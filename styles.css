@@ -127,9 +127,7 @@ body {
     transition: transform 0.6s ease;
 }
 
-.book:hover {
-    transform: rotateY(-5deg) rotateX(5deg);
-}
+/* Animação de inclinação removida */
 
 /* Páginas do livro */
 .page {
@@ -148,17 +146,54 @@ body {
 
 /* Capa */
 .cover-page {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 50%, #ffa8a8 100%);
+    background: 
+        /* Textura de capa de caderno */
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        /* Gradiente principal */
+        linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 50%, #ffa8a8 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    border: 3px solid #333;
+    box-shadow: 
+        0 0 20px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Adicionar detalhes de capa de caderno */
+.cover-page::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.cover-page::after {
+    content: '';
+    position: absolute;
+    top: 50px;
+    left: 30px;
+    width: 4px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .cover-content {
     text-align: center;
     color: #fff;
-    z-index: 2;
+    z-index: 3;
     position: relative;
 }
 
@@ -293,14 +328,65 @@ body {
 
 /* Páginas internas */
 .intro-page, .navigation-page, .topic-page {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 20px;
+    background: 
+        /* Linhas horizontais do caderno */
+        repeating-linear-gradient(
+            transparent 0px,
+            transparent 23px,
+            #e8f4fd 23px,
+            #e8f4fd 24px
+        ),
+        /* Margem vermelha */
+        linear-gradient(
+            to right,
+            #ff6b6b 0px,
+            #ff6b6b 8px,
+            transparent 8px,
+            transparent 100%
+        ),
+        /* Fundo base do caderno */
+        linear-gradient(135deg, #fefefe 0%, #f8f9fa 100%);
+    padding: 20px 20px 20px 30px;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     overflow-y: auto;
     min-height: 100%;
     box-sizing: border-box;
+    position: relative;
+}
+
+/* Adicionar furos do caderno */
+.intro-page::before, .navigation-page::before, .topic-page::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: repeating-linear-gradient(
+        transparent 0px,
+        transparent 20px,
+        #ddd 20px,
+        #ddd 22px
+    );
+    z-index: 1;
+}
+
+/* Adicionar textura de papel */
+.intro-page::after, .navigation-page::after, .topic-page::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .page-content {
@@ -310,6 +396,8 @@ body {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+    position: relative;
+    z-index: 2;
 }
 
 /* Página de Introdução */
@@ -437,19 +525,33 @@ body {
     background: #fff;
     padding: 18px;
     border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.1),
+        3px 3px 0px #000;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
     overflow: visible;
-    border: 2px solid transparent;
+    border: 3px solid #000;
     z-index: 2;
     pointer-events: all;
+    font-family: 'Comic Neue', cursive;
+    transform: rotate(-0.5deg);
+}
+
+.topic-card:nth-child(2) {
+    transform: rotate(0.5deg);
+}
+
+.topic-card:nth-child(3) {
+    transform: rotate(-0.3deg);
 }
 
 .topic-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px) scale(1.02) rotate(0deg);
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        5px 5px 0px #000;
     border-color: #4ecdc4;
 }
 
@@ -602,6 +704,336 @@ body {
     line-height: 1.6;
 }
 
+/* Estilos de Gibi/Quadrinhos */
+.comic-text-box {
+    background: 
+        /* Textura de papel */
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        /* Fundo branco */
+        #fff;
+    border: 4px solid #000;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 15px 0;
+    position: relative;
+    box-shadow: 
+        4px 4px 0px #000,
+        8px 8px 0px rgba(0, 0, 0, 0.3);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 500;
+    line-height: 1.6;
+    transform: rotate(-1deg);
+    transition: all 0.3s ease;
+    z-index: 3;
+}
+
+.comic-text-box:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 
+        6px 6px 0px #000,
+        12px 12px 0px rgba(0, 0, 0, 0.3);
+}
+
+.comic-speech-bubble {
+    background: 
+        /* Textura de papel */
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        /* Fundo branco */
+        #fff;
+    border: 4px solid #000;
+    border-radius: 25px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 
+        4px 4px 0px #000,
+        8px 8px 0px rgba(0, 0, 0, 0.3);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 15px 0;
+    max-width: 300px;
+    z-index: 3;
+}
+
+.comic-speech-bubble::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 30px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 20px solid #000;
+}
+
+.comic-speech-bubble::after {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 32px;
+    width: 0;
+    height: 0;
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-right: 16px solid #fff;
+}
+
+.comic-thought-bubble {
+    background: 
+        /* Textura de papel */
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        /* Fundo branco */
+        #fff;
+    border: 4px solid #000;
+    border-radius: 50px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 
+        4px 4px 0px #000,
+        8px 8px 0px rgba(0, 0, 0, 0.3);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 15px 0;
+    max-width: 280px;
+    z-index: 3;
+}
+
+.comic-thought-bubble::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 20px;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 50%;
+    box-shadow: 2px 2px 0px #000;
+}
+
+.comic-thought-bubble::after {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 15px;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    box-shadow: 1px 1px 0px #000;
+}
+
+.comic-highlight-box {
+    background: 
+        /* Textura de papel */
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        /* Fundo amarelo */
+        #ffff00;
+    border: 4px solid #000;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 10px 0;
+    position: relative;
+    box-shadow: 
+        3px 3px 0px #000,
+        6px 6px 0px rgba(0, 0, 0, 0.3);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 600;
+    transform: rotate(1deg);
+    transition: all 0.3s ease;
+    z-index: 3;
+}
+
+.comic-highlight-box:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 
+        5px 5px 0px #000,
+        10px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.comic-title-box {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    border: 5px solid #000;
+    border-radius: 25px;
+    padding: 25px;
+    margin: 20px 0;
+    position: relative;
+    box-shadow: 
+        6px 6px 0px #000,
+        12px 12px 0px rgba(0, 0, 0, 0.3);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 3px 3px 0px #000;
+    transform: rotate(-2deg);
+    transition: all 0.3s ease;
+}
+
+.comic-title-box h2 {
+    color: #fff !important;
+    text-shadow: 3px 3px 0px #000, 0 0 10px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.comic-title-box .nav-title {
+    color: #fff !important;
+    text-shadow: 3px 3px 0px #000, 0 0 10px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.comic-title-box:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 
+        8px 8px 0px #000,
+        16px 16px 0px rgba(0, 0, 0, 0.3);
+}
+
+.comic-info-box {
+    background: 
+        /* Textura de papel */
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        /* Fundo azul claro */
+        #e8f4fd;
+    border: 4px solid #000;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 15px 0;
+    position: relative;
+    box-shadow: 
+        4px 4px 0px #000,
+        8px 8px 0px rgba(0, 0, 0, 0.3);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 500;
+    line-height: 1.6;
+    transform: rotate(1deg);
+    transition: all 0.3s ease;
+    z-index: 3;
+}
+
+.comic-info-box:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.comic-warning-box {
+    background: 
+        /* Textura de papel */
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+        /* Fundo amarelo */
+        #ffeb3b;
+    border: 4px solid #000;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 15px 0;
+    position: relative;
+    box-shadow: 
+        4px 4px 0px #000,
+        8px 8px 0px rgba(0, 0, 0, 0.3);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 600;
+    line-height: 1.6;
+    transform: rotate(-1deg);
+    transition: all 0.3s ease;
+    z-index: 3;
+}
+
+.comic-warning-box:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.comic-warning-box::before {
+    content: '⚠️';
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 2px 2px 0px #000;
+}
+
+/* Aplicar estilos de gibi aos textos existentes */
+.intro-paragraph {
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 15px;
+    padding: 18px;
+    margin: 15px 0;
+    box-shadow: 
+        3px 3px 0px #000,
+        6px 6px 0px rgba(0, 0, 0, 0.2);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 500;
+    line-height: 1.6;
+    transform: rotate(0.5deg);
+    transition: all 0.3s ease;
+}
+
+.intro-paragraph:hover {
+    transform: rotate(0deg) scale(1.01);
+    box-shadow: 
+        5px 5px 0px #000,
+        10px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.nav-intro p {
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 15px;
+    padding: 18px;
+    margin: 15px 0;
+    box-shadow: 
+        3px 3px 0px #000,
+        6px 6px 0px rgba(0, 0, 0, 0.2);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 500;
+    line-height: 1.6;
+    transform: rotate(-0.5deg);
+    transition: all 0.3s ease;
+}
+
+.nav-intro p:hover {
+    transform: rotate(0deg) scale(1.01);
+}
+
+.content-placeholder p {
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 15px;
+    padding: 18px;
+    margin: 15px 0;
+    box-shadow: 
+        3px 3px 0px #000,
+        6px 6px 0px rgba(0, 0, 0, 0.2);
+    font-family: 'Comic Neue', cursive;
+    font-weight: 500;
+    line-height: 1.6;
+    transform: rotate(0.5deg);
+    transition: all 0.3s ease;
+}
+
+.content-placeholder p:hover {
+    transform: rotate(0deg) scale(1.01);
+}
+
 /* Animações */
 @keyframes titleFloat {
     0%, 100% { transform: rotate(-2deg) translateY(0px); }
@@ -670,6 +1102,58 @@ body {
     
     .author-name {
         font-size: 0.9rem;
+    }
+    
+    /* Ajustes para caixas de gibi em tablet */
+    .comic-text-box {
+        padding: 15px;
+        margin: 12px 0;
+        border-width: 3px;
+        transform: rotate(-0.5deg);
+    }
+    
+    .comic-speech-bubble {
+        padding: 15px;
+        margin: 12px 0;
+        border-width: 3px;
+    }
+    
+    .comic-title-box {
+        padding: 20px;
+        margin: 18px 0;
+        transform: rotate(-1deg);
+    }
+    
+    .comic-info-box {
+        padding: 15px;
+        margin: 12px 0;
+        transform: rotate(0.5deg);
+    }
+    
+    .comic-highlight-box {
+        padding: 12px;
+        margin: 10px 0;
+        transform: rotate(0.5deg);
+    }
+    
+    .comic-warning-box {
+        padding: 15px;
+        margin: 12px 0;
+        transform: rotate(-0.5deg);
+    }
+    
+    .topic-card {
+        padding: 15px;
+        border-width: 2px;
+        transform: rotate(-0.3deg);
+    }
+    
+    .topic-card:nth-child(2) {
+        transform: rotate(0.3deg);
+    }
+    
+    .topic-card:nth-child(3) {
+        transform: rotate(-0.2deg);
     }
 }
 
@@ -762,5 +1246,118 @@ body {
     .indicator {
         width: 10px;
         height: 10px;
+    }
+    
+    /* Ajustes para caixas de gibi em mobile */
+    .comic-text-box {
+        padding: 12px;
+        margin: 10px 0;
+        border-width: 2px;
+        box-shadow: 
+            2px 2px 0px #000,
+            4px 4px 0px rgba(0, 0, 0, 0.3);
+        transform: rotate(0deg);
+    }
+    
+    .comic-speech-bubble {
+        padding: 12px;
+        margin: 10px 0;
+        border-width: 2px;
+        box-shadow: 
+            2px 2px 0px #000,
+            4px 4px 0px rgba(0, 0, 0, 0.3);
+        max-width: 100%;
+    }
+    
+    .comic-title-box {
+        padding: 15px;
+        margin: 15px 0;
+        border-width: 3px;
+        box-shadow: 
+            3px 3px 0px #000,
+            6px 6px 0px rgba(0, 0, 0, 0.3);
+        transform: rotate(0deg);
+    }
+    
+    .comic-title-box h2 {
+        font-size: 1.6rem;
+    }
+    
+    .comic-title-box .nav-title {
+        font-size: 1.4rem;
+    }
+    
+    .comic-info-box {
+        padding: 12px;
+        margin: 10px 0;
+        border-width: 2px;
+        box-shadow: 
+            2px 2px 0px #000,
+            4px 4px 0px rgba(0, 0, 0, 0.3);
+        transform: rotate(0deg);
+    }
+    
+    .comic-highlight-box {
+        padding: 10px;
+        margin: 8px 0;
+        border-width: 2px;
+        box-shadow: 
+            2px 2px 0px #000,
+            4px 4px 0px rgba(0, 0, 0, 0.3);
+        transform: rotate(0deg);
+    }
+    
+    .comic-warning-box {
+        padding: 12px;
+        margin: 10px 0;
+        border-width: 2px;
+        box-shadow: 
+            2px 2px 0px #000,
+            4px 4px 0px rgba(0, 0, 0, 0.3);
+        transform: rotate(0deg);
+    }
+    
+    .topic-card {
+        padding: 12px;
+        border-width: 2px;
+        box-shadow: 
+            0 4px 15px rgba(0, 0, 0, 0.1),
+            2px 2px 0px #000;
+        transform: rotate(0deg);
+    }
+    
+    .topic-card:nth-child(2),
+    .topic-card:nth-child(3) {
+        transform: rotate(0deg);
+    }
+    
+    .intro-paragraph {
+        padding: 12px;
+        margin: 10px 0;
+        border-width: 2px;
+        box-shadow: 
+            2px 2px 0px #000,
+            4px 4px 0px rgba(0, 0, 0, 0.2);
+        transform: rotate(0deg);
+    }
+    
+    .nav-intro p {
+        padding: 12px;
+        margin: 10px 0;
+        border-width: 2px;
+        box-shadow: 
+            2px 2px 0px #000,
+            4px 4px 0px rgba(0, 0, 0, 0.2);
+        transform: rotate(0deg);
+    }
+    
+    .content-placeholder p {
+        padding: 12px;
+        margin: 10px 0;
+        border-width: 2px;
+        box-shadow: 
+            2px 2px 0px #000,
+            4px 4px 0px rgba(0, 0, 0, 0.2);
+        transform: rotate(0deg);
     }
 }
