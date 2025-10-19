@@ -2,705 +2,147 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Me Deixa Pensar - Cartilha Digital</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="book-container">
-        <!-- Controles de Navegação -->
-        <div class="navigation-controls">
-            <button class="nav-btn prev-btn" id="prevBtn" title="Página anterior">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-            
-            <div class="page-indicators" id="pageIndicators">
-                <span class="indicator active" data-page="0"></span>
-                <span class="indicator" data-page="1"></span>
-                <span class="indicator" data-page="2"></span>
-            </div>
-            
-            <button class="nav-btn next-btn" id="nextBtn" title="Próxima página">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-        </div>
         
         <div class="book">
-            <!-- Capa -->
-            <div class="page cover-page">
-                <div class="cover-content">
-                    <div class="title-container">
-                        <h1 class="main-title">Me Deixa Pensar</h1>
-                        <div class="subtitle-line"></div>
-                        <p class="subtitle">Cartilha para quem quer refletir sobre o futuro profissional</p>
-                    </div>
-                    
-                    <div class="authors-container">
-                        <div class="author">
-                            <div class="author-avatar">D</div>
-                            <p class="author-name">Daniela de Sousa Liberato</p>
-                        </div>
-                        <div class="author">
-                            <div class="author-avatar">R</div>
-                            <p class="author-name">Rosa Maria Machado de Sena</p>
-                        </div>
-                    </div>
-                    
-                    <div class="decorative-elements">
-                        <div class="thought-bubble bubble-1">💭</div>
-                        <div class="thought-bubble bubble-2">🤔</div>
-                        <div class="thought-bubble bubble-3">💡</div>
-                        <div class="thought-bubble bubble-4">✨</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Página de Introdução -->
-            <div class="page intro-page">
+            <!-- Página Única com Scroll Vertical -->
+            <div class="page main-page">
                 <div class="page-content">
-                    <div class="intro-header">
-                        <div class="comic-title-box">
-                            <h2 class="intro-title">Se liga! Seu futuro começa agora.</h2>
+                    <!-- Seção: Capa -->
+                    <section class="cover-section">
+                        <div class="cover-content">
+                            <div class="title-container">
+                                <h1 class="main-title">Me Deixa Pensar</h1>
+                                <div class="subtitle-line"></div>
+                                <p class="subtitle">Cartilha para quem quer refletir sobre o futuro profissional</p>
+                            </div>
+                            
+                            <div class="authors-container">
+                                <div class="author">
+                                    <div class="author-avatar">D</div>
+                                    <p class="author-name">Daniela de Sousa Liberato</p>
+                                </div>
+                                <div class="author">
+                                    <div class="author-avatar">R</div>
+                                    <p class="author-name">Rosa Maria Machado de Sena</p>
+                                </div>
+                            </div>
+                            
                         </div>
-                        <div class="intro-decoration">✨</div>
-                    </div>
+                    </section>
                     
-                    <div class="daniela-intro">
-                        <div class="daniela-avatar">
-                            <svg width="80" height="80" viewBox="0 0 80 80" class="avatar-svg">
-                                <circle cx="40" cy="40" r="35" fill="#ff6b6b" stroke="#fff" stroke-width="3"/>
-                                <circle cx="32" cy="32" r="3" fill="#fff"/>
-                                <circle cx="48" cy="32" r="3" fill="#fff"/>
-                                <path d="M30 50 Q40 60 50 50" stroke="#fff" stroke-width="3" fill="none"/>
-                                <text x="40" y="45" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">D</text>
-                            </svg>
-                        </div>
-                        <div class="comic-speech-bubble">
-                            <p class="daniela-text">
-                                Olá! Eu sou a <strong>Daniela</strong>, psicóloga e ex-estudante do Ensino Médio. 
-                                Assim como muitos adolescentes, também enfrentei momentos de ansiedade quando 
-                                precisei pensar sobre o meu futuro profissional.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="intro-content">
-                        <div class="comic-text-box">
-                            <p>
-                                A ideia desta cartilha nasceu da minha vivência pessoal e do meu trabalho com 
-                                estudantes que também passam por isso.
-                            </p>
-                        </div>
-                        <div class="comic-text-box">
-                            <p>
-                                Este material foi pensado com <span class="highlight">carinho</span> para te ajudar 
-                                a lidar com a ansiedade, refletir sobre seus interesses e planejar, com mais 
-                                tranquilidade, os próximos passos da sua trajetória.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Página de Navegação -->
-            <div class="page navigation-page">
-                <div class="page-content">
-                    <div class="comic-title-box">
-                        <h2 class="nav-title">Vamos explorar juntos! 🚀</h2>
-                    </div>
-                    
-                    <div class="nav-intro">
-                        <div class="comic-info-box">
-                            <p>Use esta cartilha como uma ferramenta poderosa para te ajudar a dar os primeiros passos e, quem sabe, a tomar sua primeira grande decisão.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="topics-container">
-                        <div class="topic-card" data-topic="autoconhecimento">
-                            <div class="topic-icon">🔍</div>
-                            <h3>Autoconhecimento</h3>
-                            <p>Olhando para dentro de si</p>
-                            <div class="topic-arrow">→</div>
-                        </div>
-                        
-                        <div class="topic-card" data-topic="profissoes">
-                            <div class="topic-icon">💼</div>
-                            <h3>Conhecimento das Profissões</h3>
-                            <p>Entendendo o mundo do trabalho além do óbvio</p>
-                            <div class="topic-arrow">→</div>
-                        </div>
-                        
-                        <div class="topic-card" data-topic="implicacoes">
-                            <div class="topic-icon">🎯</div>
-                            <h3>As Implicações da Escolha</h3>
-                            <p>Percebendo que esse caminho é seu</p>
-                            <div class="topic-arrow">→</div>
-                        </div>
-                    </div>
-                    
-                    <div class="recommendation">
-                        <div class="comic-highlight-box">
-                            <p>💡 <strong>Dica:</strong> Recomendo que você comece pelo <span class="highlight">Autoconhecimento</span>!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Página de Autoconhecimento -->
-            <div class="page topic-page" id="autoconhecimento-page">
-                <div class="page-content">
-                    <div class="topic-header">
-                        <button class="back-btn">← Voltar</button>
-                        <h2>🔍 Autoconhecimento</h2>
-                        <p class="topic-subtitle">Olhando para dentro de si</p>
-                    </div>
-                    
-                    <div class="topic-content">
-                        <div class="autoconhecimento-intro">
-                            <div class="comic-title-box">
-                                <h3>🔍 Autoconhecimento: Olhando para dentro de si</h3>
+                    <!-- Seção: Introdução -->
+                    <section class="intro-section">
+                        <!-- Call to Action Principal -->
+                        <div class="intro-hero">
+                            <div class="hero-callout">
+                                <h2 class="hero-title">Se liga! Seu futuro começa agora.</h2>
                             </div>
                         </div>
                         
-                        <div class="autoconhecimento-main">
-                            <div class="comic-text-box">
-                                <p>
-                                    Antes de pensar no que o mundo espera de você, vamos pensar em você enquanto sujeito deste mundo.
-                                </p>
-                            </div>
-                            
-                            <div class="comic-highlight-box">
-                                <p>
-                                    👉 Sua escolha profissional não pode ser apenas um palpite: é sobre entender quem você é, o que te move e o que realmente importa na sua vida.
-                                </p>
-                            </div>
-                            
-                            <div class="comic-text-box">
-                                <p>
-                                    Sua história, seus amigos, sua família, o lugar onde você mora… tudo isso te influencia. E isso é ótimo! É o que te torna único(a).
-                                </p>
-                            </div>
-                            
-                            <div class="comic-speech-bubble">
-                                <p>
-                                    <strong>Vamos começar a descobrir quem é você?</strong>
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div class="autoconhecimento-actions">
-                            <div class="comic-info-box">
-                                <p>💡 <strong>Dica:</strong> Reserve um tempo para refletir sobre cada pergunta. Não há respostas certas ou erradas - o importante é ser honesto consigo mesmo!</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Seção: Seu Ponto de Partida -->
-                        <div class="ponto-partida-section">
-                            <div class="comic-title-box">
-                                <h3>🎯 Seu Ponto de Partida</h3>
-                            </div>
-                            
-                            <div class="comic-text-box">
-                                <p>Pensar sobre o futuro pode ser confuso. Talvez você sinta que precisa dar uma resposta logo:</p>
-                            </div>
-                            
-                            <!-- Balões de diálogo animados -->
-                            <div class="dialogue-bubbles-container">
-                                <div class="dialogue-bubble left-bubble bubble-1">
-                                    <p>"Qual profissão vai seguir?"</p>
-                                </div>
-                                
-                                <div class="dialogue-bubble right-bubble bubble-2">
-                                    <p>"Vai fazer faculdade?"</p>
-                                </div>
-                                
-                                <div class="dialogue-bubble left-bubble bubble-3">
-                                    <p>"E se não der certo?"</p>
-                                </div>
-                                
-                                <div class="dialogue-bubble right-bubble bubble-4">
-                                    <p>"Será que isso dá dinheiro?"</p>
-                                </div>
-                                
-                                <!-- Personagem aflito no meio -->
-                                <div class="anxious-character">
-                                    <div class="character-face">😰</div>
+                        <!-- Apresentação da Daniela -->
+                        <div class="daniela-presentation">
+                            <div class="daniela-avatar-container">
+                                <div class="daniela-avatar">
+                                    <svg width="80" height="80" viewBox="0 0 80 80" class="avatar-svg">
+                                        <circle cx="40" cy="40" r="35" fill="#ff6b6b" stroke="#fff" stroke-width="3"/>
+                                        <circle cx="32" cy="32" r="3" fill="#fff"/>
+                                        <circle cx="48" cy="32" r="3" fill="#fff"/>
+                                        <path d="M30 50 Q40 60 50 50" stroke="#fff" stroke-width="3" fill="none"/>
+                                        <text x="40" y="45" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">D</text>
+                                    </svg>
                                 </div>
                             </div>
                             
-                            <div class="comic-text-box">
-                                <p>Às vezes dá ansiedade. Às vezes dá vontade de fugir do assunto. E tá tudo bem se for assim. Você não precisa ter todas as respostas agora. Mas é possível dar pequenos passos, entender melhor o que você sente, o que espera da sua vida e o que faz sentido pra você.</p>
-                            </div>
-                            
-                            <!-- Seleção de emoji -->
-                            <div class="emoji-selection-section">
-                                <div class="comic-highlight-box">
-                                    <p>💡 Para começar, selecione um emoji que representa como você se sente quando pensa no seu futuro profissional:</p>
-                                </div>
-                                
-                                <div class="emoji-options">
-                                    <button class="emoji-option" data-feeling="tranquilo" data-emoji="😎">
-                                        <span class="emoji">😎</span>
-                                        <span class="label">Tranquilo(a)</span>
-                                    </button>
-                                    <button class="emoji-option" data-feeling="indeciso" data-emoji="🤔">
-                                        <span class="emoji">🤔</span>
-                                        <span class="label">Indeciso(a)</span>
-                                    </button>
-                                    <button class="emoji-option" data-feeling="preocupado" data-emoji="😥">
-                                        <span class="emoji">😥</span>
-                                        <span class="label">Preocupado(a)</span>
-                                    </button>
-                                    <button class="emoji-option" data-feeling="nao-pensei" data-emoji="😴">
-                                        <span class="emoji">😴</span>
-                                        <span class="label">Ainda nem pensei nisso</span>
-                                    </button>
-                                </div>
-                                
-                                <div class="selected-emoji-display" id="selectedEmojiDisplay" style="display: none;">
-                                    <div class="comic-info-box">
-                                        <p>✅ Você selecionou: <span id="selectedEmojiText"></span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Balões de reflexão -->
-                            <div class="reflection-section">
-                                <div class="comic-highlight-box">
-                                    <p>💡 Agora, reflita por um minuto e escolha uma palavra, um sentimento e uma dúvida que vêm à sua mente quando você pensa no futuro. Escreva dentro dos respectivos balões de pensamento abaixo.</p>
-                                </div>
-                                
-                                <div class="thought-bubbles-container">
-                                    <div class="thought-bubble-input">
-                                        <div class="bubble-header">💭</div>
-                                        <label>Uma palavra:</label>
-                                        <input type="text" id="wordInput" placeholder="Ex: esperança, medo, curiosidade..." maxlength="20">
-                                    </div>
-                                    
-                                    <div class="thought-bubble-input">
-                                        <div class="bubble-header">❤️</div>
-                                        <label>Um sentimento:</label>
-                                        <input type="text" id="feelingInput" placeholder="Ex: ansioso, empolgado, confuso..." maxlength="20">
-                                    </div>
-                                    
-                                    <div class="thought-bubble-input">
-                                        <div class="bubble-header">❓</div>
-                                        <label>Uma dúvida:</label>
-                                        <input type="text" id="doubtInput" placeholder="Ex: Será que vou conseguir?" maxlength="30">
-                                    </div>
-                                </div>
-                                
-                                <div class="reflection-summary" id="reflectionSummary" style="display: none;">
-                                    <div class="comic-speech-bubble">
-                                        <p><strong>Seu momento de reflexão:</strong></p>
-                                        <p>Palavra: <span id="summaryWord"></span></p>
-                                        <p>Sentimento: <span id="summaryFeeling"></span></p>
-                                        <p>Dúvida: <span id="summaryDoubt"></span></p>
-                                    </div>
+                            <div class="daniela-speech-container">
+                                <div class="comic-speech-bubble daniela-bubble">
+                                    <p class="daniela-text">
+                                        Olá! Eu sou a <strong>Daniela</strong>, psicóloga e ex-estudante do Ensino Médio. 
+                                        Assim como muitos adolescentes, também enfrentei momentos de ansiedade quando 
+                                        precisei pensar sobre o meu futuro profissional.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Seção: Meu Mapa da Energia Diária -->
-                        <div class="energy-map-section">
-                            <div class="comic-title-box">
-                                <h3>🗺️ Meu Mapa da Energia Diária</h3>
-                            </div>
-                            
-                            <div class="comic-text-box">
-                                <p>O que você faz no seu dia a dia pode dizer muito sobre quem você é. Para entender melhor o seu potencial, vamos mapear o que te dá energia e o que descarrega a sua bateria.</p>
-                            </div>
-                            
-                            <!-- Mapa Visual -->
-                            <div class="energy-map-container">
-                                <div class="map-grid">
-                                    <!-- Campo da Paixão -->
-                                    <div class="territory passion-field" data-territory="passion">
-                                        <div class="territory-header">
-                                            <div class="territory-icon">🌻</div>
-                                            <h4>O CAMPO DA PAIXÃO</h4>
-                                            <p class="territory-subtitle">(Gosto e Faço)</p>
-                                        </div>
-                                        <div class="territory-description">
-                                            <p>Esse é seu território preferido, onde você recarrega suas energias. Aqui você usa suas habilidades com facilidade e prazer.</p>
-                                        </div>
-                                        <div class="territory-input">
-                                            <label>Quais são as atividades que fazem parte desse lugar?</label>
-                                            <textarea id="passionInput" placeholder="Ex: tocar violão, desenhar, jogar futebol..." maxlength="200"></textarea>
-                                        </div>
-                                        <div class="territory-actions">
-                                            <button class="territory-zoom-btn" data-territory="passion">
-                                                🔍 Ampliar
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Jardim Secreto -->
-                                    <div class="territory secret-garden" data-territory="secret">
-                                        <div class="territory-header">
-                                            <div class="territory-icon">🌺</div>
-                                            <h4>O JARDIM SECRETO</h4>
-                                            <p class="territory-subtitle">(Gosto e Não Faço)</p>
-                                        </div>
-                                        <div class="territory-description">
-                                            <p>Esse é um território que você gostaria muito de visitar e acredita que tem potencial para isso.</p>
-                                        </div>
-                                        <div class="territory-input">
-                                            <label>Quais são as atividades que você gostaria de fazer e não faz?</label>
-                                            <textarea id="secretInput" placeholder="Ex: aprender a cozinhar, viajar, escrever..." maxlength="200"></textarea>
-                                        </div>
-                                        <div class="territory-actions">
-                                            <button class="territory-zoom-btn" data-territory="secret">
-                                                🔍 Ampliar
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Montanha Íngreme -->
-                                    <div class="territory steep-mountain" data-territory="mountain">
-                                        <div class="territory-header">
-                                            <div class="territory-icon">⛰️</div>
-                                            <h4>A MONTANHA ÍNGREME</h4>
-                                            <p class="territory-subtitle">(Não Gosto e Faço)</p>
-                                        </div>
-                                        <div class="territory-description">
-                                            <p>Esse é um território de desafios, onde a subida exige muito esforço.</p>
-                                        </div>
-                                        <div class="territory-input">
-                                            <label>Quais são as atividades que te levam para essa montanha? Elas te ensinam algo?</label>
-                                            <textarea id="mountainInput" placeholder="Ex: estudar matemática, arrumar o quarto..." maxlength="200"></textarea>
-                                        </div>
-                                        <div class="territory-actions">
-                                            <button class="territory-zoom-btn" data-territory="mountain">
-                                                🔍 Ampliar
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Pântano -->
-                                    <div class="territory swamp" data-territory="swamp">
-                                        <div class="territory-header">
-                                            <div class="territory-icon">🐸</div>
-                                            <h4>O PÂNTANO</h4>
-                                            <p class="territory-subtitle">(Não Gosto e Não Faço)</p>
-                                        </div>
-                                        <div class="territory-description">
-                                            <p>Esse é o território do qual você quer manter distância. É o que você não gosta de fazer e consegue evitar.</p>
-                                        </div>
-                                        <div class="territory-input">
-                                            <label>Quais são as atividades que fazem parte desse pântano?</label>
-                                            <textarea id="swampInput" placeholder="Ex: assistir noticiários, fazer contas..." maxlength="200"></textarea>
-                                        </div>
-                                        <div class="territory-actions">
-                                            <button class="territory-zoom-btn" data-territory="swamp">
-                                                🔍 Ampliar
-                                            </button>
-                                        </div>
-                                    </div>
+                        <!-- Conteúdo Explicativo -->
+                        <div class="intro-explanation">
+                            <div class="explanation-layer-1">
+                                <div class="comic-text-box explanation-box-1">
+                                    <p>
+                                        A ideia desta cartilha nasceu da minha vivência pessoal e do meu trabalho com 
+                                        estudantes que também passam por isso.
+                                    </p>
                                 </div>
                             </div>
                             
-                            <!-- Reflexão sobre o mapa -->
-                            <div class="map-reflection">
-                                <div class="comic-text-box">
-                                    <p>Agora que você preencheu os quatro territórios, observe: tanto no Campo da Paixão quanto no Pântano você já tem pistas sólidas sobre quem você é e quais caminhos pode seguir ou evitar. Isso já é incrível!</p>
-                                </div>
-                                
-                                <div class="comic-highlight-box">
-                                    <p>💡 <strong>Deixo aqui uma sugestão:</strong> olhe para o Jardim Secreto e para a Montanha Íngreme e se pergunte:</p>
-                                    <p><strong>POR QUE</strong> eu ainda não faço aquilo que me atrai?</p>
-                                    <p><strong>POR QUE</strong> eu ainda faço aquilo que já sei que não gosto?</p>
-                                </div>
-                                
-                                <!-- Instrução sobre os botões de ampliar -->
-                                <div class="comic-info-box">
-                                    <p>💡 <strong>Dica:</strong> Clique no botão "🔍 Ampliar" de cada território para explorar questões de reflexão mais profundas!</p>
+                            <div class="explanation-layer-2">
+                                <div class="comic-text-box explanation-box-2">
+                                    <p>
+                                        Este material foi pensado com <span class="highlight">carinho</span> para te ajudar 
+                                        a lidar com a ansiedade, refletir sobre seus interesses e planejar, com mais 
+                                        tranquilidade, os próximos passos da sua trajetória.
+                                    </p>
                                 </div>
                             </div>
-                            
-                            <!-- Modal de zoom -->
-                            <div class="zoom-modal" id="zoomModal">
-                                <div class="zoom-content">
-                                    <button class="close-zoom" id="closeZoom">✕</button>
-                                    <div class="zoom-territory" id="zoomTerritory">
-                                        <!-- Conteúdo será inserido dinamicamente -->
-                                    </div>
-                                </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Seção: Navegação -->
+                    <section class="navigation-section">
+                        <!-- Título Principal -->
+                        <div class="nav-hero">
+                            <div class="comic-title-box nav-title-container">
+                                <h2 class="nav-title">Vamos explorar juntos!</h2>
                             </div>
                         </div>
                         
-                        <!-- Seção: Minha Bússola de Interesses -->
-                        <div class="compass-section">
-                            <div class="comic-title-box">
-                                <h3>🧭 Minha Bússola de Interesses</h3>
-                            </div>
-                            
-                            <div class="comic-text-box">
-                                <p>Sabe aquelas atividades que você escreveu no Campo da Paixão?</p>
-                            </div>
-                            
-                            <div class="comic-text-box">
-                                <p>Provavelmente são coisas que te fazem perder a noção do tempo, te dão energia e fazem seus olhos brilharem, certo?</p>
-                            </div>
-                            
-                            <div class="comic-text-box">
-                                <p>É por aí que a gente começa a descobrir no que você já é bom e o que te move de verdade.</p>
-                            </div>
-                            
-                            <div class="comic-highlight-box">
-                                <p>💡 Para ficar ainda mais claro, complete as frases a seguir:</p>
-                            </div>
-                            
-                            <!-- Bússola Visual -->
-                            <div class="compass-container">
-                                <div class="compass-visual">
-                                    <!-- Bússola Central -->
-                                    <div class="compass-base">
-                                        <div class="compass-center">
-                                            <div class="compass-title">Minha Bússola</div>
-                                        </div>
-                                        <!-- Agulha da Bússola -->
-                                        <div class="compass-needle" id="compassNeedle">
-                                            <div class="needle-pointer"></div>
-                                        </div>
-                                        <!-- Pontos Cardeais -->
-                                        <div class="compass-points">
-                                            <div class="compass-point north">N</div>
-                                            <div class="compass-point east">E</div>
-                                            <div class="compass-point south">S</div>
-                                            <div class="compass-point west">W</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Círculos da Bússola -->
-                                    <div class="compass-circles">
-                                        <!-- Círculo 1: Escola (Norte) -->
-                                        <div class="compass-circle school-circle" data-circle="school" data-direction="0">
-                                            <div class="circle-icon">🏫</div>
-                                            <h4>Na escola</h4>
-                                        </div>
-                                        
-                                        <!-- Círculo 2: Lazer (Leste) -->
-                                        <div class="compass-circle leisure-circle" data-circle="leisure" data-direction="90">
-                                            <div class="circle-icon">🎨</div>
-                                            <h4>No meu tempo livre</h4>
-                                        </div>
-                                        
-                                        <!-- Círculo 3: Social (Sul) -->
-                                        <div class="compass-circle social-circle" data-circle="social" data-direction="180">
-                                            <div class="circle-icon">👥</div>
-                                            <h4>No meu convívio social</h4>
-                                        </div>
-                                        
-                                        <!-- Círculo 4: Responsabilidades (Oeste) -->
-                                        <div class="compass-circle responsibility-circle" data-circle="responsibility" data-direction="270">
-                                            <div class="circle-icon">⚡</div>
-                                            <h4>Em minhas responsabilidades</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Modal da Bússola -->
-                            <div class="compass-modal" id="compassModal">
-                                <div class="compass-modal-content">
-                                    <button class="close-compass-modal" id="closeCompassModal">✕</button>
-                                    <div class="compass-modal-header">
-                                        <div class="compass-modal-icon" id="compassModalIcon">🏫</div>
-                                        <h3 id="compassModalTitle">Na escola</h3>
-                                    </div>
-                                    <div class="compass-modal-body" id="compassModalBody">
-                                        <!-- Conteúdo será inserido dinamicamente -->
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Resumo da Bússola -->
-                            <div class="compass-summary" id="compassSummary" style="display: none;">
-                                <div class="comic-speech-bubble">
-                                    <p><strong>🧭 Sua Bússola de Interesses:</strong></p>
-                                    <div id="compassSummaryContent"></div>
-                                </div>
+                        <!-- Introdução -->
+                        <div class="nav-intro-layer">
+                            <div class="comic-info-box nav-intro-box">
+                                <p>Use esta cartilha como uma ferramenta poderosa para te ajudar a dar os primeiros passos e, quem sabe, a tomar sua primeira grande decisão.</p>
                             </div>
                         </div>
                         
-                        <!-- Seção: Top 3 Valores Inegociáveis -->
-                        <div class="values-section">
-                            <div class="comic-title-box">
-                                <h3>🏆 Top 3 Valores Inegociáveis</h3>
+                        <!-- Cards de Tópicos -->
+                        <div class="topics-grid">
+                            <div class="topic-card primary-card" data-topic="autoconhecimento">
+                                <div class="card-glow"></div>
+                                <div class="topic-icon">🔍</div>
+                                <h3>Autoconhecimento</h3>
+                                <p>Olhando para dentro de si</p>
+                                <div class="topic-arrow">→</div>
+                                <div class="card-badge">Recomendado</div>
                             </div>
                             
-                            <div class="comic-text-box">
-                                <p>O que te orienta, qual sua bússola interna?</p>
+                            <div class="topic-card secondary-card" data-topic="profissoes">
+                                <div class="topic-icon">💼</div>
+                                <h3>Conhecimento das Profissões</h3>
+                                <p>Entendendo o mundo do trabalho além do óbvio</p>
+                                <div class="topic-arrow">→</div>
                             </div>
                             
-                            <div class="comic-text-box">
-                                <p>O que te move, te inspira e te faz sentir que a vida tem valor?</p>
-                            </div>
-                            
-                            <div class="comic-text-box">
-                                <p>Antes de pensar em uma profissão, é importante saber quais são os seus valores inegociáveis. Eles são a base para qualquer decisão que você tomar.</p>
-                            </div>
-                            
-                            <div class="comic-highlight-box">
-                                <p>💡 Aqui estão alguns valores. Selecione os três que você considera inegociáveis - ou seja, aqueles dos quais você não abre mão.</p>
-                            </div>
-                            
-                            <!-- Pódio dos Valores -->
-                            <div class="values-podium">
-                                <div class="podium-container">
-                                    <!-- 1º Lugar -->
-                                    <div class="podium-place first-place" data-place="1">
-                                        <div class="podium-base"></div>
-                                        <div class="podium-number">1</div>
-                                        <div class="podium-value" data-value-id="">
-                                            <span class="placeholder">Clique ou arraste aqui</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- 2º Lugar -->
-                                    <div class="podium-place second-place" data-place="2">
-                                        <div class="podium-base"></div>
-                                        <div class="podium-number">2</div>
-                                        <div class="podium-value" data-value-id="">
-                                            <span class="placeholder">Clique ou arraste aqui</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- 3º Lugar -->
-                                    <div class="podium-place third-place" data-place="3">
-                                        <div class="podium-base"></div>
-                                        <div class="podium-number">3</div>
-                                        <div class="podium-value" data-value-id="">
-                                            <span class="placeholder">Clique ou arraste aqui</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Lista de Valores -->
-                            <div class="values-list">
-                                <div class="comic-text-box">
-                                    <p><strong>OS VALORES QUE VOCÊ CARREGA [DENTRO DA MOCHILA]</strong></p>
-                                </div>
-                                
-                                <div class="values-grid">
-                                    <div class="value-item" data-value="caminho" draggable="true">
-                                        <span>Escolher meu próprio caminho.</span>
-                                    </div>
-                                    <div class="value-item" data-value="desafios" draggable="true">
-                                        <span>Buscar novidades e desafios.</span>
-                                    </div>
-                                    <div class="value-item" data-value="bem" draggable="true">
-                                        <span>Fazer o que me faz bem.</span>
-                                    </div>
-                                    <div class="value-item" data-value="esforco" draggable="true">
-                                        <span>Conquistar pelo meu esforço.</span>
-                                    </div>
-                                    <div class="value-item" data-value="voz" draggable="true">
-                                        <span>Ter voz e influência.</span>
-                                    </div>
-                                    <div class="value-item" data-value="estabilidade" draggable="true">
-                                        <span>Ter estabilidade pra ficar de boa.</span>
-                                    </div>
-                                    <div class="value-item" data-value="respeito" draggable="true">
-                                        <span>Jogar limpo e respeitar regras.</span>
-                                    </div>
-                                    <div class="value-item" data-value="raizes" draggable="true">
-                                        <span>Valorizar minhas raízes.</span>
-                                    </div>
-                                    <div class="value-item" data-value="cuidar" draggable="true">
-                                        <span>Cuidar dos meus (família e amigos).</span>
-                                    </div>
-                                    <div class="value-item" data-value="justica" draggable="true">
-                                        <span>Querer um mundo mais justo.</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Reflexão sobre o Trabalho Ideal -->
-                            <div class="work-reflection">
-                                <div class="comic-text-box">
-                                    <p>Agora, use a imaginação:</p>
-                                </div>
-                                
-                                <div class="reflection-inputs">
-                                    <div class="reflection-input">
-                                        <label for="idealWork">Se você pudesse criar seu próprio trabalho, como ele seria?</label>
-                                        <textarea id="idealWork" placeholder="Descreva como seria seu trabalho ideal..." maxlength="300"></textarea>
-                                    </div>
-                                    
-                                    <div class="reflection-input">
-                                        <label for="worldContribution">Como este trabalho contribuiria para melhorar o mundo em que você vive?</label>
-                                        <textarea id="worldContribution" placeholder="Explique como seu trabalho ideal contribuiria para um mundo melhor..." maxlength="300"></textarea>
-                                    </div>
-                                </div>
-                                
-                                <div class="comic-info-box">
-                                    <p>💡 <strong>DICA:</strong> Lembre-se, suas respostas são o seu guia. Não tem certo ou errado.</p>
-                                </div>
-                            </div>
-                            
-                            <!-- Resumo Final -->
-                            <div class="values-summary" id="valuesSummary" style="display: none;">
-                                <div class="comic-speech-bubble">
-                                    <p><strong>🏆 Seus Valores Inegociáveis:</strong></p>
-                                    <div id="valuesSummaryContent"></div>
-                                </div>
-                                
-                                <div class="comic-highlight-box">
-                                    <p>👉 Com essa clareza, você construiu uma base sólida para qualquer escolha que fizer a partir de agora.</p>
-                                </div>
+                            <div class="topic-card secondary-card" data-topic="implicacoes">
+                                <div class="topic-icon">🎯</div>
+                                <h3>As Implicações da Escolha</h3>
+                                <p>Percebendo que esse caminho é seu</p>
+                                <div class="topic-arrow">→</div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Página de Profissões -->
-            <div class="page topic-page" id="profissoes-page">
-                <div class="page-content">
-                    <div class="topic-header">
-                        <button class="back-btn">← Voltar</button>
-                        <h2>💼 Conhecimento das Profissões</h2>
-                        <p class="topic-subtitle">Entendendo o mundo do trabalho além do óbvio</p>
-                    </div>
-                    
-                    <div class="topic-content">
-                        <div class="content-placeholder">
-                            <div class="placeholder-icon">🚧</div>
-                            <h3>Em construção...</h3>
-                            <div class="comic-warning-box">
-                                <p>Esta seção está sendo desenvolvida com muito carinho!</p>
+                        
+                        <!-- Dica Final -->
+                        <div class="nav-tip-layer">
+                            <div class="comic-highlight-box nav-tip-box">
+                                <p><strong>Dica:</strong> Recomendo que você comece pelo <span class="highlight">Autoconhecimento</span>!</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Página de Implicações -->
-            <div class="page topic-page" id="implicacoes-page">
-                <div class="page-content">
-                    <div class="topic-header">
-                        <button class="back-btn">← Voltar</button>
-                        <h2>🎯 As Implicações da Escolha</h2>
-                        <p class="topic-subtitle">Percebendo que esse caminho é seu</p>
-                    </div>
-                    
-                    <div class="topic-content">
-                        <div class="content-placeholder">
-                            <div class="placeholder-icon">🚧</div>
-                            <h3>Em construção...</h3>
-                            <div class="comic-warning-box">
-                                <p>Esta seção está sendo desenvolvida com muito carinho!</p>
-                            </div>
-                        </div>
-                    </div>
+                    </section>
                 </div>
             </div>
         </div>

@@ -9,12 +9,17 @@ class CartilhaNavigator {
         this.nextBtn = document.getElementById('nextBtn');
         this.pageIndicators = document.querySelectorAll('.indicator');
         
+        // Verifica se estamos na página principal ou em uma página específica
+        this.isMainPage = document.querySelector('.main-page') !== null;
+        
         this.init();
     }
     
     init() {
         this.setupEventListeners();
-        this.showPage(0); // Mostra a capa inicialmente
+        if (!this.isMainPage) {
+            this.showPage(0); // Mostra a capa inicialmente apenas se não for página principal
+        }
     }
     
     setupEventListeners() {
@@ -53,15 +58,59 @@ class CartilhaNavigator {
         
         // Cliques nos cards de tópicos
         this.topicCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const topic = card.dataset.topic;
-                this.showTopic(topic);
-            });
+            // Remove qualquer listener anterior para evitar duplicação
+            card.removeEventListener('click', this.handleTopicCardClick);
+            card.removeEventListener('touchstart', this.handleTopicCardTouch);
             
-            // Efeito de hover com som
-            card.addEventListener('mouseenter', () => {
-                this.playHoverSound();
-            });
+            // Adiciona listeners com bind para poder remover depois
+            this.handleTopicCardClick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const topic = card.dataset.topic;
+                
+                // Redireciona para páginas específicas
+                if (topic === 'autoconhecimento') {
+                    window.location.href = 'autoconhecimento.html';
+                } else if (topic === 'profissoes') {
+                    window.location.href = 'profissoes.html';
+                } else if (topic === 'implicacoes') {
+                    window.location.href = 'implicacoes.html';
+                } else {
+                    this.showTopic(topic);
+                }
+                
+                this.animateCardClick(card);
+            };
+            
+            this.handleTopicCardTouch = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const topic = card.dataset.topic;
+                
+                // Redireciona para páginas específicas
+                if (topic === 'autoconhecimento') {
+                    window.location.href = 'autoconhecimento.html';
+                } else if (topic === 'profissoes') {
+                    window.location.href = 'profissoes.html';
+                } else if (topic === 'implicacoes') {
+                    window.location.href = 'implicacoes.html';
+                } else {
+                    this.showTopic(topic);
+                }
+                
+                this.animateCardClick(card);
+            };
+            
+            // Adiciona listeners
+            card.addEventListener('click', this.handleTopicCardClick, { passive: false });
+            card.addEventListener('touchstart', this.handleTopicCardTouch, { passive: false });
+            
+            // Efeito de hover com som (apenas em desktop)
+            if (window.matchMedia('(hover: hover)').matches) {
+                card.addEventListener('mouseenter', () => {
+                    this.playHoverSound();
+                });
+            }
         });
         
         // Botões de voltar
@@ -71,12 +120,95 @@ class CartilhaNavigator {
             });
         });
         
-        // Efeito de clique nos cards
-        this.topicCards.forEach(card => {
-            card.addEventListener('click', () => {
-                this.animateCardClick(card);
-            });
+        // Suporte para gestos touch
+        this.setupTouchGestures();
+        
+        // Detecção de orientação
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                this.handleOrientationChange();
+            }, 100);
         });
+        
+        // Detecção de redimensionamento
+        window.addEventListener('resize', () => {
+            this.handleResize();
+        });
+    }
+    
+    setupTouchGestures() {
+        let startX = 0;
+        let startY = 0;
+        let endX = 0;
+        let endY = 0;
+        
+        // Detecta início do toque
+        document.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+        }, { passive: true });
+        
+        // Detecta fim do toque e determina direção
+        document.addEventListener('touchend', (e) => {
+            const touch = e.changedTouches[0];
+            endX = touch.clientX;
+            endY = touch.clientY;
+            
+            const deltaX = endX - startX;
+            const deltaY = endY - startY;
+            
+            // Só processa se o movimento foi horizontal e significativo
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                    // Swipe para direita - página anterior
+                    this.previousPage();
+                } else {
+                    // Swipe para esquerda - próxima página
+                    this.nextPage();
+                }
+            }
+        }, { passive: true });
+    }
+    
+    handleOrientationChange() {
+        // Ajusta o layout quando a orientação muda
+        const book = document.querySelector('.book');
+        if (book) {
+            // Força um redimensionamento suave
+            book.style.transition = 'all 0.3s ease';
+            setTimeout(() => {
+                book.style.transition = '';
+            }, 300);
+        }
+    }
+    
+    handleResize() {
+        // Debounce para evitar muitas chamadas
+        clearTimeout(this.resizeTimeout);
+        this.resizeTimeout = setTimeout(() => {
+            // Ajusta elementos que podem precisar de recálculo
+            this.adjustForScreenSize();
+        }, 250);
+    }
+    
+    adjustForScreenSize() {
+        const screenWidth = window.innerWidth;
+        const book = document.querySelector('.book');
+        
+        if (screenWidth <= 480) {
+            // Mobile
+            document.body.classList.add('mobile-layout');
+            document.body.classList.remove('tablet-layout', 'desktop-layout');
+        } else if (screenWidth <= 768) {
+            // Tablet
+            document.body.classList.add('tablet-layout');
+            document.body.classList.remove('mobile-layout', 'desktop-layout');
+        } else {
+            // Desktop
+            document.body.classList.add('desktop-layout');
+            document.body.classList.remove('mobile-layout', 'tablet-layout');
+        }
     }
     
     showPage(pageIndex) {
@@ -110,6 +242,13 @@ class CartilhaNavigator {
                 const floatingElements = page.querySelectorAll('.floating-element');
                 floatingElements.forEach(element => element.remove());
             }
+        });
+        
+        // Garante que elementos decorativos não interfiram com cliques
+        const decorativeElements = document.querySelectorAll('.decorative-elements, .floating-element');
+        decorativeElements.forEach(element => {
+            element.style.pointerEvents = 'none';
+            element.style.zIndex = '1';
         });
     }
     
@@ -177,13 +316,21 @@ class CartilhaNavigator {
     }
     
     animateCardClick(card) {
-        card.style.transform = 'scale(0.95)';
+        // Remove rotação temporariamente para melhor feedback visual
+        const originalTransform = card.style.transform;
+        card.style.transform = 'scale(0.95) rotate(0deg)';
         card.style.boxShadow = '0 4px 15px rgba(78, 205, 196, 0.4)';
+        card.style.transition = 'all 0.2s ease';
         
         setTimeout(() => {
-            card.style.transform = 'scale(1)';
+            card.style.transform = originalTransform;
             card.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.1)';
-        }, 150);
+        }, 200);
+        
+        // Adiciona feedback háptico em dispositivos móveis
+        if ('vibrate' in navigator) {
+            navigator.vibrate(50);
+        }
     }
     
     playHoverSound() {
@@ -243,6 +390,17 @@ class VisualEffects {
                 coverPage.appendChild(element);
             }
         }
+        
+        // Garante que elementos flutuantes não interfiram com cliques
+        this.ensureFloatingElementsDontInterfere();
+    }
+    
+    ensureFloatingElementsDontInterfere() {
+        const floatingElements = document.querySelectorAll('.floating-element');
+        floatingElements.forEach(element => {
+            element.style.pointerEvents = 'none';
+            element.style.zIndex = '1';
+        });
     }
     
     setupParticleSystem() {
@@ -275,6 +433,7 @@ class VisualEffects {
         particle.style.pointerEvents = 'none';
         particle.style.zIndex = '1';
         particle.style.animation = 'particleFloat 4s ease-out forwards';
+        particle.className = 'floating-element';
         
         container.appendChild(particle);
         
@@ -336,6 +495,11 @@ class AutoconhecimentoInteractions {
         const selectedDisplay = document.getElementById('selectedEmojiDisplay');
         const selectedText = document.getElementById('selectedEmojiText');
         
+        // Só configura se existirem elementos de emoji
+        if (emojiOptions.length === 0) {
+            return;
+        }
+        
         emojiOptions.forEach(option => {
             option.addEventListener('click', () => {
                 // Remove seleção anterior
@@ -349,8 +513,12 @@ class AutoconhecimentoInteractions {
                 const feeling = option.dataset.feeling;
                 const label = option.querySelector('.label').textContent;
                 
-                selectedText.textContent = `${emoji} ${label}`;
-                selectedDisplay.style.display = 'block';
+                if (selectedText) {
+                    selectedText.textContent = `${emoji} ${label}`;
+                }
+                if (selectedDisplay) {
+                    selectedDisplay.style.display = 'block';
+                }
                 
                 // Salva no localStorage
                 this.saveResponse('selectedEmoji', {
@@ -371,7 +539,7 @@ class AutoconhecimentoInteractions {
         const doubtInput = document.getElementById('doubtInput');
         const summary = document.getElementById('reflectionSummary');
         
-        const inputs = [wordInput, feelingInput, doubtInput];
+        const inputs = [wordInput, feelingInput, doubtInput].filter(input => input !== null);
         
         inputs.forEach(input => {
             input.addEventListener('input', () => {
@@ -392,14 +560,23 @@ class AutoconhecimentoInteractions {
         const doubtInput = document.getElementById('doubtInput');
         const summary = document.getElementById('reflectionSummary');
         
+        // Se não existirem os inputs, não faz nada
+        if (!wordInput || !feelingInput || !doubtInput || !summary) {
+            return;
+        }
+        
         const word = wordInput.value.trim();
         const feeling = feelingInput.value.trim();
         const doubt = doubtInput.value.trim();
         
         if (word && feeling && doubt) {
-            document.getElementById('summaryWord').textContent = word;
-            document.getElementById('summaryFeeling').textContent = feeling;
-            document.getElementById('summaryDoubt').textContent = doubt;
+            const summaryWord = document.getElementById('summaryWord');
+            const summaryFeeling = document.getElementById('summaryFeeling');
+            const summaryDoubt = document.getElementById('summaryDoubt');
+            
+            if (summaryWord) summaryWord.textContent = word;
+            if (summaryFeeling) summaryFeeling.textContent = feeling;
+            if (summaryDoubt) summaryDoubt.textContent = doubt;
             summary.style.display = 'block';
             
             // Salva o resumo completo
@@ -442,20 +619,35 @@ class AutoconhecimentoInteractions {
             const emojiOption = document.querySelector(`[data-feeling="${emojiData.feeling}"]`);
             if (emojiOption) {
                 emojiOption.classList.add('selected');
-                document.getElementById('selectedEmojiText').textContent = `${emojiData.emoji} ${emojiData.label}`;
-                document.getElementById('selectedEmojiDisplay').style.display = 'block';
+                const selectedEmojiText = document.getElementById('selectedEmojiText');
+                const selectedEmojiDisplay = document.getElementById('selectedEmojiDisplay');
+                if (selectedEmojiText) {
+                    selectedEmojiText.textContent = `${emojiData.emoji} ${emojiData.label}`;
+                }
+                if (selectedEmojiDisplay) {
+                    selectedEmojiDisplay.style.display = 'block';
+                }
             }
         }
         
         // Carrega inputs de reflexão
         if (responses.wordInput) {
-            document.getElementById('wordInput').value = responses.wordInput;
+            const wordInput = document.getElementById('wordInput');
+            if (wordInput) {
+                wordInput.value = responses.wordInput;
+            }
         }
         if (responses.feelingInput) {
-            document.getElementById('feelingInput').value = responses.feelingInput;
+            const feelingInput = document.getElementById('feelingInput');
+            if (feelingInput) {
+                feelingInput.value = responses.feelingInput;
+            }
         }
         if (responses.doubtInput) {
-            document.getElementById('doubtInput').value = responses.doubtInput;
+            const doubtInput = document.getElementById('doubtInput');
+            if (doubtInput) {
+                doubtInput.value = responses.doubtInput;
+            }
         }
         
         // Verifica se deve mostrar o resumo
@@ -554,6 +746,10 @@ class EnergyMapInteractions {
         zoomModal.classList.add('active');
         document.body.style.overflow = 'hidden';
         
+        // Previne scroll do body em mobile
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        
         // Foca no modal para acessibilidade
         setTimeout(() => {
             const closeBtn = document.getElementById('closeZoom');
@@ -569,6 +765,9 @@ class EnergyMapInteractions {
             }
         };
         document.addEventListener('keydown', this.escapeListener);
+        
+        // Adiciona suporte para touch em modais
+        this.setupModalTouchSupport(zoomModal);
     }
     
     hideZoomModal() {
@@ -577,12 +776,47 @@ class EnergyMapInteractions {
             zoomModal.classList.remove('active');
             document.body.style.overflow = 'auto';
             
+            // Restaura scroll do body em mobile
+            document.body.style.position = '';
+            document.body.style.width = '';
+            
             // Remove listener do ESC
             if (this.escapeListener) {
                 document.removeEventListener('keydown', this.escapeListener);
                 this.escapeListener = null;
             }
         }
+    }
+    
+    setupModalTouchSupport(modal) {
+        // Previne scroll do modal em mobile
+        modal.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+        
+        // Adiciona suporte para swipe para fechar modal
+        let startY = 0;
+        let startX = 0;
+        
+        modal.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            startY = touch.clientY;
+            startX = touch.clientX;
+        }, { passive: true });
+        
+        modal.addEventListener('touchend', (e) => {
+            const touch = e.changedTouches[0];
+            const endY = touch.clientY;
+            const endX = touch.clientX;
+            
+            const deltaY = endY - startY;
+            const deltaX = endX - startX;
+            
+            // Swipe para baixo para fechar modal
+            if (deltaY > 100 && Math.abs(deltaX) < 50) {
+                this.hideZoomModal();
+            }
+        }, { passive: true });
     }
     
     getTerritoryData(territoryType) {
@@ -808,6 +1042,9 @@ class CompassInteractions {
                 e.preventDefault();
                 e.stopPropagation();
                 
+                // Previne qualquer scroll
+                e.stopImmediatePropagation();
+                
                 // Remove seleção anterior
                 circles.forEach(c => c.classList.remove('selected'));
                 
@@ -882,6 +1119,9 @@ class CompassInteractions {
         const circleType = circle.dataset.circle;
         const circleData = this.getCompassCircleData(circleType);
         
+        // Salva a posição atual do scroll
+        this.scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
         // Atualiza o cabeçalho do modal
         modalIcon.textContent = circleData.icon;
         modalTitle.textContent = circleData.title;
@@ -889,13 +1129,40 @@ class CompassInteractions {
         // Cria o conteúdo do modal
         modalBody.innerHTML = this.createCompassModalContent(circleData);
         
+        // CORREÇÃO: Adiciona classe para travar o body
+        document.body.classList.add('modal-open');
+        document.body.style.top = `-${this.scrollPosition}px`;
+        
+        // CORREÇÃO: Move o modal para o final do body (garante que seja o último elemento)
+        if (modal.parentElement !== document.body) {
+            document.body.appendChild(modal);
+        }
+        
+        // CORREÇÃO: Garante que o modal tenha o z-index mais alto e position fixed
+        modal.style.cssText = `
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 999999 !important;
+            display: flex !important;
+        `;
+        
         // Mostra o modal
         modal.classList.add('active');
         
-        // Previne scroll após mostrar o modal
-        setTimeout(() => {
-            document.body.style.overflow = 'hidden';
-        }, 10);
+        // CORREÇÃO: Garante que o conteúdo do modal também tenha z-index alto
+        const modalContent = modal.querySelector('.compass-modal-content');
+        if (modalContent) {
+            modalContent.style.cssText = `
+                position: relative !important;
+                z-index: 1000000 !important;
+            `;
+        }
+        
+        // CORREÇÃO: Previne scroll em todos os elementos
+        document.documentElement.style.overflow = 'hidden';
         
         // Foca no primeiro input
         setTimeout(() => {
@@ -907,15 +1174,43 @@ class CompassInteractions {
         
         // Adiciona listeners para os inputs
         this.setupCompassModalInputs();
+        
+        // Adiciona suporte para touch em modais
+        this.setupModalTouchSupport(modal);
     }
     
     closeCompassModal() {
+        console.log('closeCompassModal chamado!'); // Debug
+        
         const modal = document.getElementById('compassModal');
+        console.log('Modal encontrado:', modal); // Debug
+        
         if (modal) {
+            // CORREÇÃO: Remove a classe active
             modal.classList.remove('active');
             
-            // Restaura o scroll do body
-            document.body.style.overflow = '';
+            // CORREÇÃO: Força o display none removendo o estilo inline
+            modal.style.cssText = 'display: none !important;';
+            
+            console.log('Modal fechado!'); // Debug
+            
+            // CORREÇÃO: Remove a classe modal-open e restaura estilos
+            document.body.classList.remove('modal-open');
+            document.body.style.top = '';
+            
+            // CORREÇÃO: Restaura overflow do documentElement
+            document.documentElement.style.overflow = '';
+            
+            // CORREÇÃO: Restaura a posição do scroll SEM animação
+            if (this.scrollPosition !== undefined) {
+                // Usa scrollTo sem animação para evitar movimento visível
+                window.scrollTo({
+                    top: this.scrollPosition,
+                    left: 0,
+                    behavior: 'instant'
+                });
+                this.scrollPosition = undefined;
+            }
             
             // Mantém a seleção e posição da agulha
             if (this.currentSelectedCircle) {
@@ -923,6 +1218,8 @@ class CompassInteractions {
                 const direction = parseInt(this.currentSelectedCircle.dataset.direction);
                 this.rotateNeedle(needle, direction);
             }
+        } else {
+            console.error('Modal não encontrado!'); // Debug
         }
     }
     
@@ -1006,38 +1303,108 @@ class CompassInteractions {
     }
     
     createCompassModalContent(circleData) {
-        return circleData.inputs.map(input => `
-            <div class="compass-modal-input">
-                <label for="${input.id}">${input.label}</label>
-                <textarea 
-                    id="${input.id}" 
-                    placeholder="${input.placeholder}" 
-                    maxlength="${input.maxlength}"
-                ></textarea>
+        const responses = this.getStoredCompassResponses();
+        
+        const inputsHTML = circleData.inputs.map(input => {
+            const currentValue = responses[input.id] || '';
+            return `
+                <div class="compass-modal-input">
+                    <label for="${input.id}">${input.label}</label>
+                    <textarea 
+                        id="${input.id}" 
+                        placeholder="${input.placeholder}" 
+                        maxlength="${input.maxlength}"
+                    >${currentValue}</textarea>
+                </div>
+            `;
+        }).join('');
+        
+        return `
+            ${inputsHTML}
+            <div class="compass-modal-actions">
+                <button class="compass-save-btn" type="button">
+                    💾 Salvar e Fechar
+                </button>
             </div>
-        `).join('');
+        `;
     }
     
     setupCompassModalInputs() {
         const inputs = document.querySelectorAll('.compass-modal-input textarea');
         
         inputs.forEach(input => {
+            // Salva automaticamente enquanto digita
             input.addEventListener('input', () => {
                 this.saveCompassResponse(input.id, input.value);
                 this.checkAndShowSummary();
             });
             
+            // Salva quando sai do campo
             input.addEventListener('blur', () => {
                 this.saveCompassResponse(input.id, input.value);
                 this.checkAndShowSummary();
             });
+            
+            // Salva quando pressiona Enter
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    this.saveCompassResponse(input.id, input.value);
+                    this.checkAndShowSummary();
+                    // Foca no próximo campo ou fecha o modal
+                    const nextInput = input.parentElement.nextElementSibling?.querySelector('textarea');
+                    if (nextInput) {
+                        nextInput.focus();
+                    } else {
+                        this.closeCompassModal();
+                    }
+                }
+            });
         });
+        
+        // CORREÇÃO: Busca o botão dentro do modal que acabou de ser criado
+        // Usa setTimeout para garantir que o DOM foi atualizado
+        setTimeout(() => {
+            const modalBody = document.getElementById('compassModalBody');
+            const saveBtn = modalBody?.querySelector('.compass-save-btn');
+            
+            console.log('Botão encontrado:', saveBtn); // Debug
+            
+            // Botão Salvar e Fechar
+            if (saveBtn) {
+                // Remove listeners anteriores (se existirem)
+                const newSaveBtn = saveBtn.cloneNode(true);
+                saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+                
+                newSaveBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    console.log('Botão clicado!'); // Debug
+                    
+                    // Salva todos os campos antes de fechar
+                    const allInputs = document.querySelectorAll('.compass-modal-input textarea');
+                    allInputs.forEach(input => {
+                        this.saveCompassResponse(input.id, input.value);
+                    });
+                    this.checkAndShowSummary();
+                    this.closeCompassModal();
+                });
+            } else {
+                console.error('Botão não encontrado!'); // Debug
+            }
+        }, 50);
     }
     
     checkAndShowSummary() {
         const responses = this.getStoredCompassResponses();
         const summary = document.getElementById('compassSummary');
         const summaryContent = document.getElementById('compassSummaryContent');
+        
+        // Se não existir o summary, não faz nada
+        if (!summary || !summaryContent) {
+            return;
+        }
         
         // Verifica se pelo menos 4 campos estão preenchidos
         const filledFields = Object.values(responses).filter(value => value.trim() !== '').length;
@@ -1149,7 +1516,7 @@ class ValuesInteractions {
     
     setupDragAndDrop() {
         const valueItems = document.querySelectorAll('.value-item');
-        const podiumValues = document.querySelectorAll('.podium-value');
+        const podiumBases = document.querySelectorAll('.podium-base');
         
         // Configura drag para os itens de valor
         valueItems.forEach(item => {
@@ -1158,11 +1525,23 @@ class ValuesInteractions {
                 item.classList.add('dragging');
                 e.dataTransfer.effectAllowed = 'move';
                 e.dataTransfer.setData('text/html', item.outerHTML);
+                
+                // Adiciona classe de drop zone aos pódios vazios
+                podiumBases.forEach(podium => {
+                    if (!podium.dataset.valueId) {
+                        podium.classList.add('drop-zone');
+                    }
+                });
             });
             
             item.addEventListener('dragend', () => {
                 item.classList.remove('dragging');
                 this.draggedElement = null;
+                
+                // Remove classe de drop zone de todos os pódios
+                podiumBases.forEach(podium => {
+                    podium.classList.remove('drop-zone', 'drag-over');
+                });
             });
             
             // Adiciona funcionalidade de clique como alternativa
@@ -1171,14 +1550,21 @@ class ValuesInteractions {
                     this.showValueSelectionModal(item);
                 }
             });
+            
+            // Suporte para touch em dispositivos móveis
+            this.setupTouchDragSupport(item, valueItems, podiumBases);
         });
         
         // Configura drop para os lugares do pódio
-        podiumValues.forEach(podium => {
+        podiumBases.forEach(podium => {
             podium.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 e.dataTransfer.dropEffect = 'move';
-                podium.classList.add('drag-over');
+                
+                // Só permite drop se o pódio estiver vazio
+                if (!podium.dataset.valueId) {
+                    podium.classList.add('drag-over');
+                }
             });
             
             podium.addEventListener('dragleave', () => {
@@ -1187,7 +1573,7 @@ class ValuesInteractions {
             
             podium.addEventListener('drop', (e) => {
                 e.preventDefault();
-                podium.classList.remove('drag-over');
+                podium.classList.remove('drag-over', 'drop-zone');
                 
                 if (this.draggedElement && !podium.dataset.valueId) {
                     this.placeValueOnPodium(podium, this.draggedElement);
@@ -1195,7 +1581,8 @@ class ValuesInteractions {
             });
             
             // Adiciona funcionalidade de clique no pódio
-            podium.addEventListener('click', () => {
+            podium.addEventListener('click', (e) => {
+                e.stopPropagation();
                 if (!podium.dataset.valueId) {
                     this.showPodiumSelectionModal(podium);
                 } else {
@@ -1204,17 +1591,124 @@ class ValuesInteractions {
                 }
             });
         });
+        
+        // Previne drop fora do pódio
+        document.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            // Remove todas as classes de drag se soltar fora do pódio
+            podiumBases.forEach(podium => {
+                podium.classList.remove('drag-over', 'drop-zone');
+            });
+        });
+    }
+    
+    setupTouchDragSupport(item, valueItems, podiumBases) {
+        let startX = 0;
+        let startY = 0;
+        let isDragging = false;
+        let dragElement = null;
+        
+        item.addEventListener('touchstart', (e) => {
+            if (item.classList.contains('used')) return;
+            
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            isDragging = false;
+            
+            // Cria elemento visual para drag
+            dragElement = item.cloneNode(true);
+            dragElement.style.position = 'fixed';
+            dragElement.style.pointerEvents = 'none';
+            dragElement.style.zIndex = '1000';
+            dragElement.style.opacity = '0.8';
+            dragElement.style.transform = 'rotate(5deg) scale(1.1)';
+            document.body.appendChild(dragElement);
+            
+        }, { passive: true });
+        
+        item.addEventListener('touchmove', (e) => {
+            if (!dragElement) return;
+            
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - startX;
+            const deltaY = touch.clientY - startY;
+            
+            // Inicia drag se movimento for significativo
+            if (!isDragging && (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10)) {
+                isDragging = true;
+                item.classList.add('dragging');
+                this.draggedElement = item;
+                
+                // Adiciona classe de drop zone aos pódios vazios
+                podiumBases.forEach(podium => {
+                    if (!podium.dataset.valueId) {
+                        podium.classList.add('drop-zone');
+                    }
+                });
+            }
+            
+            if (isDragging) {
+                dragElement.style.left = (touch.clientX - 50) + 'px';
+                dragElement.style.top = (touch.clientY - 50) + 'px';
+                
+                // Verifica se está sobre um pódio
+                const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+                const podium = elementBelow?.closest('.podium-base');
+                
+                // Remove highlight de todos os pódios
+                podiumBases.forEach(p => p.classList.remove('drag-over'));
+                
+                // Adiciona highlight ao pódio sob o toque apenas se estiver vazio
+                if (podium && !podium.dataset.valueId) {
+                    podium.classList.add('drag-over');
+                }
+            }
+            
+        }, { passive: true });
+        
+        item.addEventListener('touchend', (e) => {
+            if (!dragElement) return;
+            
+            const touch = e.changedTouches[0];
+            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+            const podium = elementBelow?.closest('.podium-base');
+            
+            if (isDragging && podium && !podium.dataset.valueId) {
+                this.placeValueOnPodium(podium, item);
+            }
+            
+            // Limpa estado
+            item.classList.remove('dragging');
+            this.draggedElement = null;
+            isDragging = false;
+            
+            // Remove highlight e drop zone de todos os pódios
+            podiumBases.forEach(p => p.classList.remove('drag-over', 'drop-zone'));
+            
+            // Remove elemento visual
+            if (dragElement) {
+                document.body.removeChild(dragElement);
+                dragElement = null;
+            }
+            
+        }, { passive: true });
     }
     
     placeValueOnPodium(podium, valueItem) {
         const valueText = valueItem.querySelector('span').textContent;
         const valueId = valueItem.dataset.value;
         
-        // Remove placeholder
-        podium.innerHTML = '';
+        // Atualiza o conteúdo do pódio
+        const podiumContent = podium.querySelector('.podium-content');
+        if (podiumContent) {
+            podiumContent.innerHTML = `<span>${valueText}</span>`;
+        }
         
-        // Adiciona o valor
-        podium.innerHTML = `<span>${valueText}</span>`;
         podium.dataset.valueId = valueId;
         podium.classList.add('occupied');
         
@@ -1232,8 +1726,12 @@ class ValuesInteractions {
     removeValueFromPodium(podium) {
         const valueId = podium.dataset.valueId;
         
-        // Remove o valor do pódio
-        podium.innerHTML = '<span class="placeholder">Clique ou arraste aqui</span>';
+        // Restaura o placeholder
+        const podiumContent = podium.querySelector('.podium-content');
+        if (podiumContent) {
+            podiumContent.innerHTML = '<span class="placeholder">Clique ou arraste aqui</span>';
+        }
+        
         podium.dataset.valueId = '';
         podium.classList.remove('occupied');
         
@@ -1252,56 +1750,34 @@ class ValuesInteractions {
     }
     
     showValueSelectionModal(clickedItem) {
-        const availablePodiums = document.querySelectorAll('.podium-value:not([data-value-id])');
+        const availablePodiums = document.querySelectorAll('.podium-base:not([data-value-id])');
         
         if (availablePodiums.length === 0) {
-            alert('Todos os lugares do pódio já estão ocupados!');
+            this.showNotification('Todos os lugares do pódio já estão ocupados!', 'warning');
             return;
         }
+        
+        const valueText = clickedItem.querySelector('span').textContent;
         
         // Cria modal simples para seleção
         const modal = document.createElement('div');
         modal.className = 'value-selection-modal';
         modal.innerHTML = `
             <div class="modal-content">
-                <h3>Escolha a posição no pódio:</h3>
+                <h3>🏆 Escolha a posição no pódio para:</h3>
+                <p style="margin-bottom: 20px; font-style: italic; color: #666;">"${valueText}"</p>
                 <div class="podium-options">
                     ${Array.from(availablePodiums).map(podium => {
                         const place = podium.closest('.podium-place').dataset.place;
                         const medal = place === '1' ? '🥇' : place === '2' ? '🥈' : '🥉';
+                        const positionText = place === '1' ? '1º lugar (Ouro)' : place === '2' ? '2º lugar (Prata)' : '3º lugar (Bronze)';
                         return `<button class="podium-option" data-place="${place}">
-                            ${medal} ${place}º lugar
+                            ${medal} ${positionText}
                         </button>`;
                     }).join('')}
                 </div>
                 <button class="close-modal">Cancelar</button>
             </div>
-        `;
-        
-        // Adiciona estilos inline
-        modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        `;
-        
-        const content = modal.querySelector('.modal-content');
-        content.style.cssText = `
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            border: 3px solid #000;
-            box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
         `;
         
         document.body.appendChild(modal);
@@ -1310,9 +1786,10 @@ class ValuesInteractions {
         modal.querySelectorAll('.podium-option').forEach(option => {
             option.addEventListener('click', () => {
                 const place = option.dataset.place;
-                const targetPodium = document.querySelector(`.podium-place[data-place="${place}"] .podium-value`);
+                const targetPodium = document.querySelector(`.podium-place[data-place="${place}"] .podium-base`);
                 this.placeValueOnPodium(targetPodium, clickedItem);
                 document.body.removeChild(modal);
+                this.showNotification(`Valor colocado no ${place}º lugar!`, 'success');
             });
         });
         
@@ -1325,22 +1802,35 @@ class ValuesInteractions {
                 document.body.removeChild(modal);
             }
         });
+        
+        // Adiciona suporte para ESC
+        const escapeHandler = (e) => {
+            if (e.key === 'Escape') {
+                document.body.removeChild(modal);
+                document.removeEventListener('keydown', escapeHandler);
+            }
+        };
+        document.addEventListener('keydown', escapeHandler);
     }
     
     showPodiumSelectionModal(podium) {
         const availableValues = document.querySelectorAll('.value-item:not(.used)');
         
         if (availableValues.length === 0) {
-            alert('Todos os valores já foram selecionados!');
+            this.showNotification('Todos os valores já foram selecionados!', 'warning');
             return;
         }
+        
+        const place = podium.closest('.podium-place').dataset.place;
+        const medal = place === '1' ? '🥇' : place === '2' ? '🥈' : '🥉';
+        const positionText = place === '1' ? '1º lugar (Ouro)' : place === '2' ? '2º lugar (Prata)' : '3º lugar (Bronze)';
         
         // Cria modal simples para seleção
         const modal = document.createElement('div');
         modal.className = 'value-selection-modal';
         modal.innerHTML = `
             <div class="modal-content">
-                <h3>Escolha um valor:</h3>
+                <h3>${medal} Escolha um valor para o ${positionText}:</h3>
                 <div class="value-options">
                     ${Array.from(availableValues).map(item => {
                         const valueText = item.querySelector('span').textContent;
@@ -1353,32 +1843,6 @@ class ValuesInteractions {
             </div>
         `;
         
-        // Adiciona estilos inline
-        modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        `;
-        
-        const content = modal.querySelector('.modal-content');
-        content.style.cssText = `
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            border: 3px solid #000;
-            box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-        `;
-        
         document.body.appendChild(modal);
         
         // Adiciona eventos
@@ -1388,6 +1852,7 @@ class ValuesInteractions {
                 const targetItem = document.querySelector(`.value-item[data-value="${valueId}"]`);
                 this.placeValueOnPodium(podium, targetItem);
                 document.body.removeChild(modal);
+                this.showNotification(`Valor colocado no ${place}º lugar!`, 'success');
             });
         });
         
@@ -1400,6 +1865,15 @@ class ValuesInteractions {
                 document.body.removeChild(modal);
             }
         });
+        
+        // Adiciona suporte para ESC
+        const escapeHandler = (e) => {
+            if (e.key === 'Escape') {
+                document.body.removeChild(modal);
+                document.removeEventListener('keydown', escapeHandler);
+            }
+        };
+        document.addEventListener('keydown', escapeHandler);
     }
     
     setupReflectionInputs() {
@@ -1417,11 +1891,11 @@ class ValuesInteractions {
     }
     
     checkAndShowSummary() {
-        const podiumValues = document.querySelectorAll('.podium-value[data-value-id]');
+        const podiumBases = document.querySelectorAll('.podium-base[data-value-id]');
         const summary = document.getElementById('valuesSummary');
         const summaryContent = document.getElementById('valuesSummaryContent');
         
-        if (podiumValues.length >= 3) {
+        if (podiumBases.length >= 3) {
             this.generateSummary(summaryContent);
             summary.style.display = 'block';
         } else {
@@ -1430,12 +1904,12 @@ class ValuesInteractions {
     }
     
     generateSummary(container) {
-        const podiumValues = document.querySelectorAll('.podium-value[data-value-id]');
+        const podiumBases = document.querySelectorAll('.podium-base[data-value-id]');
         const summaryData = [];
         
-        podiumValues.forEach((podium, index) => {
+        podiumBases.forEach((podium, index) => {
             const place = podium.closest('.podium-place').dataset.place;
-            const valueText = podium.querySelector('span').textContent;
+            const valueText = podium.querySelector('.podium-content span').textContent;
             const medal = place === '1' ? '🥇' : place === '2' ? '🥈' : '🥉';
             
             summaryData.push({
@@ -1456,13 +1930,13 @@ class ValuesInteractions {
     }
     
     saveValuesToStorage() {
-        const podiumValues = document.querySelectorAll('.podium-value[data-value-id]');
+        const podiumBases = document.querySelectorAll('.podium-base[data-value-id]');
         const values = {};
         
-        podiumValues.forEach(podium => {
+        podiumBases.forEach(podium => {
             const place = podium.closest('.podium-place').dataset.place;
             const valueId = podium.dataset.valueId;
-            const valueText = podium.querySelector('span').textContent;
+            const valueText = podium.querySelector('.podium-content span').textContent;
             
             values[place] = {
                 id: valueId,
@@ -1506,11 +1980,14 @@ class ValuesInteractions {
         // Carrega valores do pódio
         if (stored.podium) {
             Object.keys(stored.podium).forEach(place => {
-                const podium = document.querySelector(`.podium-place[data-place="${place}"] .podium-value`);
+                const podium = document.querySelector(`.podium-place[data-place="${place}"] .podium-base`);
                 const valueData = stored.podium[place];
                 
                 if (podium && valueData) {
-                    podium.innerHTML = `<span>${valueData.text}</span>`;
+                    const podiumContent = podium.querySelector('.podium-content');
+                    if (podiumContent) {
+                        podiumContent.innerHTML = `<span>${valueData.text}</span>`;
+                    }
                     podium.dataset.valueId = valueData.id;
                     podium.classList.add('occupied');
                     
@@ -1542,16 +2019,65 @@ class ValuesInteractions {
     getAllValuesResponses() {
         return this.getStoredValues();
     }
+    
+    // Sistema de notificações
+    showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+        
+        // Estilos inline para a notificação
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#4caf50' : type === 'warning' ? '#ff9800' : '#2196f3'};
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 2px solid #000;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+            font-family: var(--font-comic);
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+            word-wrap: break-word;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Anima a entrada
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Remove após 3 segundos
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    document.body.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
+    }
 }
 
 // Inicializa a aplicação quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', () => {
-    new CartilhaNavigator();
+    // Inicializa as classes principais
+    const navigator = new CartilhaNavigator();
     new VisualEffects();
     new AutoconhecimentoInteractions();
     new EnergyMapInteractions();
     new CompassInteractions();
     new ValuesInteractions();
+    
+    // Ajusta layout inicial baseado no tamanho da tela
+    navigator.adjustForScreenSize();
     
     // Adiciona instruções de navegação
     console.log('📚 Cartilha Digital - Navegação:');
@@ -1559,8 +2085,18 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('← Seta esquerda: Página anterior');
     console.log('Esc: Voltar ao menu principal');
     console.log('🖱️ Use as setinhas ou clique nos indicadores para navegar!');
+    console.log('📱 Em dispositivos móveis: deslize para navegar!');
     console.log('Clique nos cards para explorar os tópicos!');
     console.log('💾 Suas respostas são salvas automaticamente no navegador!');
+    
+    // Detecta se é dispositivo touch
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        document.body.classList.add('touch-device');
+        console.log('📱 Modo touch detectado - gestos habilitados!');
+    } else {
+        document.body.classList.add('no-touch');
+        console.log('🖱️ Modo desktop detectado - hover effects habilitados!');
+    }
 });
 
 // Adiciona efeito de loading na página

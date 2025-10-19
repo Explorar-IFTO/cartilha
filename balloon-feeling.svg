@@ -1,0 +1,29 @@
+<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradiente do balão rosa -->
+  <defs>
+    <radialGradient id="pinkGrad" cx="35%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ffb3d9"/>
+      <stop offset="40%" stop-color="#ff69b4"/>
+      <stop offset="100%" stop-color="#c2185b"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Cordinha -->
+  <path d="M100 250 
+           Q110 260, 95 270 
+           Q105 280, 90 290" 
+        stroke="#8d6e63" stroke-width="2" fill="none"/>
+
+  <!-- Balão principal -->
+  <ellipse cx="100" cy="140" rx="60" ry="90" fill="url(#pinkGrad)" stroke="#c2185b" stroke-width="2"/>
+
+  <!-- Nó do balão -->
+  <path d="M90 225 Q100 235, 110 225 Q100 230, 90 225 Z"
+        fill="#c2185b" stroke="#880e4f" stroke-width="1"/>
+
+  <!-- Brilho -->
+  <ellipse cx="75" cy="90" rx="15" ry="25" fill="white" opacity="0.4"/>
+
+  <!-- Ícone de coração -->
+  <text x="100" y="150" text-anchor="middle" font-size="28" fill="#8B4513">❤️</text>
+</svg>

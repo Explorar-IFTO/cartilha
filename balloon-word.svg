@@ -1,0 +1,29 @@
+<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradiente do balão amarelo -->
+  <defs>
+    <radialGradient id="yellowGrad" cx="35%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ffff99"/>
+      <stop offset="40%" stop-color="#ffeb3b"/>
+      <stop offset="100%" stop-color="#f57f17"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Cordinha -->
+  <path d="M100 250 
+           Q110 260, 95 270 
+           Q105 280, 90 290" 
+        stroke="#8d6e63" stroke-width="2" fill="none"/>
+
+  <!-- Balão principal -->
+  <ellipse cx="100" cy="140" rx="60" ry="90" fill="url(#yellowGrad)" stroke="#f57f17" stroke-width="2"/>
+
+  <!-- Nó do balão -->
+  <path d="M90 225 Q100 235, 110 225 Q100 230, 90 225 Z"
+        fill="#f57f17" stroke="#e65100" stroke-width="1"/>
+
+  <!-- Brilho -->
+  <ellipse cx="75" cy="90" rx="15" ry="25" fill="white" opacity="0.4"/>
+
+  <!-- Ícone de pensamento -->
+  <text x="100" y="150" text-anchor="middle" font-size="28" fill="#8B4513">💭</text>
+</svg>

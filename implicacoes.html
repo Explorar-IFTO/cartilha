@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>As Implicações da Escolha - Me Deixa Pensar</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="book-container">
+        <!-- Controles de Navegação -->
+        <div class="navigation-controls">
+            <button class="nav-btn prev-btn" id="prevBtn" title="Voltar ao início" onclick="window.location.href='index.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            
+            <div class="page-indicators">
+                <span class="indicator active">🎯</span>
+            </div>
+            
+            <button class="nav-btn next-btn" id="nextBtn" title="Próxima seção" style="opacity: 0.5;" disabled>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="book">
+            <!-- Página de Implicações -->
+            <div class="page topic-page" id="implicacoes-page">
+                <div class="page-content">
+                    <div class="topic-header">
+                        <button class="back-btn" onclick="window.location.href='index.html'">← Voltar</button>
+                        <h2>🎯 As Implicações da Escolha</h2>
+                        <p class="topic-subtitle">Percebendo que esse caminho é seu</p>
+                    </div>
+                    
+                    <div class="topic-content">
+                        <div class="content-placeholder">
+                            <div class="placeholder-icon">🚧</div>
+                            <h3>Em construção...</h3>
+                            <div class="comic-warning-box">
+                                <p>Esta seção está sendo desenvolvida com muito carinho!</p>
+                            </div>
+                            
+                            <div class="comic-text-box">
+                                <p>Em breve você encontrará aqui:</p>
+                                <ul style="text-align: left; margin: 20px 0;">
+                                    <li>🎯 Entendendo as consequências das escolhas</li>
+                                    <li>🛤️ Planejando seu caminho profissional</li>
+                                    <li>⚖️ Pesando prós e contras</li>
+                                    <li>🎓 Caminhos educacionais possíveis</li>
+                                    <li>💪 Desenvolvendo habilidades necessárias</li>
+                                    <li>🌟 Criando seu plano de ação</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="comic-highlight-box">
+                                <p>💡 <strong>Dica:</strong> Complete primeiro sua jornada de <strong>Autoconhecimento</strong> e explore as <strong>Profissões</strong> para estar preparado(a) para esta seção!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
