@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Autoconhecimento - Me Deixa Pensar</title>
+    <meta name="author" content="Daniela de Sousa Liberato, Rosa Maria Machado de Sena">
+    <meta name="description" content="Autoconhecimento - EXPLORAR: Um guia para te ajudar a refletir sobre suas escolhas profissionais e projetos de vida">
+    <title>Autoconhecimento - EXPLORAR</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Comic+Neue:wght@300;400;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
@@ -157,14 +159,13 @@
                             <!-- Balões de reflexão -->
                             <div class="reflection-section">
                                 <div class="comic-highlight-box">
-                                    <p>💡 Agora, reflita por um minuto e escolha uma palavra, um sentimento e uma dúvida que vêm à sua mente quando você pensa no futuro. Escreva dentro dos respectivos balões de pensamento abaixo.</p>
+                                    <p>💡 Agora, reflita por um minuto e escolha uma palavra, um sentimento e uma dúvida que vêm à sua mente quando você pensa no futuro. Escreva dentro dos respectivos balões de fala abaixo.</p>
                                 </div>
                                 
                                 <div class="thought-bubbles-container">
                                     <div class="thought-bubble-input">
-                                        <div class="balloon-svg-container">
-                                            <img src="balloon-word.svg" alt="Balão de pensamento amarelo" class="balloon-svg">
-                                            <div class="balloon-content">
+                                        <div class="comic-speech-bubble word-bubble">
+                                            <div class="bubble-content">
                                                 <label>Uma palavra:</label>
                                                 <input type="text" id="wordInput" placeholder="Ex: esperança, medo, curiosidade..." maxlength="20">
                                             </div>
@@ -172,9 +173,8 @@
                                     </div>
                                     
                                     <div class="thought-bubble-input">
-                                        <div class="balloon-svg-container">
-                                            <img src="balloon-feeling.svg" alt="Balão de pensamento rosa" class="balloon-svg">
-                                            <div class="balloon-content">
+                                        <div class="comic-speech-bubble feeling-bubble">
+                                            <div class="bubble-content">
                                                 <label>Um sentimento:</label>
                                                 <input type="text" id="feelingInput" placeholder="Ex: ansioso, empolgado, confuso..." maxlength="20">
                                             </div>
@@ -182,9 +182,8 @@
                                     </div>
                                     
                                     <div class="thought-bubble-input">
-                                        <div class="balloon-svg-container">
-                                            <img src="balloon-doubt.svg" alt="Balão de pensamento verde" class="balloon-svg">
-                                            <div class="balloon-content">
+                                        <div class="comic-speech-bubble doubt-bubble">
+                                            <div class="bubble-content">
                                                 <label>Uma dúvida:</label>
                                                 <input type="text" id="doubtInput" placeholder="Ex: Será que vou conseguir?" maxlength="30">
                                             </div>
@@ -192,14 +191,6 @@
                                     </div>
                                 </div>
                                 
-                                <div class="reflection-summary" id="reflectionSummary" style="display: none;">
-                                    <div class="comic-speech-bubble">
-                                        <p><strong>Seu momento de reflexão:</strong></p>
-                                        <p>Palavra: <span id="summaryWord"></span></p>
-                                        <p>Sentimento: <span id="summaryFeeling"></span></p>
-                                        <p>Dúvida: <span id="summaryDoubt"></span></p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         
@@ -233,11 +224,7 @@
                                             <label>Quais são as atividades que fazem parte desse lugar?</label>
                                             <textarea id="passionInput" placeholder="Ex: tocar violão, desenhar, jogar futebol..." maxlength="200"></textarea>
                                         </div>
-                                        <div class="territory-actions">
-                                            <button class="territory-zoom-btn" data-territory="passion">
-                                                🔍 Ampliar
-                                            </button>
-                                        </div>
+                                        
                                     </div>
                                     
                                     <!-- Jardim Secreto -->
@@ -254,11 +241,7 @@
                                             <label>Quais são as atividades que você gostaria de fazer e não faz?</label>
                                             <textarea id="secretInput" placeholder="Ex: aprender a cozinhar, viajar, escrever..." maxlength="200"></textarea>
                                         </div>
-                                        <div class="territory-actions">
-                                            <button class="territory-zoom-btn" data-territory="secret">
-                                                🔍 Ampliar
-                                            </button>
-                                        </div>
+                                        
                                     </div>
                                     
                                     <!-- Montanha Íngreme -->
@@ -275,11 +258,7 @@
                                             <label>Quais são as atividades que te levam para essa montanha? Elas te ensinam algo?</label>
                                             <textarea id="mountainInput" placeholder="Ex: estudar matemática, arrumar o quarto..." maxlength="200"></textarea>
                                         </div>
-                                        <div class="territory-actions">
-                                            <button class="territory-zoom-btn" data-territory="mountain">
-                                                🔍 Ampliar
-                                            </button>
-                                        </div>
+                                        
                                     </div>
                                     
                                     <!-- Pântano -->
@@ -296,11 +275,7 @@
                                             <label>Quais são as atividades que fazem parte desse pântano?</label>
                                             <textarea id="swampInput" placeholder="Ex: assistir noticiários, fazer contas..." maxlength="200"></textarea>
                                         </div>
-                                        <div class="territory-actions">
-                                            <button class="territory-zoom-btn" data-territory="swamp">
-                                                🔍 Ampliar
-                                            </button>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -317,10 +292,6 @@
                                     <p><strong>POR QUE</strong> eu ainda faço aquilo que já sei que não gosto?</p>
                                 </div>
                                 
-                                <!-- Instrução sobre os botões de ampliar -->
-                                <div class="comic-info-box">
-                                    <p>💡 <strong>Dica:</strong> Clique no botão "🔍 Ampliar" de cada território para explorar questões de reflexão mais profundas!</p>
-                                </div>
                             </div>
                             
                             <!-- Modal de zoom -->
@@ -534,7 +505,26 @@
                             </div>
                             
                             <!-- Resumo Final -->
-                            
+                            <div class="final-summary">
+                                <div class="comic-highlight-box summary-box">
+                                    <p><strong>Pronto!</strong> Você deu um passo importante ao olhar para dentro e reconhecer seus valores, interesses e o que realmente importa na sua vida.</p>
+                                    <p>👉 <strong>Com essa clareza, você construiu uma base sólida para qualquer escolha que fizer a partir de agora.</strong></p>
+                                </div>
+                                
+                                <div class="next-step-container">
+                                    <div class="comic-speech-bubble next-step-bubble">
+                                        <p><strong>Próximo passo:</strong> Agora que você se conhece melhor, que tal explorar o mundo das profissões?</p>
+                                    </div>
+                                    
+                                    <div class="next-step-button">
+                                        <a href="profissoes.html" class="next-step-link">
+                                            <span class="link-icon">💼</span>
+                                            <span class="link-text">Explorar Profissões</span>
+                                            <span class="link-arrow">→</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
