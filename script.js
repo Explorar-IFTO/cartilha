@@ -2867,3 +2867,377 @@ function showSoftSkillConfetti(element) {
     }
 }
 
+// ===== FUNCIONALIDADES DA SEÇÃO MOCHILA =====
+
+// Função para lidar com a seleção de opções na mochila
+function handleMochilaSelection() {
+    const radioButtons = document.querySelectorAll('input[name="influencia"]');
+    const reflexaoElement = document.getElementById('reflexaoMochila');
+    
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.checked) {
+                // Mostrar reflexão genérica
+                reflexaoElement.style.display = 'block';
+                
+                // Scroll suave para a reflexão
+                setTimeout(() => {
+                    reflexaoElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'nearest' 
+                    });
+                }, 300);
+                
+                // Efeito visual de confete
+                showMochilaConfetti(this);
+                
+                // Salvar escolha no localStorage
+                localStorage.setItem('mochilaEscolha', this.value);
+                localStorage.setItem('mochilaEscolhaData', new Date().toISOString());
+            }
+        });
+    });
+}
+
+// Função para mostrar confete na seção mochila
+function showMochilaConfetti(element) {
+    for (let i = 0; i < 8; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'absolute';
+        confetti.style.width = '8px';
+        confetti.style.height = '8px';
+        confetti.style.backgroundColor = ['#4ecdc4', '#45b7d1', '#96ceb4', '#ff6b6b', '#ffd93d'][Math.floor(Math.random() * 5)];
+        confetti.style.borderRadius = '50%';
+        confetti.style.pointerEvents = 'none';
+        confetti.style.zIndex = '1000';
+        
+        const rect = element.getBoundingClientRect();
+        confetti.style.left = (rect.left + Math.random() * rect.width) + 'px';
+        confetti.style.top = (rect.top + Math.random() * rect.height) + 'px';
+        
+        document.body.appendChild(confetti);
+        
+        confetti.animate([
+            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+            { transform: `translateY(-60px) rotate(360deg)`, opacity: 0 }
+        ], {
+            duration: 1500,
+            easing: 'ease-out'
+        }).onfinish = () => {
+            confetti.remove();
+        };
+    }
+}
+
+// Função para restaurar escolha salva da mochila
+function restoreMochilaChoice() {
+    const savedChoice = localStorage.getItem('mochilaEscolha');
+    const savedDate = localStorage.getItem('mochilaEscolhaData');
+    
+    if (savedChoice && savedDate) {
+        // Verificar se a escolha não é muito antiga (opcional)
+        const choiceDate = new Date(savedDate);
+        const now = new Date();
+        const daysDiff = (now - choiceDate) / (1000 * 60 * 60 * 24);
+        
+        // Se a escolha foi feita há menos de 30 dias, restaurar
+        if (daysDiff < 30) {
+            const radioButton = document.getElementById(savedChoice);
+            if (radioButton) {
+                radioButton.checked = true;
+                
+                // Disparar evento para mostrar reflexão
+                const event = new Event('change');
+                radioButton.dispatchEvent(event);
+            }
+        }
+    }
+}
+
+// ===== FUNCIONALIDADES DA SEÇÃO PRESSÃO DE QUEM =====
+
+// Função para lidar com a seção "Pressão de Quem?"
+function handlePressaoQuem() {
+    const salvarBtn = document.getElementById('salvarPressao');
+    const textareas = document.querySelectorAll('.balao-input textarea');
+    const radioButtons = document.querySelectorAll('input[name="pressaoFinal"]');
+    
+    // Salvar respostas quando o botão for clicado
+    if (salvarBtn) {
+        salvarBtn.addEventListener('click', function() {
+            const respostas = {
+                familia: document.getElementById('pressaoFamilia').value,
+                amigos: document.getElementById('pressaoAmigos').value,
+                sociedade: document.getElementById('pressaoSociedade').value,
+                autopressao: document.getElementById('pressaoAutopressao').value,
+                pressaoFinal: document.querySelector('input[name="pressaoFinal"]:checked')?.value || ''
+            };
+            
+            // Salvar no localStorage
+            localStorage.setItem('pressaoQuemRespostas', JSON.stringify(respostas));
+            localStorage.setItem('pressaoQuemData', new Date().toISOString());
+            
+            // Feedback visual
+            showPressaoQuemConfetti(this);
+            
+            // Mudar texto do botão temporariamente
+            const originalText = this.innerHTML;
+            this.innerHTML = '<span class="btn-icon">✅</span><span class="btn-text">Salvo!</span>';
+            this.style.background = 'linear-gradient(135deg, #4caf50 0%, #66bb6a 100%)';
+            
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.style.background = 'linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%)';
+            }, 2000);
+        });
+    }
+    
+    // Auto-salvar quando o usuário digita nos textareas
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            const respostas = {
+                familia: document.getElementById('pressaoFamilia').value,
+                amigos: document.getElementById('pressaoAmigos').value,
+                sociedade: document.getElementById('pressaoSociedade').value,
+                autopressao: document.getElementById('pressaoAutopressao').value,
+                pressaoFinal: document.querySelector('input[name="pressaoFinal"]:checked')?.value || ''
+            };
+            
+            localStorage.setItem('pressaoQuemRespostas', JSON.stringify(respostas));
+        });
+    });
+    
+    // Auto-salvar quando uma opção final é selecionada
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const respostas = {
+                familia: document.getElementById('pressaoFamilia').value,
+                amigos: document.getElementById('pressaoAmigos').value,
+                sociedade: document.getElementById('pressaoSociedade').value,
+                autopressao: document.getElementById('pressaoAutopressao').value,
+                pressaoFinal: this.value
+            };
+            
+            localStorage.setItem('pressaoQuemRespostas', JSON.stringify(respostas));
+            
+            // Efeito visual
+            showPressaoQuemConfetti(this);
+        });
+    });
+}
+
+// Função para mostrar confete na seção pressão de quem
+function showPressaoQuemConfetti(element) {
+    for (let i = 0; i < 6; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'absolute';
+        confetti.style.width = '6px';
+        confetti.style.height = '6px';
+        confetti.style.backgroundColor = ['#667eea', '#764ba2', '#4ecdc4', '#ff6b6b', '#ffd93d'][Math.floor(Math.random() * 5)];
+        confetti.style.borderRadius = '50%';
+        confetti.style.pointerEvents = 'none';
+        confetti.style.zIndex = '1000';
+        
+        const rect = element.getBoundingClientRect();
+        confetti.style.left = (rect.left + Math.random() * rect.width) + 'px';
+        confetti.style.top = (rect.top + Math.random() * rect.height) + 'px';
+        
+        document.body.appendChild(confetti);
+        
+        confetti.animate([
+            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+            { transform: `translateY(-50px) rotate(360deg)`, opacity: 0 }
+        ], {
+            duration: 1200,
+            easing: 'ease-out'
+        }).onfinish = () => {
+            confetti.remove();
+        };
+    }
+}
+
+// Função para restaurar respostas salvas da seção pressão de quem
+function restorePressaoQuem() {
+    const savedData = localStorage.getItem('pressaoQuemRespostas');
+    const savedDate = localStorage.getItem('pressaoQuemData');
+    
+    if (savedData && savedDate) {
+        // Verificar se as respostas não são muito antigas (opcional)
+        const dataDate = new Date(savedDate);
+        const now = new Date();
+        const daysDiff = (now - dataDate) / (1000 * 60 * 60 * 24);
+        
+        // Se as respostas foram salvas há menos de 30 dias, restaurar
+        if (daysDiff < 30) {
+            try {
+                const respostas = JSON.parse(savedData);
+                
+                // Restaurar textareas
+                if (respostas.familia) document.getElementById('pressaoFamilia').value = respostas.familia;
+                if (respostas.amigos) document.getElementById('pressaoAmigos').value = respostas.amigos;
+                if (respostas.sociedade) document.getElementById('pressaoSociedade').value = respostas.sociedade;
+                if (respostas.autopressao) document.getElementById('pressaoAutopressao').value = respostas.autopressao;
+                
+                // Restaurar seleção final
+                if (respostas.pressaoFinal) {
+                    const radioButton = document.getElementById(respostas.pressaoFinal + 'Final');
+                    if (radioButton) {
+                        radioButton.checked = true;
+                    }
+                }
+            } catch (e) {
+                console.log('Erro ao restaurar dados da seção pressão de quem:', e);
+            }
+        }
+    }
+}
+
+// ===== FUNCIONALIDADES DA SEÇÃO O CAMINHO É SEU =====
+
+// Função para lidar com a seção "O Caminho é Seu"
+function handleCaminhoSeu() {
+    const salvarBtn = document.getElementById('salvarCaminho');
+    const textareas = document.querySelectorAll('.ponto-conteudo textarea');
+    const pontosInteresse = document.querySelectorAll('.ponto-interesse');
+    
+    // Salvar respostas quando o botão for clicado
+    if (salvarBtn) {
+        salvarBtn.addEventListener('click', function() {
+            const respostas = {
+                primeiroPasso: document.getElementById('primeiroPasso').value,
+                obstaculos: document.getElementById('obstaculos').value,
+                ferramentas: document.getElementById('ferramentas').value,
+                objetivo: document.getElementById('objetivo').value
+            };
+            
+            // Salvar no localStorage
+            localStorage.setItem('caminhoSeuRespostas', JSON.stringify(respostas));
+            localStorage.setItem('caminhoSeuData', new Date().toISOString());
+            
+            // Feedback visual
+            showCaminhoSeuConfetti(this);
+            
+            // Mudar texto do botão temporariamente
+            const originalText = this.innerHTML;
+            this.innerHTML = '<span class="btn-icon">✅</span><span class="btn-text">Caminho Salvo!</span>';
+            this.style.background = 'linear-gradient(135deg, #4caf50 0%, #66bb6a 100%)';
+            
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            }, 2000);
+        });
+    }
+    
+    // Auto-salvar quando o usuário digita nos textareas
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            const respostas = {
+                primeiroPasso: document.getElementById('primeiroPasso').value,
+                obstaculos: document.getElementById('obstaculos').value,
+                ferramentas: document.getElementById('ferramentas').value,
+                objetivo: document.getElementById('objetivo').value
+            };
+            
+            localStorage.setItem('caminhoSeuRespostas', JSON.stringify(respostas));
+        });
+    });
+    
+    // Interação com pontos da estrada SVG
+    pontosInteresse.forEach(ponto => {
+        ponto.addEventListener('click', function() {
+            const pontoData = this.getAttribute('data-ponto');
+            const pontoInteracao = document.querySelector(`[data-ponto="${pontoData}"]`);
+            
+            if (pontoInteracao) {
+                // Scroll suave para o ponto de interação
+                pontoInteracao.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+                
+                // Destacar o ponto de interação
+                pontoInteracao.style.transform = 'scale(1.05)';
+                pontoInteracao.style.boxShadow = 'var(--shadow-lg)';
+                
+                setTimeout(() => {
+                    pontoInteracao.style.transform = 'scale(1)';
+                    pontoInteracao.style.boxShadow = 'var(--shadow-md)';
+                }, 1000);
+            }
+        });
+    });
+}
+
+// Função para mostrar confete na seção caminho é seu
+function showCaminhoSeuConfetti(element) {
+    for (let i = 0; i < 10; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'absolute';
+        confetti.style.width = '8px';
+        confetti.style.height = '8px';
+        confetti.style.backgroundColor = ['#667eea', '#764ba2', '#4ecdc4', '#ff6b6b', '#ffd93d', '#96ceb4'][Math.floor(Math.random() * 6)];
+        confetti.style.borderRadius = '50%';
+        confetti.style.pointerEvents = 'none';
+        confetti.style.zIndex = '1000';
+        
+        const rect = element.getBoundingClientRect();
+        confetti.style.left = (rect.left + Math.random() * rect.width) + 'px';
+        confetti.style.top = (rect.top + Math.random() * rect.height) + 'px';
+        
+        document.body.appendChild(confetti);
+        
+        confetti.animate([
+            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+            { transform: `translateY(-80px) rotate(720deg)`, opacity: 0 }
+        ], {
+            duration: 2000,
+            easing: 'ease-out'
+        }).onfinish = () => {
+            confetti.remove();
+        };
+    }
+}
+
+// Função para restaurar respostas salvas da seção caminho é seu
+function restoreCaminhoSeu() {
+    const savedData = localStorage.getItem('caminhoSeuRespostas');
+    const savedDate = localStorage.getItem('caminhoSeuData');
+    
+    if (savedData && savedDate) {
+        // Verificar se as respostas não são muito antigas (opcional)
+        const dataDate = new Date(savedDate);
+        const now = new Date();
+        const daysDiff = (now - dataDate) / (1000 * 60 * 60 * 24);
+        
+        // Se as respostas foram salvas há menos de 30 dias, restaurar
+        if (daysDiff < 30) {
+            try {
+                const respostas = JSON.parse(savedData);
+                
+                // Restaurar textareas
+                if (respostas.primeiroPasso) document.getElementById('primeiroPasso').value = respostas.primeiroPasso;
+                if (respostas.obstaculos) document.getElementById('obstaculos').value = respostas.obstaculos;
+                if (respostas.ferramentas) document.getElementById('ferramentas').value = respostas.ferramentas;
+                if (respostas.objetivo) document.getElementById('objetivo').value = respostas.objetivo;
+            } catch (e) {
+                console.log('Erro ao restaurar dados da seção caminho é seu:', e);
+            }
+        }
+    }
+}
+
+// Inicialização quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar funcionalidades da mochila
+    handleMochilaSelection();
+    restoreMochilaChoice();
+    
+    // Inicializar funcionalidades da seção pressão de quem
+    handlePressaoQuem();
+    restorePressaoQuem();
+    
+    // Inicializar funcionalidades da seção caminho é seu
+    handleCaminhoSeu();
+    restoreCaminhoSeu();
+});

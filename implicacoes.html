@@ -3,31 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>As Implicações da Escolha - Me Deixa Pensar</title>
+    <title>As Implicações da Escolha: O Caminho É Seu - Me Deixa Pensar</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="book-container">
-        <!-- Controles de Navegação -->
-        <div class="navigation-controls">
-            <button class="nav-btn prev-btn" id="prevBtn" title="Voltar ao início" onclick="window.location.href='index.html'">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-            
-            <div class="page-indicators">
-                <span class="indicator active">🎯</span>
-            </div>
-            
-            <button class="nav-btn next-btn" id="nextBtn" title="Próxima seção" style="opacity: 0.5;" disabled>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-        </div>
-        
         <div class="book">
             <!-- Página de Implicações -->
             <div class="page topic-page" id="implicacoes-page">
@@ -39,30 +20,433 @@
                     </div>
                     
                     <div class="topic-content">
-                        <div class="content-placeholder">
-                            <div class="placeholder-icon">🚧</div>
-                            <h3>Em construção...</h3>
-                            <div class="comic-warning-box">
-                                <p>Esta seção está sendo desenvolvida com muito carinho!</p>
+                        <div class="implicacoes-main">
+                            <div class="intro-layout">
+                                <div class="intro-left">
+                                    <p class="handwriting-text intro-text-1">
+                                        Por mais que a escolha profissional seja sua, ela não acontece de forma isolada.
+                                    </p>
+                                    
+                                    <div class="comic-text-box intro-box-2">
+                                        <p>
+                                            Há influências da família, da escola, da economia, da cultura e de todo o contexto em que você vive.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="intro-right">
+                                    <div class="comic-highlight-box highlight-main">
+                                        <p>
+                                            👉 Aqui você vai refletir sobre essas pressões, entender o peso que cada uma tem na sua vida e pensar em como assumir um papel ativo nas suas decisões.
+                                        </p>
+                                    </div>
+                                    
+                                  
+                                </div>
                             </div>
                             
-                            <div class="comic-text-box">
-                                <p>Em breve você encontrará aqui:</p>
-                                <ul style="text-align: left; margin: 20px 0;">
-                                    <li>🎯 Entendendo as consequências das escolhas</li>
-                                    <li>🛤️ Planejando seu caminho profissional</li>
-                                    <li>⚖️ Pesando prós e contras</li>
-                                    <li>🎓 Caminhos educacionais possíveis</li>
-                                    <li>💪 Desenvolvendo habilidades necessárias</li>
-                                    <li>🌟 Criando seu plano de ação</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="comic-highlight-box">
-                                <p>💡 <strong>Dica:</strong> Complete primeiro sua jornada de <strong>Autoconhecimento</strong> e explore as <strong>Profissões</strong> para estar preparado(a) para esta seção!</p>
+                            <!-- Stickers decorativos -->
+                            <div class="page-stickers">
+                                <div class="page-sticker sticker-target">🎯</div>
+                                <div class="page-sticker sticker-balance">⚖️</div>
+                                <div class="page-sticker sticker-compass">🧭</div>
+                                <div class="page-sticker sticker-lightbulb">💡</div>
                             </div>
                         </div>
-                    </div>
+                        
+                        <!-- Seção: A Mochila -->
+                        <div class="mochila-section">
+                            <div class="comic-title-box section-title-enhanced">
+                                <h3>🎒 O que mais influencia minhas escolhas? (A MOCHILA)</h3>
+                                <div class="section-stickers">
+                                    <div class="section-sticker sticker-backpack">🎒</div>
+                                    <div class="section-sticker sticker-lightbulb">💡</div>
+                                    <div class="section-sticker sticker-question">❓</div>
+                                </div>
+                            </div>
+                            
+                            <p class="handwriting-text mochila-intro">A ideia de que você "nasce com uma vocação" é um mito. Quase tudo o que admiramos em alguém vem de prática, estudo e apoio.</p>
+                            
+                            <div class="comic-text-box mochila-explicacao">
+                                <p>Suas escolhas também são atravessadas pelo contexto em que você vive: família, escola, economia, cultura, tempo, etc.</p>
+                            </div>
+                            
+                            <div class="comic-highlight-box mochila-destaque">
+                                <p>👉 Vamos pensar no que você carrega na sua "mochila"?</p>
+                            </div>
+                            
+                            <!-- Personagem com Mochila -->
+                            <div class="personagem-mochila-container">
+                                <div class="personagem-mochila">
+                                    <div class="personagem-avatar">🧑‍🎓</div>
+                                    <div class="mochila-visual">🎒</div>
+                                    <div class="mochila-destaque"></div>
+                                </div>
+                                <div class="personagem-fala">
+                                    <div class="comic-speech-bubble personagem-bubble">
+                                        <p><strong>Olha só o que eu carrego nas minhas costas!</strong></p>
+                                        <p>Cada coisa que influencia minhas escolhas tem um peso diferente...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Exercício de Escolha -->
+                            <div class="exercicio-mochila">
+                                <div class="comic-highlight-box exercicio-titulo">
+                                    <div class="titulo-com-icone">
+                                        <span class="icone-lampada">💡</span>
+                                        <h4>Marque a opção que mais pesa na hora de decidir sobre o seu futuro:</h4>
+                                    </div>
+                                </div>
+                                
+                                <div class="opcoes-mochila">
+                                    <div class="opcao-mochila" data-opcao="familia">
+                                        <input type="radio" id="familia" name="influencia" value="familia">
+                                        <label for="familia">
+                                            <span class="opcao-texto">Minha família e o que ela espera de mim</span>
+                                            <span class="opcao-emoji">👨‍👩‍👧‍👦</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="opcao-mochila" data-opcao="financeira">
+                                        <input type="radio" id="financeira" name="influencia" value="financeira">
+                                        <label for="financeira">
+                                            <span class="opcao-texto">A situação financeira da minha família</span>
+                                            <span class="opcao-emoji">💰</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="opcao-mochila" data-opcao="regiao">
+                                        <input type="radio" id="regiao" name="influencia" value="regiao">
+                                        <label for="regiao">
+                                            <span class="opcao-texto">As oportunidades de estudo e de trabalho na região onde moro</span>
+                                            <span class="opcao-emoji">🗺️</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="opcao-mochila" data-opcao="escola">
+                                        <input type="radio" id="escola" name="influencia" value="escola">
+                                        <label for="escola">
+                                            <span class="opcao-texto">A escola e os professores que tenho</span>
+                                            <span class="opcao-emoji">🏫</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="opcao-mochila" data-opcao="redes">
+                                        <input type="radio" id="redes" name="influencia" value="redes">
+                                        <label for="redes">
+                                            <span class="opcao-texto">O que vejo nas redes sociais / internet</span>
+                                            <span class="opcao-emoji">📱</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="opcao-mochila" data-opcao="valores">
+                                        <input type="radio" id="valores" name="influencia" value="valores">
+                                        <label for="valores">
+                                            <span class="opcao-texto">Meus valores e crenças pessoais</span>
+                                            <span class="opcao-emoji">💎</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="comic-info-box mochila-importante">
+                                    <p><strong>IMPORTANTE:</strong> Não há resposta certa, nem errada. Apenas escolha aquela alternativa que mais faz sentido para você.</p>
+                                </div>
+                                
+                                <!-- Reflexão sobre a escolha -->
+                                <div class="reflexao-mochila" id="reflexaoMochila" style="display: none;">
+                                    <div class="comic-speech-bubble reflexao-bubble">
+                                        <div class="personagem-reflexao">
+                                            <div class="personagem-avatar">🧑‍🎓</div>
+                                            <div class="personagem-fala">
+                                                <p id="reflexaoTexto">Agora que você identificou o que mais pesa na sua mochila, pense: como isso pode te ajudar a tomar decisões mais conscientes?</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Seção: Pressão de Quem? -->
+                        <div class="pressao-quem-section">
+                            <div class="comic-title-box section-title-enhanced">
+                                <h3>💭 Pressão de Quem?</h3>
+                                <div class="section-stickers">
+                                    <div class="section-sticker sticker-family">👨‍👩‍👧‍👦</div>
+                                    <div class="section-sticker sticker-friends">👥</div>
+                                    <div class="section-sticker sticker-society">🌍</div>
+                                </div>
+                            </div>
+                            
+                            <p class="handwriting-text pressao-quem-intro">É normal sentir a pressão da família, dos amigos, ou da própria sociedade na hora de escolher uma profissão. Mas a sua vida é só sua.</p>
+                            
+                            <div class="comic-highlight-box pressao-quem-destaque">
+                                <p>Abaixo, você verá balões de fala. Pense em cada uma das pressões e anote o que vier à mente.</p>
+                            </div>
+                            
+                            <!-- Balões de Fala -->
+                            <div class="baloes-pressao-container">
+                                <!-- Balão 1: Família -->
+                                <div class="balao-pressao" data-pressao="familia">
+                                    <div class="balao-header">
+                                        <div class="balao-ilustracao">👨‍👩‍👧‍👦</div>
+                                        <div class="balao-titulo">Família</div>
+                                    </div>
+                                    <div class="balao-conteudo">
+                                        <div class="balao-pergunta">
+                                            <p><strong>Qual a pressão que a sua família coloca em você?</strong></p>
+                                        </div>
+                                        <div class="balao-input">
+                                            <textarea id="pressaoFamilia" placeholder="Descreva as pressões que você sente da sua família..." maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Balão 2: Amigos -->
+                                <div class="balao-pressao" data-pressao="amigos">
+                                    <div class="balao-header">
+                                        <div class="balao-ilustracao">👥</div>
+                                        <div class="balao-titulo">Amigos/Turma</div>
+                                    </div>
+                                    <div class="balao-conteudo">
+                                        <div class="balao-pergunta">
+                                            <p><strong>Qual a pressão que seus amigos ou a sua turma colocam em você?</strong></p>
+                                        </div>
+                                        <div class="balao-input">
+                                            <textarea id="pressaoAmigos" placeholder="Descreva as pressões que você sente dos seus amigos..." maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Balão 3: Sociedade -->
+                                <div class="balao-pressao" data-pressao="sociedade">
+                                    <div class="balao-header">
+                                        <div class="balao-ilustracao">🌍</div>
+                                        <div class="balao-titulo">Sociedade</div>
+                                    </div>
+                                    <div class="balao-conteudo">
+                                        <div class="balao-pergunta">
+                                            <p><strong>Qual a pressão que a sociedade coloca em você?</strong></p>
+                                        </div>
+                                        <div class="balao-input">
+                                            <textarea id="pressaoSociedade" placeholder="Descreva as pressões que você sente da sociedade..." maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Balão 4: Auto-pressão -->
+                                <div class="balao-pressao" data-pressao="autopressao">
+                                    <div class="balao-header">
+                                        <div class="balao-ilustracao">🤔</div>
+                                        <div class="balao-titulo">Você Mesmo(a)</div>
+                                    </div>
+                                    <div class="balao-conteudo">
+                                        <div class="balao-pergunta">
+                                            <p><strong>Qual a pressão que você coloca em si mesmo(a)?</strong></p>
+                                        </div>
+                                        <div class="balao-input">
+                                            <textarea id="pressaoAutopressao" placeholder="Descreva as pressões que você mesmo(a) se coloca..." maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pergunta Final -->
+                            <div class="pergunta-final-pressao">
+                                <div class="comic-highlight-box pergunta-final-box">
+                                    <h4>🎯 De todas essas pressões, qual é a que mais pesa para você?</h4>
+                                    <div class="opcoes-pressao-final">
+                                        <div class="opcao-pressao-final">
+                                            <input type="radio" id="familiaFinal" name="pressaoFinal" value="familia">
+                                            <label for="familiaFinal">
+                                                <span class="opcao-emoji">👨‍👩‍👧‍👦</span>
+                                                <span class="opcao-texto">Família</span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="opcao-pressao-final">
+                                            <input type="radio" id="amigosFinal" name="pressaoFinal" value="amigos">
+                                            <label for="amigosFinal">
+                                                <span class="opcao-emoji">👥</span>
+                                                <span class="opcao-texto">Amigos/Turma</span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="opcao-pressao-final">
+                                            <input type="radio" id="sociedadeFinal" name="pressaoFinal" value="sociedade">
+                                            <label for="sociedadeFinal">
+                                                <span class="opcao-emoji">🌍</span>
+                                                <span class="opcao-texto">Sociedade</span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="opcao-pressao-final">
+                                            <input type="radio" id="autopressaoFinal" name="pressaoFinal" value="autopressao">
+                                            <label for="autopressaoFinal">
+                                                <span class="opcao-emoji">🤔</span>
+                                                <span class="opcao-texto">Você Mesmo(a)</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Botão de Salvar -->
+                            <div class="salvar-pressao-container">
+                                <button class="salvar-pressao-btn" id="salvarPressao">
+                                    <span class="btn-icon">💾</span>
+                                    <span class="btn-text">Salvar Minhas Reflexões</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Seção: O Caminho é Seu -->
+                        <div class="caminho-seu-section">
+                            <div class="comic-title-box section-title-enhanced">
+                                <h3>🛤️ O Caminho é Seu</h3>
+                                <div class="section-stickers">
+                                    <div class="section-sticker sticker-road">🛤️</div>
+                                    <div class="section-sticker sticker-target">🎯</div>
+                                    <div class="section-sticker sticker-compass">🧭</div>
+                                </div>
+                            </div>
+                            
+                            <p class="handwriting-text caminho-intro">Agora, conecte tudo o que descobriu até aqui: quem você é, as profissões que explorou e as pressões que percebeu. Se necessário, revisite suas anotações.</p>
+                            
+                            <div class="comic-highlight-box caminho-destaque">
+                                <p>👉 Sua escolha é um direito. Com consciência da sua história e do mundo ao redor, você pode trilhar o seu caminho.</p>
+                            </div>
+                            
+                            <!-- Visual da Estrada -->
+                            <div class="estrada-container">
+                                <div class="estrada-visual">
+                                    <!-- Estrada SVG -->
+                                    <svg class="estrada-svg" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                                        <!-- Céu -->
+                                        <defs>
+                                            <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+                                                <stop offset="100%" style="stop-color:#E0F6FF;stop-opacity:1" />
+                                            </linearGradient>
+                                            <linearGradient id="roadGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" style="stop-color:#696969;stop-opacity:1" />
+                                                <stop offset="100%" style="stop-color:#2F2F2F;stop-opacity:1" />
+                                            </linearGradient>
+                                        </defs>
+                                        
+                                        <!-- Céu -->
+                                        <rect width="800" height="200" fill="url(#skyGradient)"/>
+                                        
+                                        <!-- Montanhas ao fundo -->
+                                        <polygon points="0,150 100,80 200,120 300,60 400,100 500,40 600,90 700,50 800,100 800,200 0,200" fill="#8B7355" opacity="0.7"/>
+                                        
+                                        <!-- Estrada -->
+                                        <path d="M 50 250 Q 200 200 400 180 T 750 160" stroke="url(#roadGradient)" stroke-width="60" fill="none"/>
+                                        <path d="M 50 250 Q 200 200 400 180 T 750 160" stroke="#FFD700" stroke-width="4" fill="none" stroke-dasharray="10,5"/>
+                                        
+                                        <!-- Linha do horizonte -->
+                                        <line x1="0" y1="200" x2="800" y2="200" stroke="#8B7355" stroke-width="2"/>
+                                        
+                                        <!-- Sol -->
+                                        <circle cx="650" cy="60" r="25" fill="#FFD700"/>
+                                        <circle cx="650" cy="60" r="20" fill="#FFA500"/>
+                                        
+                                        <!-- Pontos de interesse na estrada -->
+                                        <!-- Primeiro Passo (início) -->
+                                        <circle cx="100" cy="240" r="8" fill="#4ECDC4" class="ponto-interesse" data-ponto="primeiro-passo"/>
+                                        <text x="100" y="230" text-anchor="middle" class="ponto-label">O Primeiro Passo</text>
+                                        
+                                        <!-- Obstáculos (meio) -->
+                                        <circle cx="300" cy="200" r="8" fill="#FF6B6B" class="ponto-interesse" data-ponto="obstaculos"/>
+                                        <text x="300" y="190" text-anchor="middle" class="ponto-label">Meus Obstáculos</text>
+                                        
+                                        <!-- Ferramentas (meio-caminho) -->
+                                        <circle cx="500" cy="180" r="8" fill="#96CEB4" class="ponto-interesse" data-ponto="ferramentas"/>
+                                        <text x="500" y="170" text-anchor="middle" class="ponto-label">Minhas Ferramentas</text>
+                                        
+                                        <!-- Objetivo (horizonte) -->
+                                        <circle cx="700" cy="160" r="8" fill="#FFD93D" class="ponto-interesse" data-ponto="objetivo"/>
+                                        <text x="700" y="150" text-anchor="middle" class="ponto-label">Meu Objetivo</text>
+                                    </svg>
+                                </div>
+                                
+                                <!-- Pontos de Interação -->
+                                <div class="pontos-interacao">
+                                    <!-- O Primeiro Passo -->
+                                    <div class="ponto-interacao" data-ponto="primeiro-passo">
+                                        <div class="ponto-header">
+                                            <div class="ponto-emoji">👣</div>
+                                            <h4>O Primeiro Passo</h4>
+                                        </div>
+                                        <div class="ponto-conteudo">
+                                            <p><strong>Qual a primeira ação que vou tomar em direção ao meu objetivo?</strong></p>
+                                            <textarea id="primeiroPasso" placeholder="Descreva qual será seu primeiro passo..." maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Meus Obstáculos -->
+                                    <div class="ponto-interacao" data-ponto="obstaculos">
+                                        <div class="ponto-header">
+                                            <div class="ponto-emoji">🪨</div>
+                                            <h4>Meus Obstáculos</h4>
+                                        </div>
+                                        <div class="ponto-conteudo">
+                                            <p><strong>Quais são minhas principais dúvidas, medos ou desafios para alcançar esse objetivo?</strong></p>
+                                            <textarea id="obstaculos" placeholder="Descreva seus principais obstáculos..." maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Minhas Ferramentas -->
+                                    <div class="ponto-interacao" data-ponto="ferramentas">
+                                        <div class="ponto-header">
+                                            <div class="ponto-emoji">🛠️</div>
+                                            <h4>Minhas Ferramentas</h4>
+                                        </div>
+                                        <div class="ponto-conteudo">
+                                            <p><strong>O que pode me ajudar a superar esses obstáculos?</strong></p>
+                                            <textarea id="ferramentas" placeholder="Descreva suas ferramentas e recursos..." maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Meu Objetivo -->
+                                    <div class="ponto-interacao" data-ponto="objetivo">
+                                        <div class="ponto-header">
+                                            <div class="ponto-emoji">🎯</div>
+                                            <h4>Meu Objetivo</h4>
+                                        </div>
+                                        <div class="ponto-conteudo">
+                                            <p><strong>O que você quer alcançar no futuro próximo?</strong></p>
+                                            <textarea id="objetivo" placeholder="Descreva seu objetivo (ex.: escolher uma área de estudo, pesquisar uma profissão)..." maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Botão de Salvar -->
+                            <div class="salvar-caminho-container">
+                                <button class="salvar-caminho-btn" id="salvarCaminho">
+                                    <span class="btn-icon">💾</span>
+                                    <span class="btn-text">Salvar Meu Caminho</span>
+                                </button>
+                            </div>
+                            
+                            <!-- Reflexão Final -->
+                            <div class="reflexao-final-caminho">
+                                <div class="comic-highlight-box reflexao-final-box">
+                                    <h4>🌟 Reflexão Final</h4>
+                                    <p><strong>Pronto!</strong> Você reconheceu as pressões externas, entendeu melhor o seu contexto e começou a desenhar seu próprio caminho.</p>
+                                    
+                                    <div class="comic-text-box reflexao-destaque">
+                                        <p>👉 <strong>Mesmo que ainda não tenha uma decisão final, você já tem mais clareza para pensar sobre suas escolhas de forma crítica e se colocar como protagonista da sua história.</strong></p>
+                                    </div>
+                                    
+                                    <div class="comic-speech-bubble reflexao-conclusao">
+                                        <p>Que este espaço siga sendo um apoio sempre que você quiser parar, pensar e organizar suas ideias. Volte quando sentir necessidade: o importante é dar um passo de cada vez e reconhecer que suas escolhas fazem parte de um processo.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
                 </div>
             </div>
         </div>
