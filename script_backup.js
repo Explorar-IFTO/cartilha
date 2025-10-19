@@ -2352,69 +2352,349 @@ class MitosVerdadesCarousel {
     }
 }
 
-// Função para alternar exemplos de soft skills
-function toggleExample(skillName) {
-    const exampleElement = document.getElementById(`exemplo-${skillName}`);
-    const button = event.target.closest('.example-btn');
-    const buttonText = button.querySelector('.btn-text');
-    const buttonIcon = button.querySelector('.btn-icon');
+// Sistema de Gerenciamento da Análise de Profissões
+class AnaliseProfissoesManager {
+    constructor() {
+        this.container = document.getElementById('analiseProfissoesContainer');
+        this.opcoesData = {
+            desafios: {
+                'muitas-horas': 'Muitas horas de estudo',
+                'poucas-vagas': 'Poucas vagas de emprego',
+                'exige-contatos': 'Exige bons contatos'
+            },
+            acesso: {
+                'quase-todos': 'Quase todo mundo',
+                'mais-recursos': 'Só quem tem mais recursos',
+                'depende-regiao': 'Depende da região onde vive'
+            },
+            futuro: {
+                'crescer-muito': 'Crescer muito',
+                'mudar-tecnologia': 'Mudar bastante por causa da tecnologia',
+                'risco-desaparecer': 'Correr risco de desaparecer'
+            }
+        };
+        
+        this.init();
+    }
     
-    if (exampleElement.style.display === 'none' || exampleElement.style.display === '') {
-        // Mostrar exemplo
-        exampleElement.style.display = 'block';
-        buttonText.textContent = 'Ocultar exemplo';
-        buttonIcon.textContent = '👆';
+    init() {
+        this.loadTopProfissoes();
+        this.setupEventListeners();
+    }
+    
+    loadTopProfissoes() {
+        const stored = localStorage.getItem('topProfissoesData');
+        if (stored) {
+            const data = JSON.parse(stored);
+            this.createAnaliseCards(data);
+        } else {
+            this.showEmptyState();
+        }
+    }
+    
+    createAnaliseCards(data) {
+        this.container.innerHTML = '';
         
-        // Efeito visual
-        button.style.background = 'linear-gradient(135deg, #45b7d1, #96ceb4)';
+        for (let i = 1; i <= 3; i++) {
+            const profissao = data[`profissao${i}`];
+            const motivo = data[`motivo${i}`];
+            
+            if (profissao && motivo) {
+                const card = this.createProfissaoCard(i, profissao, motivo);
+                this.container.appendChild(card);
+            }
+        }
         
-        // Scroll suave para o exemplo
-        exampleElement.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'nearest' 
+        if (this.container.children.length === 0) {
+            this.showEmptyState();
+        }
+    }
+    
+    createProfissaoCard(number, profissao, motivo) {
+        const card = document.createElement('div');
+        card.className = 'profissao-analise-card';
+        card.setAttribute('data-profissao', number);
+        
+        card.innerHTML = `
+            <div class="profissao-analise-header">
+                <div class="profissao-analise-number">${number}</div>
+                <h3 class="profissao-analise-title">${profissao}</h3>
+            </div>
+            
+            <div class="analise-campos">
+                <div class="analise-campo">
+                    <h6>Desafios:</h6>
+                    <div class="analise-campo-opcoes">
+                        <div class="analise-campo-opcao" data-categoria="desafios" data-valor="muitas-horas">Muitas horas de estudo</div>
+                        <div class="analise-campo-opcao" data-categoria="desafios" data-valor="poucas-vagas">Poucas vagas de emprego</div>
+                        <div class="analise-campo-opcao" data-categoria="desafios" data-valor="exige-contatos">Exige bons contatos</div>
+                    </div>
+                </div>
+                
+                <div class="analise-campo">
+                    <h6>Acesso:</h6>
+                    <div class="analise-campo-opcoes">
+                        <div class="analise-campo-opcao" data-categoria="acesso" data-valor="quase-todos">Quase todo mundo</div>
+                        <div class="analise-campo-opcao" data-categoria="acesso" data-valor="mais-recursos">Só quem tem mais recursos</div>
+                        <div class="analise-campo-opcao" data-categoria="acesso" data-valor="depende-regiao">Depende da região onde vive</div>
+                    </div>
+                </div>
+                
+                <div class="analise-campo">
+                    <h6>Futuro:</h6>
+                    <div class="analise-campo-opcoes">
+                        <div class="analise-campo-opcao" data-categoria="futuro" data-valor="crescer-muito">Crescer muito</div>
+                        <div class="analise-campo-opcao" data-categoria="futuro" data-valor="mudar-tecnologia">Mudar bastante por causa da tecnologia</div>
+                        <div class="analise-campo-opcao" data-categoria="futuro" data-valor="risco-desaparecer">Correr risco de desaparecer</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        return card;
+    }
+    
+    showEmptyState() {
+        this.container.innerHTML = `
+            <div class="comic-info-box empty-state">
+                <p>📝 <strong>Preencha primeiro o Top 3 Profissões</strong> para ver a análise aqui!</p>
+            </div>
+        `;
+    }
+    
+    setupEventListeners() {
+        // Event delegation para opções de análise
+        this.container.addEventListener('click', (e) => {
+            if (e.target.classList.contains('analise-campo-opcao')) {
+                this.handleOpcaoClick(e.target);
+            }
+        });
+    }
+    
+    handleOpcaoClick(element) {
+        const card = element.closest('.profissao-analise-card');
+        const profissaoNumber = card.getAttribute('data-profissao');
+        const categoria = element.getAttribute('data-categoria');
+        const valor = element.getAttribute('data-valor');
+        
+        // Remove seleção anterior da mesma categoria
+        const campo = element.closest('.analise-campo');
+        const opcoesAnteriores = campo.querySelectorAll('.analise-campo-opcao');
+        opcoesAnteriores.forEach(opcao => {
+            opcao.classList.remove('selected');
         });
         
-        // Confete para celebrar
-        showSoftSkillConfetti(button);
+        // Adiciona seleção atual
+        element.classList.add('selected');
         
-    } else {
-        // Ocultar exemplo
-        exampleElement.style.display = 'none';
-        buttonText.textContent = 'Clique para ver o exemplo';
-        buttonIcon.textContent = '👆';
+        // Salva a escolha
+        this.saveAnaliseChoice(profissaoNumber, categoria, valor);
         
-        // Restaurar cor original
-        button.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
+        // Feedback visual
+        this.showSelectionFeedback(element);
+    }
+    
+    saveAnaliseChoice(profissaoNumber, categoria, valor) {
+        const key = `analiseProfissao${profissaoNumber}`;
+        let data = JSON.parse(localStorage.getItem(key) || '{}');
+        
+        data[categoria] = valor;
+        localStorage.setItem(key, JSON.stringify(data));
+    }
+    
+    showSelectionFeedback(element) {
+        // Efeito de confete pequeno
+        for (let i = 0; i < 3; i++) {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'absolute';
+            confetti.style.width = '4px';
+            confetti.style.height = '4px';
+            confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7d1'][Math.floor(Math.random() * 3)];
+            confetti.style.borderRadius = '50%';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.zIndex = '1000';
+            
+            const rect = element.getBoundingClientRect();
+            confetti.style.left = (rect.left + Math.random() * rect.width) + 'px';
+            confetti.style.top = (rect.top + Math.random() * rect.height) + 'px';
+            
+            document.body.appendChild(confetti);
+            
+            confetti.animate([
+                { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                { transform: `translateY(-30px) rotate(180deg)`, opacity: 0 }
+            ], {
+                duration: 800,
+                easing: 'ease-out'
+            }).onfinish = () => {
+                confetti.remove();
+            };
+        }
     }
 }
 
-// Função para mostrar confete nas soft skills
-function showSoftSkillConfetti(element) {
-    for (let i = 0; i < 5; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.position = 'absolute';
-        confetti.style.width = '6px';
-        confetti.style.height = '6px';
-        confetti.style.backgroundColor = ['#4ecdc4', '#45b7d1', '#96ceb4', '#ff6b6b'][Math.floor(Math.random() * 4)];
-        confetti.style.borderRadius = '50%';
-        confetti.style.pointerEvents = 'none';
-        confetti.style.zIndex = '1000';
+// Inicializa o sistema quando a página carrega
+document.addEventListener('DOMContentLoaded', () => {
+    // Verifica se estamos na página de profissões
+    if (document.querySelector('.mitos-carousel-container')) {
+        console.log('Initializing carousel');
+        new MitosVerdadesCarousel();
+    }
+    
+    // Inicializa o sistema Top 3 Profissões
+    if (document.querySelector('.top-profissoes-section')) {
+        console.log('Initializing Top 3 Profissões');
+        new TopProfissoesManager();
+    }
+    
+    // Inicializa o sistema de Análise de Profissões
+    if (document.querySelector('.analise-profissoes-section')) {
+        console.log('Initializing Análise de Profissões');
+        new AnaliseProfissoesManager();
+    }
+});
+
+// Sistema de Gerenciamento do Top 3 Profissões
+class TopProfissoesManager {
+    constructor() {
+        this.form = document.getElementById('topProfissoesForm');
+        this.saveBtn = document.getElementById('saveTopProfissoes');
+        this.resumoEscolhas = document.getElementById('resumoEscolhas');
+        this.resumoLista = document.getElementById('resumoLista');
         
-        const rect = element.getBoundingClientRect();
-        confetti.style.left = (rect.left + Math.random() * rect.width) + 'px';
-        confetti.style.top = (rect.top + Math.random() * rect.height) + 'px';
+        this.init();
+    }
+    
+    init() {
+        this.loadStoredData();
+        this.setupEventListeners();
+    }
+    
+    setupEventListeners() {
+        // Botão de salvar
+        if (this.saveBtn) {
+            this.saveBtn.addEventListener('click', () => {
+                this.saveData();
+            });
+        }
         
-        document.body.appendChild(confetti);
-        
-        confetti.animate([
-            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-            { transform: `translateY(-40px) rotate(180deg)`, opacity: 0 }
-        ], {
-            duration: 1000,
-            easing: 'ease-out'
-        }).onfinish = () => {
-            confetti.remove();
+        // Auto-save nos campos
+        const inputs = this.form.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                this.saveData();
+            });
+        });
+    }
+    
+    saveData() {
+        const data = {
+            profissao1: document.getElementById('profissao1').value,
+            motivo1: document.getElementById('motivo1').value,
+            profissao2: document.getElementById('profissao2').value,
+            motivo2: document.getElementById('motivo2').value,
+            profissao3: document.getElementById('profissao3').value,
+            motivo3: document.getElementById('motivo3').value
         };
+        
+        // Salva no localStorage
+        localStorage.setItem('topProfissoesData', JSON.stringify(data));
+        
+        // Atualiza o resumo
+        this.updateResumo(data);
+        
+        // Feedback visual
+        this.showSaveFeedback();
+    }
+    
+    loadStoredData() {
+        const stored = localStorage.getItem('topProfissoesData');
+        if (stored) {
+            const data = JSON.parse(stored);
+            
+            document.getElementById('profissao1').value = data.profissao1 || '';
+            document.getElementById('motivo1').value = data.motivo1 || '';
+            document.getElementById('profissao2').value = data.profissao2 || '';
+            document.getElementById('motivo2').value = data.motivo2 || '';
+            document.getElementById('profissao3').value = data.profissao3 || '';
+            document.getElementById('motivo3').value = data.motivo3 || '';
+            
+            // Atualiza o resumo se houver dados
+            if (this.hasData(data)) {
+                this.updateResumo(data);
+            }
+        }
+    }
+    
+    hasData(data) {
+        return data.profissao1 || data.profissao2 || data.profissao3;
+    }
+    
+    updateResumo(data) {
+        const resumoItems = [];
+        
+        for (let i = 1; i <= 3; i++) {
+            const profissao = data[`profissao${i}`];
+            const motivo = data[`motivo${i}`];
+            
+            if (profissao && motivo) {
+                resumoItems.push(`
+                    <div class="resumo-item">
+                        <h5>${i}º lugar: ${profissao}</h5>
+                        <p>${motivo}</p>
+                    </div>
+                `);
+            }
+        }
+        
+        if (resumoItems.length > 0) {
+            this.resumoLista.innerHTML = resumoItems.join('');
+            this.resumoEscolhas.style.display = 'block';
+        } else {
+            this.resumoEscolhas.style.display = 'none';
+        }
+    }
+    
+    showSaveFeedback() {
+        // Efeito visual de salvamento
+        this.saveBtn.style.transform = 'scale(0.95)';
+        this.saveBtn.style.background = 'linear-gradient(135deg, #45b7d1, #96ceb4)';
+        
+        setTimeout(() => {
+            this.saveBtn.style.transform = 'scale(1)';
+            this.saveBtn.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
+        }, 200);
+        
+        // Confete para celebrar
+        this.showConfetti();
+    }
+    
+    showConfetti() {
+        for (let i = 0; i < 8; i++) {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.width = '6px';
+            confetti.style.height = '6px';
+            confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][Math.floor(Math.random() * 4)];
+            confetti.style.borderRadius = '50%';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.zIndex = '1000';
+            
+            confetti.style.left = Math.random() * window.innerWidth + 'px';
+            confetti.style.top = '-10px';
+            
+            document.body.appendChild(confetti);
+            
+            confetti.animate([
+                { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                { transform: `translateY(${window.innerHeight + 100}px) rotate(360deg)`, opacity: 0 }
+            ], {
+                duration: 2000,
+                easing: 'ease-out'
+            }).onfinish = () => {
+                confetti.remove();
+            };
+        }
     }
 }
 
@@ -2598,272 +2878,3 @@ class AnaliseProfissoesManager {
         }
     }
 }
-
-// Função para alternar exemplos de soft skills
-function toggleExample(skillName) {
-    const exampleElement = document.getElementById(`exemplo-${skillName}`);
-    const button = event.target.closest('.example-btn');
-    const buttonText = button.querySelector('.btn-text');
-    const buttonIcon = button.querySelector('.btn-icon');
-    
-    if (exampleElement.style.display === 'none' || exampleElement.style.display === '') {
-        // Mostrar exemplo
-        exampleElement.style.display = 'block';
-        buttonText.textContent = 'Ocultar exemplo';
-        buttonIcon.textContent = '👆';
-        
-        // Efeito visual
-        button.style.background = 'linear-gradient(135deg, #45b7d1, #96ceb4)';
-        
-        // Scroll suave para o exemplo
-        exampleElement.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'nearest' 
-        });
-        
-        // Confete para celebrar
-        showSoftSkillConfetti(button);
-        
-    } else {
-        // Ocultar exemplo
-        exampleElement.style.display = 'none';
-        buttonText.textContent = 'Clique para ver o exemplo';
-        buttonIcon.textContent = '👆';
-        
-        // Restaurar cor original
-        button.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
-    }
-}
-
-// Função para mostrar confete nas soft skills
-function showSoftSkillConfetti(element) {
-    for (let i = 0; i < 5; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.position = 'absolute';
-        confetti.style.width = '6px';
-        confetti.style.height = '6px';
-        confetti.style.backgroundColor = ['#4ecdc4', '#45b7d1', '#96ceb4', '#ff6b6b'][Math.floor(Math.random() * 4)];
-        confetti.style.borderRadius = '50%';
-        confetti.style.pointerEvents = 'none';
-        confetti.style.zIndex = '1000';
-        
-        const rect = element.getBoundingClientRect();
-        confetti.style.left = (rect.left + Math.random() * rect.width) + 'px';
-        confetti.style.top = (rect.top + Math.random() * rect.height) + 'px';
-        
-        document.body.appendChild(confetti);
-        
-        confetti.animate([
-            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-            { transform: `translateY(-40px) rotate(180deg)`, opacity: 0 }
-        ], {
-            duration: 1000,
-            easing: 'ease-out'
-        }).onfinish = () => {
-            confetti.remove();
-        };
-    }
-}
-
-// Inicializa o sistema quando a página carrega
-document.addEventListener('DOMContentLoaded', () => {
-    // Verifica se estamos na página de profissões
-    if (document.querySelector('.mitos-carousel-container')) {
-        console.log('Initializing carousel');
-        new MitosVerdadesCarousel();
-    }
-    
-    // Inicializa o sistema Top 3 Profissões
-    if (document.querySelector('.top-profissoes-section')) {
-        console.log('Initializing Top 3 Profissões');
-        new TopProfissoesManager();
-    }
-    
-    // Inicializa o sistema de Análise de Profissões
-    if (document.querySelector('.analise-profissoes-section')) {
-        console.log('Initializing Análise de Profissões');
-        new AnaliseProfissoesManager();
-    }
-});
-
-// Sistema de Gerenciamento do Top 3 Profissões
-class TopProfissoesManager {
-    constructor() {
-        this.form = document.getElementById('topProfissoesForm');
-        this.saveBtn = document.getElementById('saveTopProfissoes');
-        
-        this.init();
-    }
-    
-    init() {
-        this.loadStoredData();
-        this.setupEventListeners();
-    }
-    
-    setupEventListeners() {
-        // Botão de salvar
-        if (this.saveBtn) {
-            this.saveBtn.addEventListener('click', () => {
-                this.saveData();
-            });
-        }
-        
-        // Auto-save nos campos
-        const inputs = this.form.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('input', () => {
-                this.saveData();
-            });
-        });
-    }
-    
-    saveData() {
-        const data = {
-            profissao1: document.getElementById('profissao1').value,
-            motivo1: document.getElementById('motivo1').value,
-            profissao2: document.getElementById('profissao2').value,
-            motivo2: document.getElementById('motivo2').value,
-            profissao3: document.getElementById('profissao3').value,
-            motivo3: document.getElementById('motivo3').value
-        };
-        
-        // Salva no localStorage
-        localStorage.setItem('topProfissoesData', JSON.stringify(data));
-        
-        // Resumo removido conforme solicitado
-        
-        // Feedback visual
-        this.showSaveFeedback();
-    }
-    
-    loadStoredData() {
-        const stored = localStorage.getItem('topProfissoesData');
-        if (stored) {
-            const data = JSON.parse(stored);
-            
-            document.getElementById('profissao1').value = data.profissao1 || '';
-            document.getElementById('motivo1').value = data.motivo1 || '';
-            document.getElementById('profissao2').value = data.profissao2 || '';
-            document.getElementById('motivo2').value = data.motivo2 || '';
-            document.getElementById('profissao3').value = data.profissao3 || '';
-            document.getElementById('motivo3').value = data.motivo3 || '';
-            
-            // Resumo removido conforme solicitado
-        }
-    }
-    
-    hasData(data) {
-        return data.profissao1 || data.profissao2 || data.profissao3;
-    }
-    
-    // Método updateResumo removido conforme solicitado
-    
-    showSaveFeedback() {
-        // Efeito visual de salvamento
-        this.saveBtn.style.transform = 'scale(0.95)';
-        this.saveBtn.style.background = 'linear-gradient(135deg, #45b7d1, #96ceb4)';
-        
-        setTimeout(() => {
-            this.saveBtn.style.transform = 'scale(1)';
-            this.saveBtn.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
-        }, 200);
-        
-        // Confete para celebrar
-        this.showConfetti();
-    }
-    
-    showConfetti() {
-        for (let i = 0; i < 8; i++) {
-            const confetti = document.createElement('div');
-            confetti.style.position = 'fixed';
-            confetti.style.width = '6px';
-            confetti.style.height = '6px';
-            confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][Math.floor(Math.random() * 4)];
-            confetti.style.borderRadius = '50%';
-            confetti.style.pointerEvents = 'none';
-            confetti.style.zIndex = '1000';
-            
-            confetti.style.left = Math.random() * window.innerWidth + 'px';
-            confetti.style.top = '-10px';
-            
-            document.body.appendChild(confetti);
-            
-            confetti.animate([
-                { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-                { transform: `translateY(${window.innerHeight + 100}px) rotate(360deg)`, opacity: 0 }
-            ], {
-                duration: 2000,
-                easing: 'ease-out'
-            }).onfinish = () => {
-                confetti.remove();
-            };
-        }
-    }
-}
-
-// Função para alternar exemplos de soft skills
-function toggleExample(skillName) {
-    const exampleElement = document.getElementById(`exemplo-${skillName}`);
-    const button = event.target.closest('.example-btn');
-    const buttonText = button.querySelector('.btn-text');
-    const buttonIcon = button.querySelector('.btn-icon');
-    
-    if (exampleElement.style.display === 'none' || exampleElement.style.display === '') {
-        // Mostrar exemplo
-        exampleElement.style.display = 'block';
-        buttonText.textContent = 'Ocultar exemplo';
-        buttonIcon.textContent = '👆';
-        
-        // Efeito visual
-        button.style.background = 'linear-gradient(135deg, #45b7d1, #96ceb4)';
-        
-        // Scroll suave para o exemplo
-        exampleElement.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'nearest' 
-        });
-        
-        // Confete para celebrar
-        showSoftSkillConfetti(button);
-        
-    } else {
-        // Ocultar exemplo
-        exampleElement.style.display = 'none';
-        buttonText.textContent = 'Clique para ver o exemplo';
-        buttonIcon.textContent = '👆';
-        
-        // Restaurar cor original
-        button.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
-    }
-}
-
-// Função para mostrar confete nas soft skills
-function showSoftSkillConfetti(element) {
-    for (let i = 0; i < 5; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.position = 'absolute';
-        confetti.style.width = '6px';
-        confetti.style.height = '6px';
-        confetti.style.backgroundColor = ['#4ecdc4', '#45b7d1', '#96ceb4', '#ff6b6b'][Math.floor(Math.random() * 4)];
-        confetti.style.borderRadius = '50%';
-        confetti.style.pointerEvents = 'none';
-        confetti.style.zIndex = '1000';
-        
-        const rect = element.getBoundingClientRect();
-        confetti.style.left = (rect.left + Math.random() * rect.width) + 'px';
-        confetti.style.top = (rect.top + Math.random() * rect.height) + 'px';
-        
-        document.body.appendChild(confetti);
-        
-        confetti.animate([
-            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-            { transform: `translateY(-40px) rotate(180deg)`, opacity: 0 }
-        ], {
-            duration: 1000,
-            easing: 'ease-out'
-        }).onfinish = () => {
-            confetti.remove();
-        };
-    }
-}
-

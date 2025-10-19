@@ -9,56 +9,574 @@
 </head>
 <body>
     <div class="book-container">
-        <!-- Controles de Navegação -->
-        <div class="navigation-controls">
-            <button class="nav-btn prev-btn" id="prevBtn" title="Voltar ao início" onclick="window.location.href='index.html'">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-            
-            <div class="page-indicators">
-                <span class="indicator active">💼</span>
-            </div>
-            
-            <button class="nav-btn next-btn" id="nextBtn" title="Próxima seção" style="opacity: 0.5;" disabled>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-        </div>
-        
         <div class="book">
             <!-- Página de Profissões -->
             <div class="page topic-page" id="profissoes-page">
                 <div class="page-content">
                     <div class="topic-header">
                         <button class="back-btn" onclick="window.location.href='index.html'">← Voltar</button>
-                        <h2>💼 Conhecimento das Profissões</h2>
-                        <p class="topic-subtitle">Entendendo o mundo do trabalho além do óbvio</p>
+                        <div class="enhanced-title-container">
+                            <h2 class="enhanced-title">💼 Conhecimento das Profissões</h2>
+                            <div class="title-stickers">
+                                <div class="sticker sticker-1">✨</div>
+                                <div class="sticker sticker-2">💭</div>
+                                <div class="sticker sticker-3">🎯</div>
+                            </div>
+                            <div class="title-glow"></div>
+                        </div>
+                        <p class="topic-subtitle">O Mundo do Trabalho Além do Óbvio</p>
                     </div>
                     
                     <div class="topic-content">
-                        <div class="content-placeholder">
-                            <div class="placeholder-icon">🚧</div>
-                            <h3>Em construção...</h3>
-                            <div class="comic-warning-box">
-                                <p>Esta seção está sendo desenvolvida com muito carinho!</p>
+                        <div class="profissoes-main">
+                            <div class="intro-layout">
+                                <div class="intro-left">
+                                    <p class="handwriting-text intro-text-1">
+                                        Conhecimento das Profissões: O Mundo do Trabalho Além do Óbvio
+                                    </p>
+                                    
+                                    <div class="comic-text-box intro-box-2">
+                                        <p>
+                                            As escolhas profissionais não se reduzem a "ter um emprego" ou "ganhar dinheiro". O mundo do trabalho é parte da vida social, envolve diferentes formas de atuação e está em constante mudança.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="intro-right">
+                                    <div class="comic-highlight-box highlight-main">
+                                        <p>
+                                            👉 Aqui você vai questionar ideias prontas, conhecer ocupações e cursos, pensar nos desafios que existem e nas habilidades que ajudam a transformar tanto a sua vida quanto a sociedade.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="comic-speech-bubble speech-main">
+                                        <p>
+                                            <strong>Vamos explorar o mundo profissional juntos?</strong>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                             
+                            <!-- Stickers decorativos -->
+                            <div class="page-stickers">
+                                <div class="page-sticker sticker-briefcase">💼</div>
+                                <div class="page-sticker sticker-lightbulb">💡</div>
+                                <div class="page-sticker sticker-rocket">🚀</div>
+                                <div class="page-sticker sticker-star">⭐</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Seção: Mitos e Verdades sobre o Trabalho -->
+                        <div class="mitos-verdades-section">
+                            <div class="comic-title-box section-title-enhanced">
+                                <h3>💡 Mitos e Verdades sobre o Trabalho</h3>
+                                <div class="section-stickers">
+                                    <div class="section-sticker sticker-question">❓</div>
+                                    <div class="section-sticker sticker-thinking">🤔</div>
+                                </div>
+                            </div>
+                            
+                            <p class="handwriting-text mitos-intro">O que você já ouviu sobre o mundo do trabalho? Vamos ver se o que você pensa é um mito ou uma verdade.</p>
+                            
+                            <div class="comic-highlight-box">
+                                <p>💡 Selecione a resposta que você considera adequada e depois veja a explicação.</p>
+                            </div>
+                            
+                            <!-- Carrossel de Mitos e Verdades -->
+                            <div class="mitos-carousel-container">
+                                <div class="carousel-wrapper">
+                                    <div class="carousel-track" id="carouselTrack">
+                                        <!-- Card 1 -->
+                                        <div class="mito-card active" data-card="1">
+                                            <div class="card-header">
+                                                <div class="card-number">1</div>
+                                                <div class="card-icon">💼</div>
+                                            </div>
+                                            <div class="card-content">
+                                                <p class="card-statement">"Você precisa ter um emprego fixo para o resto da vida."</p>
+                                                <div class="card-buttons">
+                                                    <button class="choice-btn mito-btn" data-choice="mito" data-card="1">Mito</button>
+                                                    <button class="choice-btn verdade-btn" data-choice="verdade" data-card="1">Verdade</button>
+                                                </div>
+                                                <div class="card-explanation" id="explanation-1" style="display: none;">
+                                                    <div class="explanation-content">
+                                                        <div class="explanation-header">
+                                                            <span class="explanation-icon">❌</span>
+                                                            <span class="explanation-title">Resposta: Mito</span>
+                                                        </div>
+                                                        <p class="explanation-text">Ao longo da vida, muitas pessoas mudam de área ou de função. O mercado se transforma e você também pode se reinventar.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Card 2 -->
+                                        <div class="mito-card" data-card="2">
+                                            <div class="card-header">
+                                                <div class="card-number">2</div>
+                                                <div class="card-icon">🏢</div>
+                                            </div>
+                                            <div class="card-content">
+                                                <p class="card-statement">"Trabalhar em uma grande empresa é o melhor caminho para o sucesso."</p>
+                                                <div class="card-buttons">
+                                                    <button class="choice-btn mito-btn" data-choice="mito" data-card="2">Mito</button>
+                                                    <button class="choice-btn verdade-btn" data-choice="verdade" data-card="2">Verdade</button>
+                                                </div>
+                                                <div class="card-explanation" id="explanation-2" style="display: none;">
+                                                    <div class="explanation-content">
+                                                        <div class="explanation-header">
+                                                            <span class="explanation-icon">❌</span>
+                                                            <span class="explanation-title">Resposta: Mito</span>
+                                                        </div>
+                                                        <p class="explanation-text">Sucesso é relativo! Muitas pessoas encontram satisfação e realização em pequenos negócios, ONGs ou empreendendo. O importante é encontrar um trabalho que se encaixe nos seus valores e na sua realidade.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Card 3 -->
+                                        <div class="mito-card" data-card="3">
+                                            <div class="card-header">
+                                                <div class="card-number">3</div>
+                                                <div class="card-icon">🤖</div>
+                                            </div>
+                                            <div class="card-content">
+                                                <p class="card-statement">"A tecnologia vai acabar com a maioria dos empregos."</p>
+                                                <div class="card-buttons">
+                                                    <button class="choice-btn mito-btn" data-choice="mito" data-card="3">Mito</button>
+                                                    <button class="choice-btn verdade-btn" data-choice="verdade" data-card="3">Verdade</button>
+                                                </div>
+                                                <div class="card-explanation" id="explanation-3" style="display: none;">
+                                                    <div class="explanation-content">
+                                                        <div class="explanation-header">
+                                                            <span class="explanation-icon">❌</span>
+                                                            <span class="explanation-title">Resposta: Mito</span>
+                                                        </div>
+                                                        <p class="explanation-text">A tecnologia realmente muda o trabalho, mas não o elimina por completo. Ela automatiza tarefas repetitivas, abrindo espaço para que as pessoas foquem em habilidades criativas e estratégicas que uma máquina não pode substituir.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Card 4 -->
+                                        <div class="mito-card" data-card="4">
+                                            <div class="card-header">
+                                                <div class="card-number">4</div>
+                                                <div class="card-icon">💰</div>
+                                            </div>
+                                            <div class="card-content">
+                                                <p class="card-statement">"É muito difícil ganhar dinheiro fazendo algo que gosto."</p>
+                                                <div class="card-buttons">
+                                                    <button class="choice-btn mito-btn" data-choice="mito" data-card="4">Mito</button>
+                                                    <button class="choice-btn verdade-btn" data-choice="verdade" data-card="4">Verdade</button>
+                                                </div>
+                                                <div class="card-explanation" id="explanation-4" style="display: none;">
+                                                    <div class="explanation-content">
+                                                        <div class="explanation-header">
+                                                            <span class="explanation-icon">❌</span>
+                                                            <span class="explanation-title">Resposta: Mito</span>
+                                                        </div>
+                                                        <p class="explanation-text">É possível! O segredo é ter a visão crítica de que todo trabalho tem seus desafios. É preciso equilibrar o que você ama com o que o mercado precisa e o que te garante autonomia financeira.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Controles de Navegação -->
+                                    <div class="carousel-controls">
+                                        <button class="carousel-btn prev-btn" id="prevCardBtn" disabled>
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+                                        
+                                        <button class="carousel-btn next-btn" id="nextCardBtn">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Progresso -->
+                                    <div class="carousel-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" id="progressFill"></div>
+                                        </div>
+                                        <span class="progress-text" id="progressText">1 de 4</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Reflexão Final -->
+                            <div class="mitos-reflection">
                             <div class="comic-text-box">
-                                <p>Em breve você encontrará aqui:</p>
-                                <ul style="text-align: left; margin: 20px 0;">
-                                    <li>🔍 Explorando diferentes áreas profissionais</li>
-                                    <li>💡 Descobrindo profissões além do óbvio</li>
-                                    <li>🎯 Entendendo o mercado de trabalho</li>
-                                    <li>📚 Recursos para pesquisa profissional</li>
-                                    <li>🤝 Entrevistas com profissionais</li>
+                                    <p>💭 <strong>Reflexão:</strong> Quantos desses mitos você já tinha ouvido? É importante questionar ideias prontas sobre o mundo do trabalho e formar suas próprias opiniões baseadas em informações reais.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Seção: Explorando Profissões e Cursos -->
+                        <div class="explorando-profissoes-section">
+                            <div class="comic-title-box section-title-enhanced">
+                                <h3>🔍 Explorando Profissões e Cursos</h3>
+                                <div class="section-stickers">
+                                    <div class="section-sticker sticker-search">🔍</div>
+                                    <div class="section-sticker sticker-graduation">🎓</div>
+                                    <div class="section-sticker sticker-chart">📊</div>
+                                </div>
+                            </div>
+                            
+                            <p class="handwriting-text explorando-intro">Agora vamos abrir o leque de possibilidades: conhecer ocupações, caminhos de formação e um retrato do mercado de trabalho.</p>
+                            
+                            <div class="comic-text-box explorando-explicacao">
+                                <p>Para te ajudar a dar os primeiros passos, selecionei alguns links interessantes que podem oferecer informações fundamentais, como salários, descrição de funções e estatísticas a respeito de cada profissão. Confira a seguir cada um deles:</p>
+                            </div>
+                            
+                            <!-- Cards de Recursos -->
+                            <div class="recursos-container">
+                                <!-- Recurso 1 -->
+                                <div class="recurso-card">
+                                    <div class="recurso-header">
+                                        <div class="recurso-icon">📋</div>
+                                        <h4>Características das Ocupações</h4>
+                                    </div>
+                                    <div class="recurso-content">
+                                        <p class="recurso-descricao">O que cada profissão faz no dia a dia, quanto costuma pagar e o que geralmente se espera de quem trabalha nela.</p>
+                                        <a href="https://app.powerbi.com/view?r=eyJrIjoiNjkzMDViODUtMDMzMC00ZjI5LTk4OTAtMGVhODFlNDBjN2QzIiwidCI6IjNlYzkyOTY5LTVhNTEtNGYxOC04YWM5LWVmOThmYmFmYTk3OCJ9" target="_blank" class="recurso-link">
+                                            <span class="link-text">Acesse aqui</span>
+                                            <span class="link-icon">🔗</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Recurso 2 -->
+                                <div class="recurso-card">
+                                    <div class="recurso-header">
+                                        <div class="recurso-icon">📊</div>
+                                        <h4>As Ocupações e o Mercado de Trabalho</h4>
+                                    </div>
+                                    <div class="recurso-content">
+                                        <p class="recurso-descricao">Painel com dados do mercado formal: número de trabalhadores, salário médio, localização, contratantes e vagas.</p>
+                                        <a href="https://app.powerbi.com/view?r=eyJrIjoiNjkzMDViODUtMDMzMC00ZjI5LTk4OTAtMGVhODFlNDBjN2QzIiwidCI6IjNlYzkyOTY5LTVhNTEtNGYxOC04YWM5LWVmOThmYmFmYTk3OCJ9" target="_blank" class="recurso-link">
+                                            <span class="link-text">Acesse aqui</span>
+                                            <span class="link-icon">🔗</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Recurso 3 -->
+                                <div class="recurso-card">
+                                    <div class="recurso-header">
+                                        <div class="recurso-icon">🎓</div>
+                                        <h4>MEC Conecta</h4>
+                                    </div>
+                                    <div class="recurso-content">
+                                        <p class="recurso-descricao">Plataforma do MEC para conhecer as instituições de ensino superior, formas de ingresso e dados como vagas, duração e salário médio.</p>
+                                        <a href="https://conecta.mec.gov.br/seleciona-modalidade" target="_blank" class="recurso-link">
+                                            <span class="link-text">Acesse aqui</span>
+                                            <span class="link-icon">🔗</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Recurso 4 -->
+                                <div class="recurso-card">
+                                    <div class="recurso-header">
+                                        <div class="recurso-icon">⚙️</div>
+                                        <h4>Catálogo Nacional de Cursos Técnicos (CNCT)</h4>
+                                    </div>
+                                    <div class="recurso-content">
+                                        <p class="recurso-descricao">Reúne todos os cursos técnicos do Brasil, com carga horária, perfil profissional, áreas de atuação e ocupações associadas.</p>
+                                        <a href="https://cnct.mec.gov.br/cursos" target="_blank" class="recurso-link">
+                                            <span class="link-text">Acesse aqui</span>
+                                            <span class="link-icon">🔗</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dicas e Reflexões -->
+                            <div class="dicas-reflexoes">
+                                <div class="comic-highlight-box dica-principal">
+                                    <p>💡 <strong>Lembrando que as profissões e ocupações estão em constante ressignificação.</strong> Por isso, se você não encontrar exatamente o que está buscando, use a internet livremente!</p>
+                                </div>
+                                
+                                <div class="comic-speech-bubble dica-reflexao">
+                                    <p><strong>DICA:</strong> Para saber quais profissões fazem mais sentido para você, use as informações que você já mapeou no começo desta experiência. Na dúvida, pergunte-se:</p>
+                                    <ul>
+                                        <li>Isso conversa com o que te dá energia?</li>
+                                        <li>Essa carreira combina com seus valores e projetos?</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Seção: Top 3 Profissões -->
+                        <div class="top-profissoes-section">
+                            <div class="comic-title-box section-title-enhanced">
+                                <h3>🏆 Top 3 Profissões</h3>
+                                <div class="section-stickers">
+                                    <div class="section-sticker sticker-trophy">🏆</div>
+                                    <div class="section-sticker sticker-lightbulb">💡</div>
+                                    <div class="section-sticker sticker-star">⭐</div>
+                                </div>
+                            </div>
+                            
+                            <p class="handwriting-text top-intro">Depois de explorar as possibilidades, é hora de organizar suas ideias!</p>
+                            
+                            <div class="comic-highlight-box top-dica">
+                                <p>💡 Escreva as 3 profissões que mais chamaram sua atenção e o que você achou de mais legal em cada uma. Nada de pressão! Não é pra decidir agora. Você ainda está apenas pensando a respeito.😜</p>
+                            </div>
+                            
+                            <!-- Formulário Top 3 -->
+                            <div class="top-form-container">
+                                <form class="top-profissoes-form" id="topProfissoesForm">
+                                    <!-- Profissão 1 -->
+                                    <div class="profissao-item">
+                                        <div class="profissao-header">
+                                            <div class="profissao-number">1</div>
+                                            <h4>Profissão Nº 1</h4>
+                                        </div>
+                                        <div class="profissao-inputs">
+                                            <input type="text" id="profissao1" placeholder="Digite o nome da profissão..." maxlength="50" class="profissao-nome">
+                                            <textarea id="motivo1" placeholder="Me chamou a atenção porque:" maxlength="200" class="profissao-motivo"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Profissão 2 -->
+                                    <div class="profissao-item">
+                                        <div class="profissao-header">
+                                            <div class="profissao-number">2</div>
+                                            <h4>Profissão Nº 2</h4>
+                                        </div>
+                                        <div class="profissao-inputs">
+                                            <input type="text" id="profissao2" placeholder="Digite o nome da profissão..." maxlength="50" class="profissao-nome">
+                                            <textarea id="motivo2" placeholder="Me chamou a atenção porque:" maxlength="200" class="profissao-motivo"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Profissão 3 -->
+                                    <div class="profissao-item">
+                                        <div class="profissao-header">
+                                            <div class="profissao-number">3</div>
+                                            <h4>Profissão Nº 3</h4>
+                                        </div>
+                                        <div class="profissao-inputs">
+                                            <input type="text" id="profissao3" placeholder="Digite o nome da profissão..." maxlength="50" class="profissao-nome">
+                                            <textarea id="motivo3" placeholder="Me chamou a atenção porque:" maxlength="200" class="profissao-motivo"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Botão de Salvar -->
+                                    <div class="form-actions">
+                                        <button type="button" class="save-btn" id="saveTopProfissoes">
+                                            <span class="btn-icon">💾</span>
+                                            <span class="btn-text">Salvar Minhas Escolhas</span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <!-- Nota sobre espaço pequeno -->
+                           
+                        </div>
+                        
+                        <!-- Seção: Olhando mais de perto -->
+                        <div class="analise-profissoes-section">
+                            <div class="comic-title-box section-title-enhanced">
+                                <h3>🔍 Olhando mais de perto</h3>
+                                <div class="section-stickers">
+                                    <div class="section-sticker sticker-magnifying">🔍</div>
+                                    <div class="section-sticker sticker-thinking">🤔</div>
+                                    <div class="section-sticker sticker-analysis">📊</div>
+                                </div>
+                            </div>
+                            
+                            <p class="handwriting-text analise-intro">Agora, olhe para cada uma dessas três profissões e analise-as de acordo com as perguntas a seguir. Isso vai te ajudar a verificar os prós e os contras de cada opção, e a escolher aquela que melhor se adapta aos seus interesses e ao seu estilo de vida.</p>
+                        
+                            
+                            <!-- Perguntas de Análise -->
+                            <div class="perguntas-analise">
+                                <h4>📋 Perguntas para Reflexão:</h4>
+                                <ul class="perguntas-lista">
+                                    <li>Quais os principais desafios dessa profissão?</li>
+                                    <li>Quem tem mais acesso a essa profissão?</li>
+                                    <li>No futuro, o que pode acontecer com essa profissão?</li>
                                 </ul>
                             </div>
                             
-                            <div class="comic-highlight-box">
-                                <p>💡 <strong>Dica:</strong> Enquanto isso, continue explorando sua seção de <strong>Autoconhecimento</strong> para se preparar melhor!</p>
+                            <!-- Opções de Resposta -->
+                            <div class="opcoes-resposta">
+                                <h4>🎯 Opções de Resposta:</h4>
+                                <div class="opcoes-grid">
+                                    <div class="opcao-categoria">
+                                        <h5>Desafios:</h5>
+                                        <div class="opcoes-buttons">
+                                            <button class="opcao-btn" data-categoria="desafios" data-valor="muitas-horas">Muitas horas de estudo</button>
+                                            <button class="opcao-btn" data-categoria="desafios" data-valor="poucas-vagas">Poucas vagas de emprego</button>
+                                            <button class="opcao-btn" data-categoria="desafios" data-valor="exige-contatos">Exige bons contatos</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="opcao-categoria">
+                                        <h5>Acesso:</h5>
+                                        <div class="opcoes-buttons">
+                                            <button class="opcao-btn" data-categoria="acesso" data-valor="quase-todos">Quase todo mundo</button>
+                                            <button class="opcao-btn" data-categoria="acesso" data-valor="mais-recursos">Só quem tem mais recursos</button>
+                                            <button class="opcao-btn" data-categoria="acesso" data-valor="depende-regiao">Depende da região onde vive</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="opcao-categoria">
+                                        <h5>Futuro:</h5>
+                                        <div class="opcoes-buttons">
+                                            <button class="opcao-btn" data-categoria="futuro" data-valor="crescer-muito">Crescer muito</button>
+                                            <button class="opcao-btn" data-categoria="futuro" data-valor="mudar-tecnologia">Mudar bastante por causa da tecnologia</button>
+                                            <button class="opcao-btn" data-categoria="futuro" data-valor="risco-desaparecer">Correr risco de desaparecer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Análise das Profissões -->
+                            <div class="analise-profissoes-container" id="analiseProfissoesContainer">
+                                <!-- Conteúdo será inserido dinamicamente baseado no Top 3 -->
+                            </div>
+                            
+                            <!-- Reflexão Final -->
+                            <div class="reflexao-final">
+                                <div class="comic-speech-bubble reflexao-bubble">
+                                    <div class="personagem-reflexao">
+                                        <div class="personagem-avatar">🧑‍🎓</div>
+                                        <div class="personagem-fala">
+                                            <p>Se você ainda tem dúvidas sobre a melhor escolha, fique em paz! Esse exercício é justamente para te convidar a refletir e avaliar suas opções.</p>
+                                            <p><strong>Não decida nada com pressa!</strong> É importante considerar esses pontos para que, quando chegar a hora, tenha a segurança de estar no melhor caminho para você.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Seção: As Habilidades que te Conectam -->
+                        <div class="habilidades-section">
+                            <div class="comic-title-box section-title-enhanced">
+                                <h3>🤝 As Habilidades que te Conectam</h3>
+                                <div class="section-stickers">
+                                    <div class="section-sticker sticker-handshake">🤝</div>
+                                    <div class="section-sticker sticker-brain">🧠</div>
+                                    <div class="section-sticker sticker-lightbulb">💡</div>
+                                </div>
+                            </div>
+                            
+                            <p class="handwriting-text habilidades-intro">O mundo do trabalho não quer só diplomas ou cursos. Ele também valoriza habilidades que ajudam a se relacionar, colaborar e encontrar soluções no dia a dia. Essas são as chamadas <strong>soft skills</strong>.</p>
+                            
+                            <div class="comic-highlight-box habilidades-explicacao">
+                                <p>Elas são tão importantes quanto as habilidades técnicas porque permitem se adaptar às mudanças e enfrentar desafios de forma criativa.</p>
+                            </div>
+                            
+                            <div class="comic-info-box habilidades-dica">
+                                <p>💡 A seguir estão algumas das soft skills requeridas pelo mercado de trabalho. <strong>Clique para ver exemplos</strong> e saber quais você já usa e quais precisa desenvolver.</p>
+                            </div>
+                            
+                            <!-- Cards de Soft Skills -->
+                            <div class="soft-skills-container">
+                                <!-- Comunicação -->
+                                <div class="soft-skill-card" data-skill="comunicacao">
+                                    <div class="skill-header">
+                                        <div class="skill-icon">💬</div>
+                                        <h4>Comunicação</h4>
+                                    </div>
+                                    <div class="skill-description">
+                                        <p>Explicar suas ideias com clareza e ouvir os outros.</p>
+                                    </div>
+                                    <div class="skill-example" id="exemplo-comunicacao" style="display: none;">
+                                        <div class="example-content">
+                                            <h5>📝 Exemplo:</h5>
+                                            <p>Em um trabalho em grupo, você fala de forma simples e entende o que os colegas dizem.</p>
+                                        </div>
+                                    </div>
+                                    <button class="example-btn" onclick="toggleExample('comunicacao')">
+                                        <span class="btn-text">Clique para ver o exemplo</span>
+                                        <span class="btn-icon">👆</span>
+                                    </button>
+                                </div>
+                                
+                                <!-- Trabalho em Equipe -->
+                                <div class="soft-skill-card" data-skill="trabalho-equipe">
+                                    <div class="skill-header">
+                                        <div class="skill-icon">👥</div>
+                                        <h4>Trabalho em Equipe</h4>
+                                    </div>
+                                    <div class="skill-description">
+                                        <p>Colaborar para alcançar objetivos juntos.</p>
+                                    </div>
+                                    <div class="skill-example" id="exemplo-trabalho-equipe" style="display: none;">
+                                        <div class="example-content">
+                                            <h5>📝 Exemplo:</h5>
+                                            <p>Em um projeto da escola, você organiza tarefas e colabora com os colegas para que tudo dê certo.</p>
+                                        </div>
+                                    </div>
+                                    <button class="example-btn" onclick="toggleExample('trabalho-equipe')">
+                                        <span class="btn-text">Clique para ver o exemplo</span>
+                                        <span class="btn-icon">👆</span>
+                                    </button>
+                                </div>
+                                
+                                <!-- Resolução de Problemas -->
+                                <div class="soft-skill-card" data-skill="resolucao-problemas">
+                                    <div class="skill-header">
+                                        <div class="skill-icon">🔧</div>
+                                        <h4>Resolução de Problemas</h4>
+                                    </div>
+                                    <div class="skill-description">
+                                        <p>Encontrar soluções criativas no dia a dia.</p>
+                                    </div>
+                                    <div class="skill-example" id="exemplo-resolucao-problemas" style="display: none;">
+                                        <div class="example-content">
+                                            <h5>📝 Exemplo:</h5>
+                                            <p>Seu grupo não decide onde quer almoçar hoje. Você sugere uma ideia que agrada a todos e organiza como chegar lá.</p>
+                                        </div>
+                                    </div>
+                                    <button class="example-btn" onclick="toggleExample('resolucao-problemas')">
+                                        <span class="btn-text">Clique para ver o exemplo</span>
+                                        <span class="btn-icon">👆</span>
+                                    </button>
+                                </div>
+                                
+                                <!-- Adaptabilidade -->
+                                <div class="soft-skill-card" data-skill="adaptabilidade">
+                                    <div class="skill-header">
+                                        <div class="skill-icon">🔄</div>
+                                        <h4>Adaptabilidade</h4>
+                                    </div>
+                                    <div class="skill-description">
+                                        <p>Aprender e mudar rápido, já que o mundo do trabalho está sempre em transformação.</p>
+                                    </div>
+                                    <div class="skill-example" id="exemplo-adaptabilidade" style="display: none;">
+                                        <div class="example-content">
+                                            <h5>📝 Exemplo:</h5>
+                                            <p>O professor muda as regras do trabalho e você reorganiza o plano sem perder tempo.</p>
+                                        </div>
+                                    </div>
+                                    <button class="example-btn" onclick="toggleExample('adaptabilidade')">
+                                        <span class="btn-text">Clique para ver o exemplo</span>
+                                        <span class="btn-icon">👆</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Dica Final -->
+                            <div class="comic-speech-bubble habilidades-dica-final">
+                                <p>Para saber mais, pesquise sobre <strong>soft skills</strong> na internet. Você vai aprender bastante e pode alinhar intencionalmente seus comportamentos na direção da profissão escolhida.</p>
+                            </div>
+                            
+                            <!-- Reflexão Final -->
+                            <div class="reflexao-final-profissoes">
+                                <div class="comic-highlight-box reflexao-box">
+                                    <p><strong>Muito bem!</strong> Você ampliou sua visão, conheceu caminhos possíveis, percebeu os desafios e reconheceu que suas habilidades contam tanto quanto diplomas e cursos.</p>
+                                    <p>👉 <strong>Esse olhar crítico e aberto te ajuda a pensar em escolhas mais conscientes e alinhadas com quem você é e com o mundo em que vive.</strong></p>
+                                </div>
                             </div>
                         </div>
                     </div>
