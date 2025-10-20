@@ -1069,29 +1069,6 @@ body {
     max-width: 300px;
 }
 
-.comic-speech-bubble::before {
-    content: '';
-    position: absolute;
-    left: -20px;
-    top: 30px;
-    width: 0;
-    height: 0;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    border-right: 20px solid var(--black);
-}
-
-.comic-speech-bubble::after {
-    content: '';
-    position: absolute;
-    left: -16px;
-    top: 32px;
-    width: 0;
-    height: 0;
-    border-top: 13px solid transparent;
-    border-bottom: 13px solid transparent;
-    border-right: 16px solid var(--white);
-}
 
 .comic-thought-bubble {
     border-radius: 50px;
@@ -2248,6 +2225,7 @@ body {
   align-items: center;
   justify-content: center;
   border: 3px solid var(--white);
+  z-index: 2;
 }
 
 .compass-title {
@@ -2272,19 +2250,9 @@ body {
   transition: transform 0.5s ease;
   border-radius: 4px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 1;
 }
 
-.needle-pointer {
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 20px solid var(--secondary-color);
-  position: absolute;
-  top: -20px;
-  left: -6px;
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
-}
 
 /* === PONTOS CARDEAIS === */
 .compass-points {
@@ -2636,6 +2604,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
   
   .compass-needle {
     height: 140px;
+    transform: translate(-50%, -100%) rotate(0deg);
   }
   
   .compass-point {
@@ -2767,15 +2736,9 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
   .compass-needle {
     height: 130px;
     width: 10px;
+    transform: translate(-50%, -100%) rotate(0deg);
   }
   
-  .needle-pointer {
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 18px solid var(--secondary-color);
-    top: -18px;
-    left: -5px;
-  }
   
   .compass-point {
     width: 30px;
@@ -2847,6 +2810,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
   
   .compass-needle {
     height: 115px;
+    transform: translate(-50%, -100%) rotate(0deg);
   }
   
   .compass-point {
@@ -4554,8 +4518,14 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 }
 
 .first-place { order: 2; }
-.second-place { order: 1; }
-.third-place { order: 3; }
+.second-place { 
+    order: 1; 
+    height: 80%; 
+}
+.third-place { 
+    order: 3; 
+    height: 70%; 
+}
 
 .values-grid {
     display: grid;
@@ -5076,22 +5046,11 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
         font-size: 0.4rem;
     }
     
-    .compass-needle {
-        height: 40px;
-    }
+  .compass-needle {
+    height: 40px;
+    transform: translate(-50%, -100%) rotate(0deg);
+  }
     
-    .needle-pointer {
-        border-left: 3px solid transparent;
-        border-right: 3px solid transparent;
-        border-bottom: 20px solid #dc3545;
-    }
-    
-    .needle-pointer::after {
-        border-left: 2px solid transparent;
-        border-right: 2px solid transparent;
-        border-top: 12px solid #6c757d;
-        top: 20px;
-    }
     
     /* Estilos movidos para media query mobile correto */
     
