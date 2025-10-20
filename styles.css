@@ -3040,18 +3040,13 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     margin-bottom: 15px;
-}
-
-.explanation-icon {
-    font-size: 1.5rem;
 }
 
 .explanation-title {
     font-weight: bold;
     font-size: 1.2rem;
-    color: #ff6b6b;
+    color: #4ecdc4;
 }
 
 .explanation-text {
@@ -4735,6 +4730,66 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
 }
 
+/* Botão para Voltar ao Início */
+.home-button-container {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.home-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.home-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.home-button:hover::before {
+    left: 100%;
+}
+
+.home-button:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.home-button:active {
+    transform: translateY(-1px);
+}
+
+.home-button .btn-icon {
+    font-size: 1.3rem;
+    animation: homePulse 2s infinite;
+}
+
+@keyframes homePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
 .territory-zoom-btn {
     background: rgba(255, 255, 255, 0.9);
     color: var(--black);
@@ -6294,8 +6349,111 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     font-size: 1rem;
 }
 
+/* Link para Próxima Seção */
+.next-section-link {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.next-section-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.next-section-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.next-section-box p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.next-section-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
+}
+
+.next-section-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.next-section-btn:active {
+    transform: translateY(0);
+}
+
+.next-section-btn .btn-icon {
+    font-size: 1.3rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(0); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(3px); }
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
+    .next-section-box {
+        padding: 20px;
+        margin: 20px 0;
+    }
+    
+    .next-section-box p {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+    
+    .next-section-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+    
+    .home-button-container {
+        margin: 30px 0;
+    }
+    
+    .home-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+    
     .pressao-quem-section {
         margin: 20px 0;
         padding: 20px 15px;

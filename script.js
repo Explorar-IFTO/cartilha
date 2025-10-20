@@ -2474,12 +2474,18 @@ class AnaliseProfissoesManager {
         if (this.container.children.length === 0) {
             this.showEmptyState();
         }
+        
+        // Adiciona event listeners aos cards criados
+        this.setupCardEventListeners();
     }
     
     createProfissaoCard(number, profissao, motivo) {
         const card = document.createElement('div');
         card.className = 'profissao-analise-card';
         card.setAttribute('data-profissao', number);
+        
+        // Carrega as escolhas salvas para esta profissão
+        const savedChoices = this.loadSavedChoices(number);
         
         card.innerHTML = `
             <div class="profissao-analise-header">
@@ -2491,27 +2497,27 @@ class AnaliseProfissoesManager {
                 <div class="analise-campo">
                     <h6>Desafios:</h6>
                     <div class="analise-campo-opcoes">
-                        <div class="analise-campo-opcao" data-categoria="desafios" data-valor="muitas-horas">Muitas horas de estudo</div>
-                        <div class="analise-campo-opcao" data-categoria="desafios" data-valor="poucas-vagas">Poucas vagas de emprego</div>
-                        <div class="analise-campo-opcao" data-categoria="desafios" data-valor="exige-contatos">Exige bons contatos</div>
+                        <div class="analise-campo-opcao ${savedChoices.desafios === 'muitas-horas' ? 'selected' : ''}" data-categoria="desafios" data-valor="muitas-horas">Muitas horas de estudo</div>
+                        <div class="analise-campo-opcao ${savedChoices.desafios === 'poucas-vagas' ? 'selected' : ''}" data-categoria="desafios" data-valor="poucas-vagas">Poucas vagas de emprego</div>
+                        <div class="analise-campo-opcao ${savedChoices.desafios === 'exige-contatos' ? 'selected' : ''}" data-categoria="desafios" data-valor="exige-contatos">Exige bons contatos</div>
                     </div>
                 </div>
                 
                 <div class="analise-campo">
                     <h6>Acesso:</h6>
                     <div class="analise-campo-opcoes">
-                        <div class="analise-campo-opcao" data-categoria="acesso" data-valor="quase-todos">Quase todo mundo</div>
-                        <div class="analise-campo-opcao" data-categoria="acesso" data-valor="mais-recursos">Só quem tem mais recursos</div>
-                        <div class="analise-campo-opcao" data-categoria="acesso" data-valor="depende-regiao">Depende da região onde vive</div>
+                        <div class="analise-campo-opcao ${savedChoices.acesso === 'quase-todos' ? 'selected' : ''}" data-categoria="acesso" data-valor="quase-todos">Quase todo mundo</div>
+                        <div class="analise-campo-opcao ${savedChoices.acesso === 'mais-recursos' ? 'selected' : ''}" data-categoria="acesso" data-valor="mais-recursos">Só quem tem mais recursos</div>
+                        <div class="analise-campo-opcao ${savedChoices.acesso === 'depende-regiao' ? 'selected' : ''}" data-categoria="acesso" data-valor="depende-regiao">Depende da região onde vive</div>
                     </div>
                 </div>
                 
                 <div class="analise-campo">
                     <h6>Futuro:</h6>
                     <div class="analise-campo-opcoes">
-                        <div class="analise-campo-opcao" data-categoria="futuro" data-valor="crescer-muito">Crescer muito</div>
-                        <div class="analise-campo-opcao" data-categoria="futuro" data-valor="mudar-tecnologia">Mudar bastante por causa da tecnologia</div>
-                        <div class="analise-campo-opcao" data-categoria="futuro" data-valor="risco-desaparecer">Correr risco de desaparecer</div>
+                        <div class="analise-campo-opcao ${savedChoices.futuro === 'crescer-muito' ? 'selected' : ''}" data-categoria="futuro" data-valor="crescer-muito">Crescer muito</div>
+                        <div class="analise-campo-opcao ${savedChoices.futuro === 'mudar-tecnologia' ? 'selected' : ''}" data-categoria="futuro" data-valor="mudar-tecnologia">Mudar bastante por causa da tecnologia</div>
+                        <div class="analise-campo-opcao ${savedChoices.futuro === 'risco-desaparecer' ? 'selected' : ''}" data-categoria="futuro" data-valor="risco-desaparecer">Correr risco de desaparecer</div>
                     </div>
                 </div>
             </div>
@@ -2528,9 +2534,20 @@ class AnaliseProfissoesManager {
         `;
     }
     
+    loadSavedChoices(profissaoNumber) {
+        const key = `analiseProfissao${profissaoNumber}`;
+        const saved = localStorage.getItem(key);
+        return saved ? JSON.parse(saved) : {};
+    }
+    
+    setupCardEventListeners() {
+        // Event listeners já estão configurados via event delegation no setupEventListeners
+        // Este método existe para compatibilidade com o código existente
+    }
+    
     setupEventListeners() {
-        // Event delegation para opções de análise
-        this.container.addEventListener('click', (e) => {
+        // Event delegation para opções de análise - usando document para capturar elementos criados dinamicamente
+        document.addEventListener('click', (e) => {
             if (e.target.classList.contains('analise-campo-opcao')) {
                 this.handleOpcaoClick(e.target);
             }
@@ -2682,7 +2699,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializa o sistema de Análise de Profissões
     if (document.querySelector('.analise-profissoes-section')) {
         console.log('Initializing Análise de Profissões');
-        new AnaliseProfissoesManager();
+        window.analiseProfissoesManager = new AnaliseProfissoesManager();
     }
 });
 
@@ -2730,7 +2747,8 @@ class TopProfissoesManager {
         // Salva no localStorage
         localStorage.setItem('topProfissoesData', JSON.stringify(data));
         
-        // Resumo removido conforme solicitado
+        // Atualiza automaticamente a seção de análise
+        this.updateAnaliseSection(data);
         
         // Feedback visual
         this.showSaveFeedback();
@@ -2748,7 +2766,19 @@ class TopProfissoesManager {
             document.getElementById('profissao3').value = data.profissao3 || '';
             document.getElementById('motivo3').value = data.motivo3 || '';
             
-            // Resumo removido conforme solicitado
+            // Atualiza a seção de análise com os dados carregados
+            this.updateAnaliseSection(data);
+        }
+    }
+    
+    updateAnaliseSection(data) {
+        // Verifica se existe uma instância do AnaliseProfissoesManager
+        if (window.analiseProfissoesManager) {
+            window.analiseProfissoesManager.createAnaliseCards(data);
+        } else {
+            // Se não existe, cria uma nova instância temporária para atualizar
+            const tempManager = new AnaliseProfissoesManager();
+            tempManager.createAnaliseCards(data);
         }
     }
     
@@ -2888,9 +2918,6 @@ function handleMochilaSelection() {
                     });
                 }, 300);
                 
-                // Efeito visual de confete
-                showMochilaConfetti(this);
-                
                 // Salvar escolha no localStorage
                 localStorage.setItem('mochilaEscolha', this.value);
                 localStorage.setItem('mochilaEscolhaData', new Date().toISOString());
@@ -2899,35 +2926,6 @@ function handleMochilaSelection() {
     });
 }
 
-// Função para mostrar confete na seção mochila
-function showMochilaConfetti(element) {
-    for (let i = 0; i < 8; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.position = 'absolute';
-        confetti.style.width = '8px';
-        confetti.style.height = '8px';
-        confetti.style.backgroundColor = ['#4ecdc4', '#45b7d1', '#96ceb4', '#ff6b6b', '#ffd93d'][Math.floor(Math.random() * 5)];
-        confetti.style.borderRadius = '50%';
-        confetti.style.pointerEvents = 'none';
-        confetti.style.zIndex = '1000';
-        
-        const rect = element.getBoundingClientRect();
-        confetti.style.left = (rect.left + Math.random() * rect.width) + 'px';
-        confetti.style.top = (rect.top + Math.random() * rect.height) + 'px';
-        
-        document.body.appendChild(confetti);
-        
-        confetti.animate([
-            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-            { transform: `translateY(-60px) rotate(360deg)`, opacity: 0 }
-        ], {
-            duration: 1500,
-            easing: 'ease-out'
-        }).onfinish = () => {
-            confetti.remove();
-        };
-    }
-}
 
 // Função para restaurar escolha salva da mochila
 function restoreMochilaChoice() {
