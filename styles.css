@@ -5089,7 +5089,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     .compass-base {
         width: 200px;
         height: 200px;
-        top: 300px;
+        top: 350px;
     } 
     
     .compass-center {
@@ -5932,14 +5932,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 }
 
 .opcao-mochila input[type="radio"]:checked + label::after {
-    content: '✓';
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--white);
+    display: none;
 }
 
 /* Caixa importante */

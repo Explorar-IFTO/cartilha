@@ -240,7 +240,7 @@
                                 <div class="balao-pressao" data-pressao="autopressao">
                                     <div class="balao-header">
                                         <div class="balao-ilustracao">🤔</div>
-                                        <div class="balao-titulo">Você Mesmo(a)</div>
+                                        <div class="balao-titulo">Eu Mesmo(a)</div>
                                     </div>
                                     <div class="balao-conteudo">
                                         <div class="balao-pergunta">
@@ -286,7 +286,7 @@
                                             <input type="radio" id="autopressaoFinal" name="pressaoFinal" value="autopressao">
                                             <label for="autopressaoFinal">
                                                 <span class="opcao-emoji">🤔</span>
-                                                <span class="opcao-texto">Você Mesmo(a)</span>
+                                                <span class="opcao-texto">Eu Mesmo(a)</span>
                                             </label>
                                         </div>
                                     </div>
@@ -354,26 +354,38 @@
                                         <circle cx="650" cy="60" r="20" fill="#FFA500"/>
                                         
                                         <!-- Pontos de interesse na estrada -->
-                                        <!-- Primeiro Passo (início) -->
-                                        <circle cx="100" cy="240" r="8" fill="#4ECDC4" class="ponto-interesse" data-ponto="primeiro-passo"/>
-                                        <text x="100" y="230" text-anchor="middle" class="ponto-label">O Primeiro Passo</text>
+                                        <!-- Objetivo (início) -->
+                                        <circle cx="100" cy="240" r="8" fill="#FFD93D" class="ponto-interesse" data-ponto="objetivo"/>
+                                        <text x="100" y="230" text-anchor="middle" class="ponto-label">Meu Objetivo</text>
                                         
-                                        <!-- Obstáculos (meio) -->
-                                        <circle cx="300" cy="200" r="8" fill="#FF6B6B" class="ponto-interesse" data-ponto="obstaculos"/>
-                                        <text x="300" y="190" text-anchor="middle" class="ponto-label">Meus Obstáculos</text>
+                                        <!-- Primeiro Passo (meio) -->
+                                        <circle cx="300" cy="200" r="8" fill="#4ECDC4" class="ponto-interesse" data-ponto="primeiro-passo"/>
+                                        <text x="300" y="190" text-anchor="middle" class="ponto-label">O Primeiro Passo</text>
                                         
-                                        <!-- Ferramentas (meio-caminho) -->
-                                        <circle cx="500" cy="180" r="8" fill="#96CEB4" class="ponto-interesse" data-ponto="ferramentas"/>
-                                        <text x="500" y="170" text-anchor="middle" class="ponto-label">Minhas Ferramentas</text>
+                                        <!-- Obstáculos (meio-caminho) -->
+                                        <circle cx="500" cy="180" r="8" fill="#FF6B6B" class="ponto-interesse" data-ponto="obstaculos"/>
+                                        <text x="500" y="170" text-anchor="middle" class="ponto-label">Meus Obstáculos</text>
                                         
-                                        <!-- Objetivo (horizonte) -->
-                                        <circle cx="700" cy="160" r="8" fill="#FFD93D" class="ponto-interesse" data-ponto="objetivo"/>
-                                        <text x="700" y="150" text-anchor="middle" class="ponto-label">Meu Objetivo</text>
+                                        <!-- Ferramentas (horizonte) -->
+                                        <circle cx="700" cy="160" r="8" fill="#96CEB4" class="ponto-interesse" data-ponto="ferramentas"/>
+                                        <text x="700" y="150" text-anchor="middle" class="ponto-label">Minhas Ferramentas</text>
                                     </svg>
                                 </div>
                                 
                                 <!-- Pontos de Interação -->
                                 <div class="pontos-interacao">
+                                    <!-- Meu Objetivo -->
+                                    <div class="ponto-interacao" data-ponto="objetivo">
+                                        <div class="ponto-header">
+                                            <div class="ponto-emoji">🎯</div>
+                                            <h4>Meu Objetivo</h4>
+                                        </div>
+                                        <div class="ponto-conteudo">
+                                            <p><strong>O que você quer alcançar no futuro próximo?</strong> (ex.: escolher uma área de estudo, pesquisar uma profissão)</p>
+                                            <textarea id="objetivo" placeholder="Descreva seu objetivo..." maxlength="300"></textarea>
+                                        </div>
+                                    </div>
+                                    
                                     <!-- O Primeiro Passo -->
                                     <div class="ponto-interacao" data-ponto="primeiro-passo">
                                         <div class="ponto-header">
@@ -407,18 +419,6 @@
                                         <div class="ponto-conteudo">
                                             <p><strong>O que pode me ajudar a superar esses obstáculos?</strong> (minhas habilidades, pessoas que me apoiam, internet, professores)</p>
                                             <textarea id="ferramentas" placeholder="Descreva suas ferramentas e recursos..." maxlength="300"></textarea>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Meu Objetivo -->
-                                    <div class="ponto-interacao" data-ponto="objetivo">
-                                        <div class="ponto-header">
-                                            <div class="ponto-emoji">🎯</div>
-                                            <h4>Meu Objetivo</h4>
-                                        </div>
-                                        <div class="ponto-conteudo">
-                                            <p><strong>O que você quer alcançar no futuro próximo?</strong> (ex.: escolher uma área de estudo, pesquisar uma profissão)</p>
-                                            <textarea id="objetivo" placeholder="Descreva seu objetivo..." maxlength="300"></textarea>
                                         </div>
                                     </div>
                                 </div>

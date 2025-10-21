@@ -25,12 +25,19 @@ class CartilhaNavigator {
     setupEventListeners() {
         // Navegação por teclado
         document.addEventListener('keydown', (e) => {
+            // Só intercepta teclas de navegação se não estiver em um campo de entrada
+            const isInputField = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.contentEditable === 'true';
+            
             if (e.key === 'ArrowRight' || e.key === ' ') {
-                e.preventDefault();
-                this.nextPage();
+                if (!isInputField) {
+                    e.preventDefault();
+                    this.nextPage();
+                }
             } else if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                this.previousPage();
+                if (!isInputField) {
+                    e.preventDefault();
+                    this.previousPage();
+                }
             } else if (e.key === 'Escape') {
                 this.goToNavigation();
             }
@@ -1504,83 +1511,30 @@ class CompassInteractions {
 class ValuesInteractions {
     constructor() {
         this.storageKey = 'cartilha_values_responses';
-        this.draggedElement = null;
         this.init();
     }
     
     init() {
-        this.setupDragAndDrop();
+        this.setupClickInteractions();
         this.setupReflectionInputs();
         this.loadSavedValues();
     }
     
-    setupDragAndDrop() {
+    setupClickInteractions() {
         const valueItems = document.querySelectorAll('.value-item');
         const podiumBases = document.querySelectorAll('.podium-base');
         
-        // Configura drag para os itens de valor
+        // Configura clique para os itens de valor
         valueItems.forEach(item => {
-            item.addEventListener('dragstart', (e) => {
-                this.draggedElement = item;
-                item.classList.add('dragging');
-                e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('text/html', item.outerHTML);
-                
-                // Adiciona classe de drop zone aos pódios vazios
-                podiumBases.forEach(podium => {
-                    if (!podium.dataset.valueId) {
-                        podium.classList.add('drop-zone');
-                    }
-                });
-            });
-            
-            item.addEventListener('dragend', () => {
-                item.classList.remove('dragging');
-                this.draggedElement = null;
-                
-                // Remove classe de drop zone de todos os pódios
-                podiumBases.forEach(podium => {
-                    podium.classList.remove('drop-zone', 'drag-over');
-                });
-            });
-            
-            // Adiciona funcionalidade de clique como alternativa
             item.addEventListener('click', () => {
                 if (!item.classList.contains('used')) {
                     this.showValueSelectionModal(item);
                 }
             });
-            
-            // Suporte para touch em dispositivos móveis
-            this.setupTouchDragSupport(item, valueItems, podiumBases);
         });
         
-        // Configura drop para os lugares do pódio
+        // Configura clique para os lugares do pódio
         podiumBases.forEach(podium => {
-            podium.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                e.dataTransfer.dropEffect = 'move';
-                
-                // Só permite drop se o pódio estiver vazio
-                if (!podium.dataset.valueId) {
-                    podium.classList.add('drag-over');
-                }
-            });
-            
-            podium.addEventListener('dragleave', () => {
-                podium.classList.remove('drag-over');
-            });
-            
-            podium.addEventListener('drop', (e) => {
-                e.preventDefault();
-                podium.classList.remove('drag-over', 'drop-zone');
-                
-                if (this.draggedElement && !podium.dataset.valueId) {
-                    this.placeValueOnPodium(podium, this.draggedElement);
-                }
-            });
-            
-            // Adiciona funcionalidade de clique no pódio
             podium.addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (!podium.dataset.valueId) {
@@ -1591,112 +1545,6 @@ class ValuesInteractions {
                 }
             });
         });
-        
-        // Previne drop fora do pódio
-        document.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
-        
-        document.addEventListener('drop', (e) => {
-            e.preventDefault();
-            // Remove todas as classes de drag se soltar fora do pódio
-            podiumBases.forEach(podium => {
-                podium.classList.remove('drag-over', 'drop-zone');
-            });
-        });
-    }
-    
-    setupTouchDragSupport(item, valueItems, podiumBases) {
-        let startX = 0;
-        let startY = 0;
-        let isDragging = false;
-        let dragElement = null;
-        
-        item.addEventListener('touchstart', (e) => {
-            if (item.classList.contains('used')) return;
-            
-            const touch = e.touches[0];
-            startX = touch.clientX;
-            startY = touch.clientY;
-            isDragging = false;
-            
-            // Cria elemento visual para drag
-            dragElement = item.cloneNode(true);
-            dragElement.style.position = 'fixed';
-            dragElement.style.pointerEvents = 'none';
-            dragElement.style.zIndex = '1000';
-            dragElement.style.opacity = '0.8';
-            dragElement.style.transform = 'rotate(5deg) scale(1.1)';
-            document.body.appendChild(dragElement);
-            
-        }, { passive: true });
-        
-        item.addEventListener('touchmove', (e) => {
-            if (!dragElement) return;
-            
-            const touch = e.touches[0];
-            const deltaX = touch.clientX - startX;
-            const deltaY = touch.clientY - startY;
-            
-            // Inicia drag se movimento for significativo
-            if (!isDragging && (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10)) {
-                isDragging = true;
-                item.classList.add('dragging');
-                this.draggedElement = item;
-                
-                // Adiciona classe de drop zone aos pódios vazios
-                podiumBases.forEach(podium => {
-                    if (!podium.dataset.valueId) {
-                        podium.classList.add('drop-zone');
-                    }
-                });
-            }
-            
-            if (isDragging) {
-                dragElement.style.left = (touch.clientX - 50) + 'px';
-                dragElement.style.top = (touch.clientY - 50) + 'px';
-                
-                // Verifica se está sobre um pódio
-                const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-                const podium = elementBelow?.closest('.podium-base');
-                
-                // Remove highlight de todos os pódios
-                podiumBases.forEach(p => p.classList.remove('drag-over'));
-                
-                // Adiciona highlight ao pódio sob o toque apenas se estiver vazio
-                if (podium && !podium.dataset.valueId) {
-                    podium.classList.add('drag-over');
-                }
-            }
-            
-        }, { passive: true });
-        
-        item.addEventListener('touchend', (e) => {
-            if (!dragElement) return;
-            
-            const touch = e.changedTouches[0];
-            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-            const podium = elementBelow?.closest('.podium-base');
-            
-            if (isDragging && podium && !podium.dataset.valueId) {
-                this.placeValueOnPodium(podium, item);
-            }
-            
-            // Limpa estado
-            item.classList.remove('dragging');
-            this.draggedElement = null;
-            isDragging = false;
-            
-            // Remove highlight e drop zone de todos os pódios
-            podiumBases.forEach(p => p.classList.remove('drag-over', 'drop-zone'));
-            
-            // Remove elemento visual
-            if (dragElement) {
-                document.body.removeChild(dragElement);
-                dragElement = null;
-            }
-            
-        }, { passive: true });
     }
     
     placeValueOnPodium(podium, valueItem) {
@@ -1714,7 +1562,6 @@ class ValuesInteractions {
         
         // Marca o item como usado
         valueItem.classList.add('used');
-        valueItem.draggable = false;
         
         // Salva no localStorage
         this.saveValuesToStorage();
@@ -1729,7 +1576,7 @@ class ValuesInteractions {
         // Restaura o placeholder
         const podiumContent = podium.querySelector('.podium-content');
         if (podiumContent) {
-            podiumContent.innerHTML = '<span class="placeholder">Clique ou arraste aqui</span>';
+            podiumContent.innerHTML = '<span class="placeholder">Clique aqui</span>';
         }
         
         podium.dataset.valueId = '';
@@ -1739,7 +1586,6 @@ class ValuesInteractions {
         const originalItem = document.querySelector(`.value-item[data-value="${valueId}"]`);
         if (originalItem) {
             originalItem.classList.remove('used');
-            originalItem.draggable = true;
         }
         
         // Salva no localStorage
@@ -1776,7 +1622,7 @@ class ValuesInteractions {
                         </button>`;
                     }).join('')}
                 </div>
-                <button class="close-modal">Cancelar</button>
+                <button class="close-modal">Ok</button>
             </div>
         `;
         
@@ -1839,7 +1685,7 @@ class ValuesInteractions {
                         </button>`;
                     }).join('')}
                 </div>
-                <button class="close-modal">Cancelar</button>
+                <button class="close-modal">Ok</button>
             </div>
         `;
         
@@ -1995,7 +1841,6 @@ class ValuesInteractions {
                     const originalItem = document.querySelector(`.value-item[data-value="${valueData.id}"]`);
                     if (originalItem) {
                         originalItem.classList.add('used');
-                        originalItem.draggable = false;
                     }
                 }
             });
