@@ -2789,9 +2789,11 @@ function restoreMochilaChoice() {
             if (radioButton) {
                 radioButton.checked = true;
                 
-                // Disparar evento para mostrar reflexão
-                const event = new Event('change');
-                radioButton.dispatchEvent(event);
+                // Mostrar reflexão sem fazer scroll automático
+                const reflexaoElement = document.getElementById('reflexaoMochila');
+                if (reflexaoElement) {
+                    reflexaoElement.style.display = 'block';
+                }
             }
         }
     }
