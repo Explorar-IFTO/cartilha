@@ -4730,6 +4730,99 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
 }
 
+/* Botão para Baixar PDF */
+.download-pdf-container {
+    margin: 40px 0;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.download-pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(76, 175, 80, 0.3);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.download-pdf-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.download-pdf-btn:hover::before {
+    left: 100%;
+}
+
+.download-pdf-btn:hover {
+    background: linear-gradient(135deg, #43a047 0%, #5cb85c 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(76, 175, 80, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.download-pdf-btn:active {
+    transform: translateY(-1px);
+}
+
+.download-pdf-btn .btn-icon {
+    font-size: 1.3rem;
+    animation: downloadPulse 2s infinite;
+    position: relative;
+    z-index: 2;
+}
+
+.download-pdf-btn .btn-text {
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes downloadPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.pdf-info-box {
+    margin-top: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    border: 2px dashed #4caf50;
+}
+
+.pdf-info-box p {
+    margin: 0;
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
 /* Botão para Voltar ao Início */
 .home-button-container {
     margin: 40px 0;
@@ -6436,6 +6529,20 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     .next-section-btn {
         padding: 12px 24px;
         font-size: 1rem;
+    }
+    
+    .download-pdf-container {
+        margin: 30px 0;
+    }
+    
+    .download-pdf-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+    
+    .pdf-info-box {
+        padding: 12px 15px;
+        font-size: 0.9rem;
     }
     
     .home-button-container {

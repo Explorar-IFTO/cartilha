@@ -448,6 +448,17 @@
                                 </div>
                             </div>
                             
+                            <!-- Botão para Baixar PDF -->
+                            <div class="download-pdf-container">
+                                <button class="download-pdf-btn" id="downloadPDFBtn" onclick="gerarPDFTodasRespostas(); return false;">
+                                    <span class="btn-icon">📥</span>
+                                    <span class="btn-text">Baixar PDF com Todas as Minhas Respostas</span>
+                                </button>
+                                <div class="comic-info-box pdf-info-box">
+                                    <p>💡 <strong>Dica:</strong> Este PDF contém todas as suas respostas e reflexões de todas as seções que você preencheu. Você pode salvar e revisar sempre que quiser!</p>
+                                </div>
+                            </div>
+                            
                             <!-- Botão para Voltar ao Início -->
                             <div class="home-button-container">
                                 <a href="index.html" class="home-button">
@@ -462,6 +473,7 @@
         </div>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

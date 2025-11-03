@@ -3088,6 +3088,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Inicializar funcionalidade de expandir/colapsar referências
     initReferencesToggle();
+    
+    // Inicializar botão de download de PDF
+    initPDFDownloadButton();
 });
 
 // Função para inicializar o toggle das referências
@@ -3143,3 +3146,541 @@ function initReferencesToggle() {
         });
     }
 }
+
+// ===== FUNCIONALIDADE DE GERAÇÃO DE PDF =====
+
+// Função para coletar todas as respostas armazenadas
+function coletarTodasRespostas() {
+    const todasRespostas = {};
+    
+    // 1. Autoconhecimento
+    const autoconhecimento = localStorage.getItem('cartilha_autoconhecimento_responses');
+    if (autoconhecimento) {
+        try {
+            todasRespostas.autoconhecimento = JSON.parse(autoconhecimento);
+        } catch (e) {
+            console.warn('Erro ao parsear autoconhecimento:', e);
+        }
+    }
+    
+    // 2. Mapa de Energia
+    const energiaMap = localStorage.getItem('cartilha_energy_map_responses');
+    if (energiaMap) {
+        try {
+            todasRespostas.energiaMap = JSON.parse(energiaMap);
+        } catch (e) {
+            console.warn('Erro ao parsear energiaMap:', e);
+        }
+    }
+    
+    // 3. Bússola de Interesses
+    const compass = localStorage.getItem('cartilha_compass_responses');
+    if (compass) {
+        try {
+            todasRespostas.compass = JSON.parse(compass);
+        } catch (e) {
+            console.warn('Erro ao parsear compass:', e);
+        }
+    }
+    
+    // 4. Valores
+    const values = localStorage.getItem('cartilha_values_responses');
+    if (values) {
+        try {
+            todasRespostas.values = JSON.parse(values);
+        } catch (e) {
+            console.warn('Erro ao parsear values:', e);
+        }
+    }
+    
+    // 5. Mitos e Verdades
+    const mitos = localStorage.getItem('mitosVerdadesResponses');
+    if (mitos) {
+        try {
+            todasRespostas.mitosVerdades = JSON.parse(mitos);
+        } catch (e) {
+            console.warn('Erro ao parsear mitosVerdades:', e);
+        }
+    }
+    
+    // 6. Top 3 Profissões
+    const topProfissoes = localStorage.getItem('topProfissoesData');
+    if (topProfissoes) {
+        try {
+            todasRespostas.topProfissoes = JSON.parse(topProfissoes);
+        } catch (e) {
+            console.warn('Erro ao parsear topProfissoes:', e);
+        }
+    }
+    
+    // 7. Análise de Profissões
+    const analise1 = localStorage.getItem('analiseProfissao1');
+    const analise2 = localStorage.getItem('analiseProfissao2');
+    const analise3 = localStorage.getItem('analiseProfissao3');
+    if (analise1 || analise2 || analise3) {
+        todasRespostas.analiseProfissoes = {};
+        if (analise1) {
+            try {
+                todasRespostas.analiseProfissoes.profissao1 = JSON.parse(analise1);
+            } catch (e) {
+                console.warn('Erro ao parsear analise1:', e);
+            }
+        }
+        if (analise2) {
+            try {
+                todasRespostas.analiseProfissoes.profissao2 = JSON.parse(analise2);
+            } catch (e) {
+                console.warn('Erro ao parsear analise2:', e);
+            }
+        }
+        if (analise3) {
+            try {
+                todasRespostas.analiseProfissoes.profissao3 = JSON.parse(analise3);
+            } catch (e) {
+                console.warn('Erro ao parsear analise3:', e);
+            }
+        }
+    }
+    
+    // 8. Mochila
+    const mochila = localStorage.getItem('mochilaEscolha');
+    if (mochila) {
+        todasRespostas.mochila = {
+            escolha: mochila
+        };
+    }
+    
+    // 9. Pressão de Quem
+    const pressao = localStorage.getItem('pressaoQuemRespostas');
+    if (pressao) {
+        try {
+            todasRespostas.pressaoQuem = JSON.parse(pressao);
+        } catch (e) {
+            console.warn('Erro ao parsear pressaoQuem:', e);
+        }
+    }
+    
+    // 10. Caminho é Seu
+    const caminho = localStorage.getItem('caminhoSeuRespostas');
+    if (caminho) {
+        try {
+            todasRespostas.caminhoSeu = JSON.parse(caminho);
+        } catch (e) {
+            console.warn('Erro ao parsear caminhoSeu:', e);
+        }
+    }
+    
+    return todasRespostas;
+}
+
+// Função para remover emojis de texto
+function removerEmojis(texto) {
+    if (!texto || typeof texto !== 'string') return texto;
+    
+    // Remove emojis usando regex
+    // Remove caracteres Unicode que são emojis
+    return texto.replace(/[\u{1F300}-\u{1F9FF}]/gu, '') // Emojis gerais
+                .replace(/[\u{1F600}-\u{1F64F}]/gu, '') // Emoticons
+                .replace(/[\u{1F680}-\u{1F6FF}]/gu, '') // Transporte e símbolos
+                .replace(/[\u{2600}-\u{26FF}]/gu, '')   // Símbolos diversos
+                .replace(/[\u{2700}-\u{27BF}]/gu, '')   // Dingbats
+                .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // Emojis suplementares
+                .replace(/[\u{1FA00}-\u{1FA6F}]/gu, '') // Emojis suplementares adicionais
+                .replace(/[\u{1FA70}-\u{1FAFF}]/gu, '') // Símbolos e pictogramas
+                .trim();
+}
+
+// Função para formatar texto quebra de linha no PDF
+function adicionarTextoComQuebra(pdf, texto, x, y, maxWidth, lineHeight) {
+    const textoLimpo = removerEmojis(texto);
+    const linhas = pdf.splitTextToSize(textoLimpo, maxWidth);
+    let currentY = y;
+    
+    linhas.forEach(linha => {
+        if (currentY > 280) { // Próxima página se necessário
+            pdf.addPage();
+            currentY = 20;
+        }
+        pdf.text(linha, x, currentY);
+        currentY += lineHeight;
+    });
+    
+    return currentY;
+}
+
+// Função principal para gerar o PDF
+function gerarPDFTodasRespostas() {
+    // Verificar se jsPDF está disponível (CDN usa window.jspdf.jsPDF)
+    const jsPDFLib = window.jspdf ? window.jspdf.jsPDF : (typeof jsPDF !== 'undefined' ? jsPDF : null);
+    
+    if (!jsPDFLib) {
+        alert('Biblioteca de PDF não carregada. Por favor, recarregue a página.');
+        return;
+    }
+    
+    const respostas = coletarTodasRespostas();
+    
+    // Verificar se há respostas para gerar o PDF
+    if (Object.keys(respostas).length === 0) {
+        alert('Não há respostas salvas para gerar o PDF.');
+        return;
+    }
+    
+    // Criar novo documento PDF
+    const pdf = new jsPDFLib({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+    });
+    
+    let yPosition = 20;
+    const margin = 15;
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const contentWidth = pageWidth - (2 * margin);
+    
+    // Função auxiliar para adicionar nova página se necessário
+    function checkNewPage(neededSpace) {
+        if (yPosition + neededSpace > 280) {
+            pdf.addPage();
+            yPosition = 20;
+            return true;
+        }
+        return false;
+    }
+    
+    // Função para adicionar título de seção (sem emojis)
+    function addSectionTitle(title, emoji = '') {
+        checkNewPage(15);
+        pdf.setFontSize(16);
+        pdf.setTextColor(67, 135, 196); // Cor azul
+        pdf.setFont(undefined, 'bold');
+        // Remove emojis do título - apenas texto
+        const titleText = title;
+        pdf.text(titleText, margin, yPosition);
+        yPosition += 10;
+        pdf.setFontSize(11);
+        pdf.setTextColor(0, 0, 0);
+        pdf.setFont(undefined, 'normal');
+    }
+    
+    // Função para adicionar texto com quebra de linha (sem emojis)
+    function addWrappedText(text, indent = 0) {
+        if (!text || text.trim() === '') return;
+        
+        // Remove emojis antes de processar
+        const textoLimpo = removerEmojis(text);
+        if (!textoLimpo || textoLimpo.trim() === '') return;
+        
+        const lines = pdf.splitTextToSize(textoLimpo, contentWidth - indent);
+        lines.forEach(line => {
+            checkNewPage(7);
+            pdf.text(line, margin + indent, yPosition);
+            yPosition += 7;
+        });
+        yPosition += 3; // Espaço após o texto
+    }
+    
+    // Função para adicionar campo label + valor (sem emojis)
+    function addField(label, value, indent = 0) {
+        if (!value || (typeof value === 'string' && value.trim() === '')) return;
+        
+        // Remove emojis do label e do value
+        const labelLimpo = removerEmojis(label);
+        const valueLimpo = typeof value === 'string' ? removerEmojis(value) : value;
+        
+        if (typeof valueLimpo === 'string' && valueLimpo.trim() === '') return;
+        
+        checkNewPage(10);
+        pdf.setFont(undefined, 'bold');
+        pdf.text(`${labelLimpo}:`, margin + indent, yPosition);
+        yPosition += 7;
+        pdf.setFont(undefined, 'normal');
+        addWrappedText(valueLimpo, indent + 5);
+    }
+    
+    // Título principal
+    pdf.setFontSize(20);
+    pdf.setTextColor(67, 135, 196);
+    pdf.setFont(undefined, 'bold');
+    pdf.text('EXPLORAR - Minhas Respostas', margin, yPosition);
+    yPosition += 10;
+    
+    pdf.setFontSize(10);
+    pdf.setTextColor(100, 100, 100);
+    pdf.setFont(undefined, 'normal');
+    pdf.text(`Gerado em: ${new Date().toLocaleDateString('pt-BR')}`, margin, yPosition);
+    yPosition += 15;
+    
+    // ===== SEÇÃO: AUTOCONHECIMENTO =====
+    if (respostas.autoconhecimento) {
+        addSectionTitle('Autoconhecimento');
+        
+        if (respostas.autoconhecimento.selectedEmoji) {
+            // Remove emojis - apenas texto
+            const feeling = respostas.autoconhecimento.selectedEmoji.feeling || '';
+            addField('Como me sinto', feeling);
+        }
+        
+        addField('Uma palavra', respostas.autoconhecimento.wordInput);
+        addField('Um sentimento', respostas.autoconhecimento.feelingInput);
+        addField('Uma dúvida', respostas.autoconhecimento.doubtInput);
+    }
+    
+    // ===== SEÇÃO: MAPA DE ENERGIA =====
+    if (respostas.energiaMap) {
+        addSectionTitle('Meu Mapa da Energia Diária');
+        
+        const territorios = {
+            'passionInput': 'Campo da Paixão (Gosto e Faço)',
+            'secretInput': 'Jardim Secreto (Gosto e Não Faço)',
+            'mountainInput': 'Montanha Íngreme (Não Gosto e Faço)',
+            'swampInput': 'Pântano (Não Gosto e Não Faço)'
+        };
+        
+        Object.keys(territorios).forEach(key => {
+            if (respostas.energiaMap[key]) {
+                addField(territorios[key], respostas.energiaMap[key]);
+            }
+        });
+    }
+    
+    // ===== SEÇÃO: BÚSSOLA DE INTERESSES =====
+    if (respostas.compass) {
+        addSectionTitle('Minha Bússola de Interesses');
+        
+        const compassAreas = {
+            'school': 'Na escola',
+            'leisure': 'No meu tempo livre',
+            'social': 'No meu convívio social',
+            'responsibility': 'Em minhas responsabilidades'
+        };
+        
+        Object.keys(compassAreas).forEach(key => {
+            const responses = respostas.compass;
+            if (responses[`${key}Input`] || responses[`${key}Completa`]) {
+                const texto = responses[`${key}Completa`] || responses[`${key}Input`] || '';
+                addField(compassAreas[key], texto);
+            }
+        });
+    }
+    
+    // ===== SEÇÃO: VALORES =====
+    if (respostas.values) {
+        addSectionTitle('Top 3 Valores Inegociáveis');
+        
+        // Valores do pódio
+        if (respostas.values.podium) {
+            const podiumOrder = ['1', '2', '3'];
+            podiumOrder.forEach(place => {
+                if (respostas.values.podium[place]) {
+                    const valueData = respostas.values.podium[place];
+                    addField(`${place}º lugar`, valueData.text || valueData.id);
+                }
+            });
+        }
+        
+        // Reflexões sobre trabalho ideal
+        if (respostas.values.reflection) {
+            addField('Trabalho ideal', respostas.values.reflection.idealWork);
+            addField('Contribuição para o mundo', respostas.values.reflection.worldContribution);
+        }
+    }
+    
+    // ===== SEÇÃO: PROFISSÕES =====
+    if (respostas.mitosVerdades) {
+        addSectionTitle('Mitos e Verdades sobre o Trabalho');
+        Object.keys(respostas.mitosVerdades).forEach(key => {
+            const resposta = respostas.mitosVerdades[key];
+            if (resposta) {
+                addField(`Card ${key}`, `Resposta: ${resposta}`);
+            }
+        });
+    }
+    
+    if (respostas.topProfissoes) {
+        addSectionTitle('Top 3 Profissões');
+        
+        for (let i = 1; i <= 3; i++) {
+            const profissao = respostas.topProfissoes[`profissao${i}`];
+            const motivo = respostas.topProfissoes[`motivo${i}`];
+            
+            if (profissao || motivo) {
+                checkNewPage(15);
+                pdf.setFont(undefined, 'bold');
+                pdf.text(`${i}º Lugar:`, margin, yPosition);
+                yPosition += 7;
+                pdf.setFont(undefined, 'normal');
+                addWrappedText(profissao || 'Não informado', 5);
+                addField('Motivo', motivo, 5);
+            }
+        }
+    }
+    
+    if (respostas.analiseProfissoes) {
+        addSectionTitle('Análise das Profissões');
+        
+        for (let i = 1; i <= 3; i++) {
+            const analise = respostas.analiseProfissoes[`profissao${i}`];
+            if (analise && Object.keys(analise).length > 0) {
+                checkNewPage(15);
+                pdf.setFont(undefined, 'bold');
+                pdf.text(`Profissão ${i}:`, margin, yPosition);
+                yPosition += 7;
+                pdf.setFont(undefined, 'normal');
+                
+                if (analise.desafios) addField('Desafios', analise.desafios, 5);
+                if (analise.acesso) addField('Quem tem mais acesso', analise.acesso, 5);
+                if (analise.futuro) addField('Futuro da profissão', analise.futuro, 5);
+            }
+        }
+    }
+    
+    // ===== SEÇÃO: IMPLICAÇÕES =====
+    if (respostas.mochila) {
+        addSectionTitle('O que mais influencia minhas escolhas? (A Mochila)');
+        
+        const mochilaDesc = {
+            'familia': 'Minha família e o que ela espera de mim',
+            'financeira': 'A situação financeira da minha família',
+            'regiao': 'As oportunidades de estudo e de trabalho na região onde moro',
+            'escola': 'A escola e os professores que tenho',
+            'redes': 'O que vejo nas redes sociais / internet',
+            'valores': 'Meus valores e crenças pessoais'
+        };
+        
+        const desc = mochilaDesc[respostas.mochila.escolha] || respostas.mochila.escolha;
+        addField('Influência mais importante', desc);
+    }
+    
+    if (respostas.pressaoQuem) {
+        addSectionTitle('Pressão de Quem?');
+        
+        addField('Pressão da Família', respostas.pressaoQuem.familia);
+        addField('Pressão dos Amigos/Turma', respostas.pressaoQuem.amigos);
+        addField('Pressão da Sociedade', respostas.pressaoQuem.sociedade);
+        addField('Pressão de Mim Mesmo(a)', respostas.pressaoQuem.autopressao);
+        
+        if (respostas.pressaoQuem.pressaoFinal) {
+            const pressaoFinalDesc = {
+                'familia': 'Família',
+                'amigos': 'Amigos/Turma',
+                'sociedade': 'Sociedade',
+                'autopressao': 'Eu Mesmo(a)'
+            };
+            const desc = pressaoFinalDesc[respostas.pressaoQuem.pressaoFinal] || respostas.pressaoQuem.pressaoFinal;
+            addField('Pressão que mais pesa', desc);
+        }
+    }
+    
+    if (respostas.caminhoSeu) {
+        addSectionTitle('O Caminho é Seu');
+        
+        addField('Meu Objetivo', respostas.caminhoSeu.objetivo);
+        addField('O Primeiro Passo', respostas.caminhoSeu.primeiroPasso);
+        addField('Meus Obstáculos', respostas.caminhoSeu.obstaculos);
+        addField('Minhas Ferramentas', respostas.caminhoSeu.ferramentas);
+    }
+    
+    // Rodapé
+    const totalPages = pdf.internal.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        pdf.setFontSize(8);
+        pdf.setTextColor(150, 150, 150);
+        pdf.text(
+            `Página ${i} de ${totalPages} - EXPLORAR`,
+            pageWidth - margin - 50,
+            pdf.internal.pageSize.getHeight() - 10
+        );
+    }
+    
+    // Salvar o PDF
+    const fileName = `EXPLORAR_MinhasRespostas_${new Date().toISOString().split('T')[0]}.pdf`;
+    pdf.save(fileName);
+    
+    // Feedback visual
+    mostrarFeedbackPDF();
+}
+
+// Função para mostrar feedback visual ao gerar PDF
+function mostrarFeedbackPDF() {
+    // Criar elemento de feedback
+    const feedback = document.createElement('div');
+    feedback.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+        color: white;
+        padding: 20px 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        z-index: 10000;
+        font-family: 'Fredoka', sans-serif;
+        font-size: 16px;
+        animation: slideIn 0.3s ease-out;
+    `;
+    feedback.innerHTML = '✅ PDF gerado com sucesso!';
+    
+    // Adicionar animação
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    document.body.appendChild(feedback);
+    
+    // Remover após 3 segundos
+    setTimeout(() => {
+        feedback.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => {
+            feedback.remove();
+            style.remove();
+        }, 300);
+    }, 3000);
+}
+
+// Inicializar botão de download de PDF
+function initPDFDownloadButton() {
+    const downloadBtn = document.getElementById('downloadPDFBtn');
+    if (downloadBtn) {
+        // Remove qualquer listener anterior para evitar duplicação
+        downloadBtn.onclick = null;
+        
+        downloadBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Botão de PDF clicado!');
+            gerarPDFTodasRespostas();
+        });
+        
+        // Também adiciona como onclick como fallback
+        downloadBtn.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Botão de PDF clicado (onclick)!');
+            gerarPDFTodasRespostas();
+        };
+        
+        console.log('Botão de PDF inicializado:', downloadBtn);
+    } else {
+        console.warn('Botão de PDF não encontrado!');
+    }
+}
+
+// Inicializar botão de PDF quando a página carregar (múltiplas tentativas)
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        initPDFDownloadButton();
+    }, 100);
+});
