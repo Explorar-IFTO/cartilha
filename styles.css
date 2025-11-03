@@ -4827,6 +4827,8 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 .home-button-container {
     margin: 40px 0;
     text-align: center;
+    position: relative;
+    z-index: 10;
 }
 
 .home-button {
@@ -4845,6 +4847,9 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
     position: relative;
     overflow: hidden;
+    z-index: 10;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .home-button::before {
@@ -4856,6 +4861,8 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .home-button:hover::before {
@@ -4876,6 +4883,13 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 .home-button .btn-icon {
     font-size: 1.3rem;
     animation: homePulse 2s infinite;
+    position: relative;
+    z-index: 2;
+}
+
+.home-button .btn-text {
+    position: relative;
+    z-index: 2;
 }
 
 @keyframes homePulse {
