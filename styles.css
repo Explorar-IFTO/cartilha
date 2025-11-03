@@ -6916,7 +6916,10 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     color: var(--text-color);
     margin-bottom: 40px;
     position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
     width: 100%;
 }
 
@@ -6938,6 +6941,58 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     transform: translateY(-50%);
     font-size: 2rem;
     animation: bounce 2s ease-in-out infinite 0.5s;
+}
+
+.references-toggle-btn {
+    background: var(--primary-color);
+    border: 3px solid var(--black);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 3px 3px 0px var(--black);
+    position: relative;
+    z-index: 10;
+    margin-left: 10px;
+}
+
+.references-toggle-btn:hover {
+    background: var(--secondary-color);
+    transform: scale(1.1);
+    box-shadow: 5px 5px 0px var(--black);
+}
+
+.references-toggle-btn:active {
+    transform: scale(0.95);
+    box-shadow: 2px 2px 0px var(--black);
+}
+
+.references-toggle-btn .toggle-icon {
+    font-size: 1.2rem;
+    color: var(--white);
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    display: block;
+    line-height: 1;
+}
+
+.references-content {
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.4s ease, gap 0.4s ease;
+    max-height: 0;
+    opacity: 0;
+    gap: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.references-content.expanded {
+    max-height: none !important;
+    overflow: visible;
 }
 
 .references-list {
@@ -7043,6 +7098,15 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     .references-title::before,
     .references-title::after {
         display: none;
+    }
+    
+    .references-toggle-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .references-toggle-btn .toggle-icon {
+        font-size: 1rem;
     }
     
     .reference-item {

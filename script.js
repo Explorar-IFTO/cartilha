@@ -3085,4 +3085,61 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar funcionalidades da seção caminho é seu
     handleCaminhoSeu();
     restoreCaminhoSeu();
+    
+    // Inicializar funcionalidade de expandir/colapsar referências
+    initReferencesToggle();
 });
+
+// Função para inicializar o toggle das referências
+function initReferencesToggle() {
+    const toggleBtn = document.querySelector('.references-toggle-btn');
+    const referencesContent = document.querySelector('.references-content');
+    
+    if (toggleBtn && referencesContent) {
+        toggleBtn.addEventListener('click', function() {
+            const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+            const icon = toggleBtn.querySelector('.toggle-icon');
+            
+            if (isExpanded) {
+                // Colapsar
+                referencesContent.classList.remove('expanded');
+                referencesContent.style.maxHeight = referencesContent.scrollHeight + 'px';
+                // Força um reflow
+                referencesContent.offsetHeight;
+                referencesContent.style.maxHeight = '0';
+                referencesContent.style.opacity = '0';
+                referencesContent.style.gap = '0';
+                toggleBtn.setAttribute('aria-expanded', 'false');
+                icon.textContent = '▼';
+            } else {
+                // Expandir
+                // Primeiro, remover max-height para poder calcular a altura real
+                referencesContent.style.maxHeight = 'none';
+                referencesContent.style.opacity = '1';
+                referencesContent.style.gap = '25px';
+                const height = referencesContent.scrollHeight;
+                // Resetar para 0 para começar a animação
+                referencesContent.style.maxHeight = '0';
+                referencesContent.style.opacity = '0';
+                referencesContent.style.gap = '0';
+                // Força um reflow
+                referencesContent.offsetHeight;
+                // Agora animar para uma altura maior que a real para garantir que não corte
+                setTimeout(function() {
+                    referencesContent.style.maxHeight = (height + 100) + 'px';
+                    referencesContent.style.opacity = '1';
+                    referencesContent.style.gap = '25px';
+                }, 10);
+                // Após a animação, remover o max-height para permitir crescimento natural
+                setTimeout(function() {
+                    if (toggleBtn.getAttribute('aria-expanded') === 'true') {
+                        referencesContent.classList.add('expanded');
+                        referencesContent.style.maxHeight = 'none';
+                    }
+                }, 600);
+                toggleBtn.setAttribute('aria-expanded', 'true');
+                icon.textContent = '▲';
+            }
+        });
+    }
+}
