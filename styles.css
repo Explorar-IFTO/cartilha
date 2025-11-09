@@ -451,8 +451,7 @@ body {
             transparent 100%
         ),
         var(--gradient-notebook);
-    padding: 40px 20px;
-    min-height: 100vh;
+    padding: 20px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -475,6 +474,7 @@ body {
 
 /* CAMADA 1: Call to Action Principal (Máxima Atenção) */
 .intro-hero {
+    margin-top: 20px;
     position: relative;
     z-index: var(--z-content);
     margin-bottom: 20px;
@@ -515,10 +515,8 @@ body {
     50% { transform: scale(1.2) rotate(180deg); }
 }
 
-/* CAMADA 2: Apresentação da Daniela (Alta Atenção) */
 .daniela-presentation {
     display: flex;
-    align-items: flex-start;
     gap: 20px;
     max-width: 900px;
     position: relative;
@@ -527,10 +525,14 @@ body {
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: center;
 }
 
 .daniela-avatar-container {
     flex-shrink: 0;
+    margin-top: 60px;
     position: relative;
     width: 120px;
     height: 120px;
@@ -662,7 +664,6 @@ body {
 }
 
 .handwriting-text {
-    font-family: var(--font-handwriting);
     font-size: 1.2rem;
     font-weight: 400;
     line-height: 1.6;
@@ -791,6 +792,7 @@ body {
     z-index: var(--z-content);
     width: 100%;
     justify-items: center;
+    align-items: stretch;
 }
 
 /* Card Principal (Autoconhecimento) */
@@ -853,6 +855,9 @@ body {
     transition: var(--transition);
     position: relative;
     z-index: var(--z-content);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .secondary-card:nth-child(2) {
@@ -893,7 +898,7 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     text-align: right;
-    margin-top: 10px;
+    margin-top: auto;
 }
 
 /* CAMADA 4: Dica Final */
@@ -965,7 +970,7 @@ body {
     }
     
     .intro-section, .navigation-section {
-        padding: 60px 40px;
+        padding: 0px 40px;
         width: 100%;
     }
     
@@ -1066,7 +1071,6 @@ body {
 
 .comic-speech-bubble {
     border-radius: 25px;
-    max-width: 300px;
 }
 
 
@@ -1102,7 +1106,7 @@ body {
 }
 
 .comic-highlight-box {
-    background: #ffff00;
+    background: #d0d0c0;
     border-radius: 15px;
     padding: 15px;
     margin: 10px 0;
@@ -1199,6 +1203,7 @@ body {
 }
 
 .topic-card {
+    width: 70%;
     background: var(--white);
     padding: 18px;
     border-radius: 16px;
@@ -1699,17 +1704,17 @@ body {
 }
 
 .secret-garden {
-    background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
+    background: linear-gradient(135deg, #a2ffa6 0%, #9bc46b 100%);
     transform: rotate(1deg);
 }
 
 .steep-mountain {
-    background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+    background: linear-gradient(135deg, #ffce85 0%, #ffa386 100%);
     transform: rotate(-0.5deg);
 }
 
 .swamp {
-    background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+    background: linear-gradient(135deg, #e4c0ea 0%, #b1a0ce 100%);
     transform: rotate(0.5deg);
 }
 
@@ -1757,8 +1762,7 @@ body {
 /* ===== TÍTULO MELHORADO COM STICKERS ===== */
 .enhanced-title-container {
     position: relative;
-    display: inline-block;
-    margin: 20px 0;
+    display: inline-block;margin-top: 50px;
 }
 
 .enhanced-title {
@@ -1929,8 +1933,8 @@ body {
 }
 
 .sticker-rocket {
-    bottom: 20%;
-    right: 8%;
+    bottom: 0%;
+    right: 0;
     animation-delay: 4.5s;
     transform: rotate(25deg);
 }
@@ -1969,7 +1973,7 @@ body {
 
 .section-sticker {
     position: absolute;
-    font-size: 1.5rem;
+    font-size: 3rem;
     animation: sectionStickerFloat 5s ease-in-out infinite;
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
     opacity: 0.9;
@@ -1997,7 +2001,7 @@ body {
 }
 
 .sticker-energy {
-    top: 10px;
+    top: 40px;
     left: -20px;
     animation-delay: 1.7s;
     transform: rotate(-15deg);
@@ -2144,6 +2148,18 @@ body {
     font-size: 0.9rem;
     text-align: center;
 }
+.next-step-button {
+    margin-top: 20px;
+}
+.next-step-button a {
+    display: flex;
+    font-size: larger;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #194eff;
+}
 
 .territory-input textarea {
     width: 100%;
@@ -2173,7 +2189,7 @@ body {
   min-height: 100vh;
   box-sizing: border-box;
   padding: 40px 20px;
-  background: var(--gradient-notebook);
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2571,7 +2587,6 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
   
   .compass-container {
     margin-top: 200px;
-    margin-bottom: 200px;
     min-height: 380px;
 }
   
@@ -2640,7 +2655,6 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
   
   .compass-container {
     margin-top: 220px;
-    margin-bottom: 100px;
     max-width: 100%;
     min-height: 400px;
     display: flex;
@@ -2713,20 +2727,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     transform: rotate(0deg) scale(0.98) !important;
   }
 
-  .compass-visual {
-    width: 300px;
-    height: 300px;
-    margin: 0 auto 100px;
-  }
-  
-  .compass-base {
-    border-width: 4px;
-  }
-  
-  .compass-center {
-    width: 75px;
-    height: 75px;
-  }
+
   
   .compass-title {
     font-size: 0.75rem;
@@ -4943,7 +4944,9 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     transform: rotate(0deg) scale(1.05);
     box-shadow: 5px 5px 0px var(--black), 10px 10px 0px rgba(0, 0, 0, 0.3);
 }
-
+.reflection-inputs{
+    margin: 30px 0px;
+}
 /* ===== INPUTS E FORMULÁRIOS ===== */
 .reflection-input {
     display: flex;
@@ -4951,7 +4954,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 }
 
 .reflection-input label {
-    font-family: var(--font-comic);
+    margin-top: 40px;    font-family: var(--font-comic);
     font-size: 1rem;
     font-weight: 600;
     color: var(--black);
@@ -5282,7 +5285,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     }
     
     .podium-content .placeholder {
-        font-size: 0.65rem;
+        font-size: 0.9rem;
         display: block;
     }
     
@@ -5390,8 +5393,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     
     /* Layout da Daniela em mobile */
     .daniela-presentation {
-        flex-direction: column;
-        align-items: center;
+        
         gap: 15px;
     }
     
@@ -5416,7 +5418,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     .daniela-bubble::before {
         left: 20px;
         top: -25px;
-        border-top: 25px solid var(--black);
+        border-top: 25px solid transparent;
         border-left: 25px solid transparent;
         border-right: 25px solid transparent;
         border-bottom: none;
@@ -5482,6 +5484,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     }
     
     .topic-card {
+        width: 60%;
         min-height: 60px;
         display: flex;
         flex-direction: column;
@@ -5503,7 +5506,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 }
 
 .placeholder {
-    color: #999;
+    color: #ffffff;
     font-style: italic;
     font-size: 0.8rem;
 }
