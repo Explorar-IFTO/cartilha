@@ -1267,7 +1267,7 @@ class CompassInteractions {
                 inputs: [
                     {
                         id: 'socialUseful',
-                        label: 'Eu me sinto útil quando...',
+                        label: 'Eu me sinto satisfeito(a) quando...',
                         placeholder: 'Ex: ajudo alguém, organizo eventos...',
                         maxlength: 100
                     },

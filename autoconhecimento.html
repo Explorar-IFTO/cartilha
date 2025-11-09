@@ -11,15 +11,7 @@
 </head>
 <body>
     <div class="book-container">
-        <!-- Elementos Decorativos Flutuantes -->
-        <div class="floating-decorations">
-            <div class="floating-element decoration-1">📝</div>
-            <div class="floating-element decoration-2">🎨</div>
-            <div class="floating-element decoration-3">💫</div>
-            <div class="floating-element decoration-4">🌈</div>
-            <div class="floating-element decoration-5">🎭</div>
-        </div>
-        
+       
         
         <div class="book">
             <!-- Página de Autoconhecimento -->
@@ -29,11 +21,6 @@
                         <button class="back-btn" onclick="window.location.href='index.html'">← Voltar</button>
                         <div class="enhanced-title-container">
                             <h2 class="enhanced-title">🔍 Autoconhecimento</h2>
-                            <div class="title-stickers">
-                                <div class="sticker sticker-1">✨</div>
-                                <div class="sticker sticker-2">💭</div>
-                                <div class="sticker sticker-3">🎯</div>
-                            </div>
                             <div class="title-glow"></div>
                         </div>
                         <p class="topic-subtitle">Olhando para dentro de si</p>
@@ -102,14 +89,14 @@
                                 <!-- Nuvem 1 - Cima -->
                                 <div class="thought-cloud cloud-top">
                                     <div class="cloud-content">
-                                        <p>"Qual profissão vai seguir?"</p>
+                                        <p>"Qual profissão vou seguir?"</p>
                                     </div>
                                 </div>
                                 
                                 <!-- Nuvem 2 - Direita -->
                                 <div class="thought-cloud cloud-right">
                                     <div class="cloud-content">
-                                        <p>"Vai fazer faculdade?"</p>
+                                        <p>"Vou fazer faculdade?"</p>
                                     </div>
                                 </div>
                                 
@@ -166,7 +153,7 @@
                                     <div class="thought-bubble-input">
                                         <div class="comic-speech-bubble">
                                             <div class="bubble-content">
-                                                <label>Uma palavra:</label>
+                                                <label>🗣️ Uma palavra:</label>
                                                 <input type="text" id="wordInput" placeholder="Ex: esperança, medo, curiosidade..." maxlength="20">
                                             </div>
                                         </div>
@@ -175,7 +162,7 @@
                                     <div class="thought-bubble-input">
                                         <div class="comic-speech-bubble feeling-bubble">
                                             <div class="bubble-content">
-                                                <label>Um sentimento:</label>
+                                                <label>❤️ Um sentimento:</label>
                                                 <input type="text" id="feelingInput" placeholder="Ex: ansioso, empolgado, confuso..." maxlength="20">
                                             </div>
                                         </div>
@@ -184,7 +171,7 @@
                                     <div class="thought-bubble-input">
                                         <div class="comic-speech-bubble doubt-bubble">
                                             <div class="bubble-content">
-                                                <label>Uma dúvida:</label>
+                                                <label>❓ Uma dúvida:</label>
                                                 <input type="text" id="doubtInput" placeholder="Ex: Será que vou conseguir?" maxlength="30">
                                             </div>
                                         </div>
@@ -205,7 +192,7 @@
                                 </div>
                             </div>
                             
-                            <p class="handwriting-text energy-intro">O que você faz no seu dia a dia pode dizer muito sobre quem você é. Para entender melhor o seu potencial, vamos mapear o que te dá energia e o que descarrega a sua bateria.</p>
+                            <p class="handwriting-text energy-intro">💡 O que você faz no seu dia a dia pode dizer muito sobre quem você é. Para entender melhor o seu potencial, vamos mapear o que te dá energia e o que descarrega a sua bateria.</p>
                             
                             <!-- Mapa Visual -->
                             <div class="energy-map-container">
@@ -213,7 +200,7 @@
                                     <!-- Campo da Paixão -->
                                     <div class="territory passion-field" data-territory="passion">
                                         <div class="territory-header">
-                                            <div class="territory-icon">🌻</div>
+                                            <div class="territory-icon">❤️</div>
                                             <h4>O CAMPO DA PAIXÃO</h4>
                                             <p class="territory-subtitle">(Gosto e Faço)</p>
                                         </div>
@@ -230,7 +217,7 @@
                                     <!-- Jardim Secreto -->
                                     <div class="territory secret-garden" data-territory="secret">
                                         <div class="territory-header">
-                                            <div class="territory-icon">🌺</div>
+                                            <div class="territory-icon">🗝️</div>
                                             <h4>O JARDIM SECRETO</h4>
                                             <p class="territory-subtitle">(Gosto e Não Faço)</p>
                                         </div>
@@ -285,15 +272,14 @@
                                 <div class="comic-text-box">
                                     <p>Agora que você preencheu os quatro territórios, observe: tanto no Campo da Paixão quanto no Pântano você já tem pistas sólidas sobre quem você é e quais caminhos pode seguir ou evitar. Isso já é incrível!</p>
                                 </div>
-                                
-                                <div class="comic-highlight-box">
-                                    <p>💡 <strong>Deixo aqui uma sugestão:</strong> olhe para o Jardim Secreto e para a Montanha Íngreme e se pergunte:</p>
-                                    <p><strong>POR QUE</strong> eu ainda não faço aquilo que me atrai?</p>
-                                    <p><strong>POR QUE</strong> eu ainda faço aquilo que já sei que não gosto?</p>
-                                </div>
+                               
                                 
                             </div>
-                            
+                            <div class="comic-highlight-box nav-tip-box">
+                                <p><strong>Dica:</strong>  olhe para o Jardim Secreto e para a Montanha Íngreme e se pergunte:</p>
+                                <p><strong>POR QUE</strong> eu ainda não faço aquilo que me atrai?</p>
+                                <p><strong>POR QUE</strong> eu ainda faço aquilo que já sei que não gosto?</p>
+                            </div>
                             <!-- Modal de zoom -->
                             <div class="zoom-modal" id="zoomModal">
                                 <div class="zoom-content">
@@ -318,7 +304,7 @@
                             <p class="handwriting-text compass-intro-3">É por aí que a gente começa a descobrir no que você já é bom e o que te move de verdade.</p>
                             
                             <div class="comic-highlight-box">
-                                <p>💡 Para ficar ainda mais claro, complete as frases a seguir:</p>
+                                <p>💡 Para ficar ainda mais claro, clique em cada quadro a seguir e complete as frases:</p>
                             </div>
                             
                             <div class="comic-info-box mobile-only-tip" style="display: none;">
@@ -407,7 +393,10 @@
                             <div class="comic-highlight-box">
                                 <p>💡 Aqui estão alguns valores. Selecione os três que você considera inegociáveis - ou seja, aqueles dos quais você não abre mão.</p>
                             </div>
-                            
+                            <div class="comic-text-box">
+                                <p>Lembre-se, suas respostas são o seu guia. Não tem certo ou errado.</p>
+                            </div>
+                           
                             <!-- Pódio dos Valores -->
                             <div class="values-podium">
                                 <div class="podium-container">
@@ -499,9 +488,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="comic-info-box">
-                                    <p>💡 <strong>DICA:</strong> Lembre-se, suas respostas são o seu guia. Não tem certo ou errado.</p>
-                                </div>
+                               
                             </div>
                             
                             <!-- Resumo Final -->
