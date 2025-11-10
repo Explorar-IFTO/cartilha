@@ -12,7 +12,7 @@
     
     /* Gradientes */
     --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-cover: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 50%, #ffa8a8 100%);
+    --gradient-cover: linear-gradient(135deg, #4a90e2 0%, #5ba3e8 50%, #6bb3ed 100%);
     --gradient-notebook: linear-gradient(135deg, #fefefe 0%, #f8f9fa 100%);
     
     /* Sombras */
@@ -169,6 +169,22 @@ body {
     min-height: 100vh;
     padding: 40px 20px;
     width: 100%;
+    overflow: hidden;
+}
+
+.cover-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+    z-index: 0;
 }
 
 .cover-content {
