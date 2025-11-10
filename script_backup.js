@@ -2803,7 +2803,7 @@ class AnaliseProfissoesManager {
     showEmptyState() {
         this.container.innerHTML = `
             <div class="comic-info-box empty-state">
-                <p>📝 <strong>Preencha primeiro o Top 3 Profissões</strong> para ver a análise aqui!</p>
+                <p><span style="font-size: 3rem;">📝</span> <strong>Preencha primeiro o Top 3 Profissões</strong> para ver a análise aqui!</p>
             </div>
         `;
     }

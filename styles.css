@@ -48,7 +48,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-p, h4 {
+p, h4, label, span, input[type="text"], textarea{
     font-size: 18px !important; /* mínimo recomendado */
 }
 body {
@@ -685,7 +685,7 @@ body {
 }
 
 .handwriting-text.section-intro {
-    margin: 20px 0 30px 0;
+    margin: 20px 0 0px 0;
     transform: rotate(0.5deg);
 }
 
@@ -1123,7 +1123,7 @@ body {
     border: 5px solid var(--black);
     border-radius: 25px;
     padding: 25px;
-    margin: 20px 0;
+    margin: 40px 0;
     position: relative;
     box-shadow: 6px 6px 0px var(--black), 12px 12px 0px rgba(0, 0, 0, 0.3);
     font-family: var(--font-comic);
@@ -1335,13 +1335,7 @@ body {
 /* ===== NUVENS DE PENSAMENTO MODERNAS ===== */
 .thought-clouds-container {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 40px 0;
-    min-height: 400px;
-    width: 100%;
-    padding: 20px;
+   
 }
 
 /* Emoji central com animação de respiração */
@@ -1446,8 +1440,7 @@ body {
 /* Responsividade */
 @media (max-width: 767px) {
     .thought-clouds-container {
-        min-height: 450px;
-        padding: 20px;
+        min-height: 350px;
     }
     
     .emoji-face {
@@ -2647,7 +2640,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
   }
   
   .compass-section {
-    padding: 30px 15px 80px;
+    padding: 30px 15px 0px;
     min-height: auto;
     display: flex;
     flex-direction: column;
@@ -5118,6 +5111,10 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
         min-width: 44px;
         min-height: 44px;
     }
+    .comic-title-box{
+        margin-top: 50px !important;
+
+    }
     
     .comic-text-box, .comic-speech-bubble, .comic-title-box, .comic-info-box, .comic-highlight-box, .comic-warning-box {
         padding: 15px;
@@ -6065,7 +6062,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 }
 
 .reflexao-bubble {
-    background:linear-gradient(135deg, #162670 0%, #4b1c7c 100%);
+    background: linear-gradient(135deg, #6881f5 0%, #784aa8 100%);
     color: var(--white);
     border: 3px solid var(--black);
 }
