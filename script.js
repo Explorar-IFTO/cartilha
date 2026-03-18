@@ -2036,15 +2036,8 @@ class MitosVerdadesCarousel {
         // Marca o botão selecionado
         button.classList.add('selected');
         button.style.opacity = '1';
-        
-        // Adiciona efeito visual ao botão selecionado
-        if (choice === 'mito') {
-            button.style.background = 'linear-gradient(135deg, #ff6b6b, #ee5a52)';
-            button.style.transform = 'scale(1.05)';
-        } else {
-            button.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
-            button.style.transform = 'scale(1.05)';
-        }
+        button.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
+        button.style.transform = 'scale(1.05)';
         
         // Mostra a explicação
         if (explanation) {
@@ -2054,17 +2047,6 @@ class MitosVerdadesCarousel {
         // Efeito de confete se acertou
         if (choice === 'mito') {
             this.showConfetti(card);
-        }
-        
-        // Auto-avança após 3 segundos (só se não for o último)
-        if (this.currentCard < this.totalCards) {
-            setTimeout(() => {
-                console.log('Auto-advancing from card', this.currentCard);
-                if (this.currentCard < this.totalCards) {
-                    this.currentCard++;
-                    this.updateCarousel();
-                }
-            }, 3000);
         }
     }
     
@@ -2140,14 +2122,8 @@ class MitosVerdadesCarousel {
         if (selectedButton) {
             selectedButton.classList.add('selected');
             selectedButton.style.opacity = '1';
-            
-            if (choice === 'mito') {
-                selectedButton.style.background = 'linear-gradient(135deg, #ff6b6b, #ee5a52)';
-                selectedButton.style.transform = 'scale(1.05)';
-            } else {
-                selectedButton.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
-                selectedButton.style.transform = 'scale(1.05)';
-            }
+            selectedButton.style.background = 'linear-gradient(135deg, #4ecdc4, #44a08d)';
+            selectedButton.style.transform = 'scale(1.05)';
         }
         
         // Mostra explicação
@@ -3093,12 +3069,18 @@ document.addEventListener('DOMContentLoaded', function() {
     initPDFDownloadButton();
 });
 
-// Função para inicializar o toggle das referências
+// Função para inicializar o toggle das referências (suporta múltiplas seções)
 function initReferencesToggle() {
-    const toggleBtn = document.querySelector('.references-toggle-btn');
-    const referencesContent = document.querySelector('.references-content');
+    const toggleButtons = document.querySelectorAll('.references-toggle-btn');
     
-    if (toggleBtn && referencesContent) {
+    if (!toggleButtons || toggleButtons.length === 0) return;
+    
+    toggleButtons.forEach((toggleBtn) => {
+        const container = toggleBtn.closest('.references-container');
+        const referencesContent = container ? container.querySelector('.references-content') : null;
+        
+        if (!referencesContent) return;
+        
         toggleBtn.addEventListener('click', function() {
             const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
             const icon = toggleBtn.querySelector('.toggle-icon');
@@ -3113,27 +3095,22 @@ function initReferencesToggle() {
                 referencesContent.style.opacity = '0';
                 referencesContent.style.gap = '0';
                 toggleBtn.setAttribute('aria-expanded', 'false');
-                icon.textContent = '▼';
+                if (icon) icon.textContent = '▼';
             } else {
                 // Expandir
-                // Primeiro, remover max-height para poder calcular a altura real
                 referencesContent.style.maxHeight = 'none';
                 referencesContent.style.opacity = '1';
                 referencesContent.style.gap = '25px';
                 const height = referencesContent.scrollHeight;
-                // Resetar para 0 para começar a animação
                 referencesContent.style.maxHeight = '0';
                 referencesContent.style.opacity = '0';
                 referencesContent.style.gap = '0';
-                // Força um reflow
                 referencesContent.offsetHeight;
-                // Agora animar para uma altura maior que a real para garantir que não corte
                 setTimeout(function() {
                     referencesContent.style.maxHeight = (height + 100) + 'px';
                     referencesContent.style.opacity = '1';
                     referencesContent.style.gap = '25px';
                 }, 10);
-                // Após a animação, remover o max-height para permitir crescimento natural
                 setTimeout(function() {
                     if (toggleBtn.getAttribute('aria-expanded') === 'true') {
                         referencesContent.classList.add('expanded');
@@ -3141,10 +3118,10 @@ function initReferencesToggle() {
                     }
                 }, 600);
                 toggleBtn.setAttribute('aria-expanded', 'true');
-                icon.textContent = '▲';
+                if (icon) icon.textContent = '▲';
             }
         });
-    }
+    });
 }
 
 // ===== FUNCIONALIDADE DE GERAÇÃO DE PDF =====

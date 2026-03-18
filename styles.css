@@ -2,7 +2,7 @@
 :root {
     /* Cores principais */
     --primary-color: #4ecdc4;
-    --secondary-color: #ff6b6b;
+    --secondary-color: #f28b82;
     --accent-color: #44a08d;
     --text-color: #333;
     --text-light: #666;
@@ -11,8 +11,8 @@
     --black: #000;
     
     /* Gradientes */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-cover: linear-gradient(135deg, #4a90e2 0%, #5ba3e8 50%, #6bb3ed 100%);
+    --gradient-primary: linear-gradient(135deg, #7d8fe0 0%, #8f9ad9 100%);
+    --gradient-cover: linear-gradient(135deg, #6fa3dd 0%, #80b3e4 50%, #92c2ea 100%);
     --gradient-notebook: linear-gradient(135deg, #fefefe 0%, #f8f9fa 100%);
     
     /* Sombras */
@@ -56,10 +56,39 @@ body {
     background: var(--gradient-primary);
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     padding: 0;
     margin: 0;
+}
+
+.site-footer {
+    text-align: center;
+    padding: 16px 10px;
+    font-size: 0.9rem;
+    color: #555;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-top: auto;
+}
+
+.logo-bar {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 999;
+    opacity: 0.85;
+}
+
+.logo-bar img {
+    height: 72px;
+    width: auto;
+    object-fit: contain;
 }
 
 @media (max-width: 1023px) {
@@ -2214,7 +2243,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 150px;
+  margin-top: 120px;
   width: 100%;
   max-width: 600px;
   min-height: 300px;
@@ -2648,6 +2677,11 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 
 /* === RESPONSIVIDADE MOBILE === */
 @media (max-width: 600px) {
+  .mochila-visual {
+      top: 6px;
+      right: -4px;
+      font-size: 2.1rem;
+  }
   /* Mostra dica de uso da bússola apenas no mobile */
   .mobile-only-tip {
     display: block !important;
@@ -2664,9 +2698,9 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
   }
   
   .compass-container {
-    margin-top: 220px;
+    margin-top: 160px;
     max-width: 100%;
-    min-height: 400px;
+    min-height: 360px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2674,8 +2708,8 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
   
   .compass-circles {
     flex-direction: column;
-    top: -210px;
-    gap: 30px;
+    top: -180px;
+    gap: 24px;
     flex-wrap: nowrap;
     max-width: 100%;
     align-items: center;
@@ -2779,14 +2813,14 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
   }
   
   .compass-container {
-    margin-top: 200px;
-    margin-bottom: 80px;
-    min-height: 380px;
+    margin-top: 160px;
+    margin-bottom: 60px;
+    min-height: 340px;
   }
   
   .compass-circles {
-    top: -195px;
-    gap: 30px;
+    top: -170px;
+    gap: 22px;
     max-width: 100%;
   }
 
@@ -5659,11 +5693,11 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 }
 
 .emoji-option.selected {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
-    border-color: #ff4757;
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    border-color: #4ecdc4;
     color: white;
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+    box-shadow: 0 10px 30px rgba(78, 205, 196, 0.4);
 }
 
 .emoji-option.selected::before {
@@ -5782,7 +5816,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
     left: 50%;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(255, 107, 107, 0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(78, 205, 196, 0.3) 0%, transparent 70%);
     transform: translate(-50%, -50%);
     border-radius: 50%;
     animation: pulse 2s infinite;
