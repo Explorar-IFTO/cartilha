@@ -229,6 +229,15 @@ body {
     justify-content: center;
 }
 
+.cover-credits {
+    margin-top: 26px;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
 @media (min-width: 1024px) {
     .cover-page {
         border: none;
@@ -1187,6 +1196,13 @@ body {
     font-weight: 700;
 }
 
+.comic-title-box h3 {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    padding: 0 40px;
+}
+
 .comic-title-box:hover {
     transform: rotate(0deg) scale(1.02);
 }
@@ -1589,6 +1605,25 @@ body {
     transition: var(--transition);
     flex: 1;
     min-width: 0;
+}
+
+.thought-bubble-input .comic-speech-bubble {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.thought-bubble-input .bubble-content {
+    width: 100%;
+    min-width: 0;
+}
+
+.thought-bubble-input .bubble-content input[type="text"] {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: block;
+    box-sizing: border-box;
 }
 
 .thought-bubble-input:nth-child(2) {
@@ -2007,15 +2042,59 @@ body {
     right: 0;
     bottom: 0;
     pointer-events: none;
-    z-index: calc(var(--z-content) + 1);
+    z-index: 1;
 }
 
 .section-sticker {
     position: absolute;
-    font-size: 3rem;
+    font-size: 2.2rem;
     animation: sectionStickerFloat 5s ease-in-out infinite;
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
-    opacity: 0.9;
+    opacity: 0.75;
+}
+
+.values-list .comic-text-box {
+    position: relative;
+    padding-top: 28px;
+}
+
+.values-list .section-stickers {
+    top: -18px;
+    bottom: auto;
+}
+
+.values-list .sticker-map {
+    top: -22px;
+    right: -10px;
+    font-size: 1.8rem;
+}
+
+.values-list .sticker-energy {
+    top: -22px;
+    left: -10px;
+    font-size: 1.8rem;
+}
+
+.mochila-section .section-title-enhanced {
+    padding-top: 22px;
+}
+
+.mochila-section .section-stickers {
+    top: -16px;
+    bottom: auto;
+}
+
+.mochila-section .sticker-question {
+    top: -22px;
+    right: -10px;
+    font-size: 1.9rem;
+}
+
+.mochila-section .sticker-thinking {
+    top: -22px;
+    left: -10px;
+    bottom: auto;
+    font-size: 1.9rem;
 }
 
 .sticker-question {
@@ -2243,7 +2322,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 120px;
+  margin-top: 150px;
   width: 100%;
   max-width: 600px;
   min-height: 300px;
@@ -2404,6 +2483,13 @@ body {
   color: var(--text-color);
   margin: 0;
   line-height: 1.2;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.compass-instruction-box {
+    margin-bottom: 28px;
 }
 
 /* === MODAL === */
@@ -5679,8 +5765,8 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 
 .emoji-option:hover {
     transform: translateY(-5px) scale(1.02);
-    border-color: #ff6b6b;
-    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.2);
+    border-color: #d7dde3;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .emoji-option:hover::before {
@@ -5739,7 +5825,7 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 }
 
 .emoji-option:hover .label {
-    color: #ff6b6b;
+    color: #495057;
 }
 
 /* Responsividade para botões de emoji */
