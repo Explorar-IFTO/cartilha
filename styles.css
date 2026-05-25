@@ -5925,10 +5925,6 @@ body.modal-open *:not(.compass-modal):not(.compass-modal *) {
 .mochila-section {
     margin: 40px 0;
     padding: 30px 20px;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-radius: var(--border-radius-lg);
-    border: var(--border-comic);
-    box-shadow: var(--shadow-comic);
     position: relative;
     overflow: hidden;
 }
